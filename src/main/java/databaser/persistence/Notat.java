@@ -33,7 +33,7 @@ public class Notat extends ActiveDomainObject {
                 PreparedStatement statement = connection.prepareStatement(sql);
         ) {
 
-            setParameters(statement, notatID, tekst, øktID);
+            setParameters(statement, notatID, tekst, øktID, tekst, øktID);
             statement.execute();
 
         } catch (SQLException e) {

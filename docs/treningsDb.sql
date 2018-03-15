@@ -114,10 +114,10 @@ CREATE INDEX `fk_Friøvelse_has_Øvelsegruppe_Friøvelse1_idx` ON `mydb`.`Friøv
 DROP TABLE IF EXISTS `mydb`.`Apparat` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`Apparat` (
-  `idApparat` INT NOT NULL,
+  `apparatID` INT NOT NULL,
   `Navn` VARCHAR(45) NOT NULL,
   `Beskrivelse` VARCHAR(450) NOT NULL,
-  PRIMARY KEY (`idApparat`))
+  PRIMARY KEY (`apparatID`))
 ENGINE = InnoDB;
 
 
@@ -132,16 +132,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Apparatøvelse` (
   `Set` INT NOT NULL,
   `Reps` INT NOT NULL,
   `Kilo` INT NOT NULL,
-  `idApparat` INT NOT NULL,
+  `apparatID` INT NOT NULL,
   PRIMARY KEY (`idApparatØvelse`),
   CONSTRAINT `fk_ApparatØvelse_Apparat1`
-    FOREIGN KEY (`idApparat`)
-    REFERENCES `mydb`.`Apparat` (`idApparat`)
+    FOREIGN KEY (`apparatID`)
+    REFERENCES `mydb`.`Apparat` (`apparatID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_ApparatØvelse_Apparat1_idx` ON `mydb`.`Apparatøvelse` (`idApparat` ASC);
+CREATE INDEX `fk_ApparatØvelse_Apparat1_idx` ON `mydb`.`Apparatøvelse` (`apparatID` ASC);
 
 
 -- -----------------------------------------------------

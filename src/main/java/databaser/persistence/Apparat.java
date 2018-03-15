@@ -48,7 +48,7 @@ public class Apparat extends ActiveDomainObject {
                 PreparedStatement statement = connection.prepareStatement(sql);
         ) {
 
-            setParameters(statement, apparatID, navn, beskrivelse);
+            setParameters(statement, apparatID, navn, beskrivelse, navn, beskrivelse);
             statement.execute();
 
         } catch (SQLException e) {

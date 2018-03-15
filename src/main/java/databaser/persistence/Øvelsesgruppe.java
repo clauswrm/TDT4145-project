@@ -39,7 +39,7 @@ public class Øvelsesgruppe extends ActiveDomainObject {
                 PreparedStatement statement = connection.prepareStatement(sql);
         ) {
 
-            setParameters(statement, øvelsesgruppeID, navn);
+            setParameters(statement, øvelsesgruppeID, navn, navn);
             statement.execute();
 
         } catch (SQLException e) {

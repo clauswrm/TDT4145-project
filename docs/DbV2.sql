@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS `mydb`.`Treningsøkt` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Treningsøkt` (
   `idTreningsøkt` INT NOT NULL,
   `Dato` DATE NOT NULL,
-  `Tidspunkt` TIME NOT NULL,
+
   `Varighet` INT NOT NULL,
   `Form` INT(10) NOT NULL,
   `Innsats` INT(10) NOT NULL,
@@ -108,10 +108,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Friøvelse_has_Øvelsegruppe` (
 DROP TABLE IF EXISTS `mydb`.`Apparat` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`Apparat` (
-  `idApparat` INT NOT NULL,
+  `apparatID` INT NOT NULL,
   `Navn` VARCHAR(45) NOT NULL,
   `Beskrivelse` VARCHAR(450) NOT NULL,
-  PRIMARY KEY (`idApparat`))
+  PRIMARY KEY (`apparatID`))
   ENGINE = InnoDB;
 
 
@@ -123,13 +123,13 @@ DROP TABLE IF EXISTS `mydb`.`Apparatøvelse` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Apparatøvelse` (
   `idApparatØvelse` INT NOT NULL,
   `Navn` VARCHAR(45) NOT NULL,
-  `idApparat` INT NOT NULL,
+  `apparatID` INT NOT NULL,
   `Beskrivelse` VARCHAR(450) NULL,
   PRIMARY KEY (`idApparatØvelse`),
-  INDEX `fk_ApparatØvelse_Apparat1_idx` (`idApparat` ASC),
+  INDEX `fk_ApparatØvelse_Apparat1_idx` (`apparatID` ASC),
   CONSTRAINT `fk_ApparatØvelse_Apparat1`
-  FOREIGN KEY (`idApparat`)
-  REFERENCES `mydb`.`Apparat` (`idApparat`)
+  FOREIGN KEY (`apparatID`)
+  REFERENCES `mydb`.`Apparat` (`apparatID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
