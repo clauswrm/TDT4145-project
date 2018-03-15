@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.ØvelserController">
+    <Button fx:id="goToMainMenu" layoutX="700" mnemonicParsing="false" onAction="#goToMainMenu" text="Hovedmenyen" />
+    <ChoiceBox fx:id="øvelsesGrupper" layoutX="375.0" layoutY="107.0">
+    </ChoiceBox>
+   <TextField layoutX="19.0" layoutY="119.0" />
+   <Label layoutX="19.0" layoutY="75.0" text="Ny øvelse" />
+   <Label layoutX="19.0" layoutY="102.0" text="Navn" />
+   <Label layoutX="19.0" layoutY="158.0" text="Beskrivelse" />
+   <CheckBox layoutX="21.0" layoutY="360.0" mnemonicParsing="false" text="Apparatøvelse" />
+   <ChoiceBox layoutX="17.0" layoutY="377.0" prefWidth="150.0" />
+   <TextArea layoutX="22.0" layoutY="175.0" prefHeight="81.0" prefWidth="197.0" />
+   <Button layoutX="16.0" layoutY="402.0" mnemonicParsing="false" text="Legg til Øvelse" />
+   <ChoiceBox layoutX="16.0" layoutY="273.0" prefWidth="150.0" />
+   <Label layoutX="36.0" layoutY="480.0" text="Ny Gruppe" />
+   <Label layoutX="34.0" layoutY="525.0" text="Navn" />
+   <Label layoutX="33.0" layoutY="590.0" text="Beskrivelse" />
+   <TextField layoutX="33.0" layoutY="542.0" />
+   <TextField layoutX="33.0" layoutY="607.0" />
+   <CheckBox layoutX="132.0" layoutY="360.0" mnemonicParsing="false" text="Friøvelse" />
+   <Label layoutX="19.0" layoutY="256.0" text="Gruppe" />
+   <Button layoutX="33.0" layoutY="640.0" mnemonicParsing="false" text="Legg til Gruppe" />
+    
+
+
+</AnchorPane>

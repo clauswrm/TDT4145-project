@@ -13,6 +13,7 @@ import java.net.URL;
 public class MainMenuController {
 
     public Button apparaterButton;
+    public Button øvelserButton;
 
     public void goToApparater(ActionEvent event) throws IOException{
         URL resource = getClass().getResource("/Apparater.fxml");
@@ -21,6 +22,18 @@ public class MainMenuController {
         Parent root = loader.load();
 
         Stage primaryStage = (Stage) apparaterButton.getScene().getWindow();
+
+        primaryStage.setScene(new Scene(root,1280,720));
+        primaryStage.show();
+
+    }
+    public void goToØvelser(ActionEvent event) throws IOException{
+        URL resource = getClass().getResource("/Øvelser.fxml");
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(resource);
+        Parent root = loader.load();
+
+        Stage primaryStage = (Stage) øvelserButton.getScene().getWindow();
 
         primaryStage.setScene(new Scene(root,1280,720));
         primaryStage.show();

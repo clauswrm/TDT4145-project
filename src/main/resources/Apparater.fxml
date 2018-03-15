@@ -18,7 +18,8 @@
        <Label layoutX="63.0" layoutY="160.0" text="Beskrivelse" />
       <TextField layoutX="64.0" layoutY="125.0" fx:id="navnField" />
       <TextField layoutX="64.0" layoutY="177.0" fx:id="beskrivelseField"/>
-    <Button layoutX="63.0" layoutY="213.0" mnemonicParsing="false" text="Legg til nytt apparat" onAction="#handleNyttApparat" />
+    <Button layoutX="63.0" layoutY="213.0" mnemonicParsing="false" fx:id="nyttApparat" text="Legg til nytt apparat" onAction="#handleNyttApparat" />
+       <Button mnemonicParsing="false" text="Hovedmenyen" fx:id="goToMainMenu" onAction="#goToMainMenu"/>
       <ScrollPane layoutY="100" layoutX="500" fitToHeight="true" hbarPolicy="NEVER">
         <ListView fx:id="listView"/>
       </ScrollPane>

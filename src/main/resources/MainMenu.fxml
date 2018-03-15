@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<?import javafx.scene.control.Label?>
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.MainMenuController">
    <children>
-      <Button layoutX="160.0" layoutY="93.0" mnemonicParsing="false" text="Apparater" fx:id="apparaterButton" onAction="#goToApparater" />
-       <Label text="DETTE ER HOVEDMENYEEEEEN" layoutX="300" layoutY="300"/>
+      <Button fx:id="apparaterButton" layoutX="160.0" layoutY="93.0" mnemonicParsing="false" onAction="#goToApparater" text="Apparater" />
+       <Button fx:id="øvelserButton" mnemonicParsing="false" onAction="#goToØvelser" text="Øvelser" />
+       <Label layoutX="300" layoutY="300" text="DETTE ER HOVEDMENYEEEEEN" />
+      <Button layoutX="454.0" layoutY="118.0" mnemonicParsing="false" text="Dagbok" />
    </children>
 </AnchorPane>
