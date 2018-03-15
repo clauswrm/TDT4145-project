@@ -13,8 +13,8 @@ public abstract class ActiveDomainObject {
 
 
     public abstract void save();
+    public abstract void load();
     public abstract void update();
-    public abstract void get();
 
 
     protected static Connection getConnection() throws SQLException {

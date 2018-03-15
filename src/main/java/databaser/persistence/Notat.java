@@ -61,7 +61,7 @@ public class Notat extends ActiveDomainObject {
         }
     }
     @Override
-    public void get() {
+    public void load() {
         final String sql = "SELECT * FROM notat WHERE idnotat=?";
 
         try (

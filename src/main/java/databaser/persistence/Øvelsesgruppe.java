@@ -7,16 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Apparat extends ActiveDomainObject {
+public class Øvelsesgruppe extends ActiveDomainObject {
 
-    private int apparatID;
+    private int øvelsesgruppeID;
     private String navn;
-    private String beskrivelse;
 
-    public Apparat(int apparatID, String navn, String beskrivelse) {
-        this.apparatID = apparatID;
+    public Øvelsesgruppe(int øvelsesgruppeID, String navn) {
+        this.øvelsesgruppeID = øvelsesgruppeID;
         this.navn = navn;
-        this.beskrivelse = beskrivelse;
     }
 
     public String getNavn() {
@@ -27,20 +25,13 @@ public class Apparat extends ActiveDomainObject {
         this.navn = navn;
     }
 
-    public String getBeskrivelse() {
-        return beskrivelse;
-    }
-
-    public void setBeskrivelse(String beskrivelse) {
-        this.beskrivelse = beskrivelse;
-    }
-
     @Override
     public void save() {
-        if (this.navn == null || this.beskrivelse == null) {
-            throw new IllegalArgumentException("Navn og beskrivelse må være satt");
+        if (this.navn == null) {
+            throw new IllegalArgumentException("Navn må være satt");
         }
-        final String sql = "INSERT INTO apparat (idApparat, Navn, Beskrivelse)" +
+
+        final String sql = "INSERT INTO øvelsegruppe (idØvelsegruppe, Navn)" +
                 "VALUES (?, ?, ?)";
 
         try (
@@ -48,49 +39,48 @@ public class Apparat extends ActiveDomainObject {
                 PreparedStatement statement = connection.prepareStatement(sql);
         ) {
 
-            setParameters(statement, apparatID, navn, beskrivelse);
+            setParameters(statement, øvelsesgruppeID, navn);
             statement.execute();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Unable to save apparatus to database.", e);
+            throw new RuntimeException("Unable to save to database.", e);
         }
     }
 
     @Override
     public void update() {
-        if (this.navn == null || this.beskrivelse == null) {
+        if (this.navn == null) {
             throw new IllegalArgumentException("Navn og beskrivelse må være satt.");
         }
-        final String sql = "UPDATE apparat SET Navn=?, Beskrivelse=? WHERE idApparat=?";
+        final String sql = "UPDATE apparat SET Navn=? WHERE idApparat=?";
 
         try (
                 Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
         ) {
 
-            setParameters(statement, navn, beskrivelse, apparatID);
+            setParameters(statement, navn, øvelsesgruppeID);
             statement.execute();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Unable to update apparatus");
+            throw new RuntimeException("Unable to update stuff");
         }
     }
 
     @Override
     public void load() {
-        final String sql = "SELECT * FROM apparat WHERE idApparat=?";
+        final String sql = "SELECT * FROM øvelsegruppe WHERE idØvelsegruppe=?";
 
         try (
                 Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
         ) {
 
-            setParameters(statement, apparatID);
+            setParameters(statement, øvelsesgruppeID);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                this.apparatID = resultSet.getInt("idApparat");
+                this.øvelsesgruppeID = resultSet.getInt("idØvelsesgruppe");
                 this.navn = resultSet.getString("Navn");
-                this.beskrivelse = resultSet.getString("Beskrivelse");
             }
 
         } catch (SQLException e) {
@@ -98,8 +88,8 @@ public class Apparat extends ActiveDomainObject {
         }
     }
 
-    public static List<Apparat> getAll() {
-        final String sql = "SELECT * FROM apparat";
+    public static List<Øvelsesgruppe> getAll() {
+        final String sql = "SELECT * FROM øvelsegruppe";
 
         try (
                 Connection connection = getConnection();
@@ -107,20 +97,19 @@ public class Apparat extends ActiveDomainObject {
         ) {
 
             ResultSet resultSet = statement.executeQuery();
-            List<Apparat> results = new ArrayList<>();
+            List<Øvelsesgruppe> results = new ArrayList<>();
 
             while (resultSet.next()) {
-                int apparatID = resultSet.getInt("idApparat");
+                int øvelsesgruppeID = resultSet.getInt("idØvelsegruppe");
                 String navn = resultSet.getString("Navn");
-                String beskrivelse = resultSet.getString("Beskrivelse");
 
-                results.add(new Apparat(apparatID, navn, beskrivelse));
+                results.add(new Øvelsesgruppe(øvelsesgruppeID, navn));
             }
 
             return results;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Unable to load apparatuses from the database");
+            throw new RuntimeException("Unable to load stuff from the database");
         }
     }
 }
