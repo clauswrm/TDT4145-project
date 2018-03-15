@@ -8,13 +8,13 @@ import java.util.Properties;
 
 public abstract class ActiveDomainObject {
     public static final String dbUsername = "root",
-                            dbPassword = "yolopass",
-                            dbURL = "jdbc:mysql://localhost:3306/mydb";
+            dbPassword = "yolopass",
+            dbURL = "jdbc:mysql://localhost:3306/mydb";
 
 
     public abstract void save();
+
     public abstract void load();
-    public abstract void update();
 
 
     protected static Connection getConnection() throws SQLException {

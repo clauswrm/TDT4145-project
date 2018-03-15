@@ -14,7 +14,7 @@ public class Notat extends ActiveDomainObject {
     private int øktID;
 
 
-    public Notat(int notatID, String tekst, int øktID){
+    public Notat(int notatID, String tekst, int øktID) {
         this.notatID = notatID;
         this.tekst = tekst;
         this.øktID = øktID;
@@ -26,7 +26,7 @@ public class Notat extends ActiveDomainObject {
             throw new IllegalArgumentException("Navn og beskrivelse må være satt");
         }
         final String sql = "INSERT INTO notat (idNotat, tekst, idTreningsøkt)" +
-                "VALUES (?, ?, ?)";
+                "VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE tekst=?, idTreningsøkt=?";
 
         try (
                 Connection connection = getConnection();
@@ -41,25 +41,6 @@ public class Notat extends ActiveDomainObject {
         }
     }
 
-    @Override
-    public void update() {
-        if (this.tekst == null) {
-            throw new IllegalArgumentException("Tekst må være skrevet.");
-        }
-        final String sql = "UPDATE notat SET idnotat=?, tekst=? WHERE idtreningsøkt=?";
-
-        try (
-                Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-        ) {
-
-            setParameters(statement,notatID, tekst, øktID);
-            statement.execute();
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Klarte ikke oppdatere notat");
-        }
-    }
     @Override
     public void load() {
         final String sql = "SELECT * FROM notat WHERE idnotat=?";
