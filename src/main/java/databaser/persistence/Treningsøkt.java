@@ -15,9 +15,9 @@ public class Treningsøkt extends ActiveDomainObject {
     int innsats;
 
 
-    public Treningsøkt(int treningsøktID, Date date, Time tidspunkt, int varighet, int form, int innsats) {
+    public Treningsøkt(int treningsøktID, Date date, int varighet, int form, int innsats) {
         this.treningsøktID = treningsøktID;
-        this.tidspunkt = tidspunkt;
+
         this.date = date;
         this.varighet = varighet;
         this.form = form;
@@ -27,15 +27,15 @@ public class Treningsøkt extends ActiveDomainObject {
 
     @Override
     public void save() {
-        final String sql = "INSERT INTO treningsøkt (idtreningsøkt, dato, tidspunkt, varighet, form, innsats)" +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+        final String sql = "INSERT INTO treningsøkt (idtreningsøkt, dato, varighet, form, innsats)" +
+                "VALUES (?, ?, ?, ?, ?)";
 
         try (
                 Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
         ) {
 
-            setParameters(statement, treningsøktID, date, tidspunkt, varighet, form, innsats);
+            setParameters(statement, treningsøktID, date, varighet, form, innsats);
             statement.execute();
 
         } catch (SQLException e) {
@@ -58,7 +58,7 @@ public class Treningsøkt extends ActiveDomainObject {
             while (resultSet.next()) {
                 this.treningsøktID = resultSet.getInt("idtreningsøkt");
                 this.date = resultSet.getDate("date");
-                this.tidspunkt = resultSet.getTime("tidspunkt");
+
                 this.varighet = resultSet.getInt("varighet");
                 this.form = resultSet.getInt("form");
                 this.innsats = resultSet.getInt("innsats");
@@ -84,12 +84,12 @@ public class Treningsøkt extends ActiveDomainObject {
             while (resultSet.next()) {
                 int treningsøktID = resultSet.getInt("idtreningsøkt");
                 Date date = resultSet.getDate("date");
-                Time tidspunkt = resultSet.getTime("tidspunkt");
+
                 int varighet = resultSet.getInt("varighet");
                 int form = resultSet.getInt("form");
                 int innsats = resultSet.getInt("innsats");
 
-                results.add(new Treningsøkt(treningsøktID, date, tidspunkt, varighet, form, innsats));
+                results.add(new Treningsøkt(treningsøktID, date, varighet, form, innsats));
             }
 
             return results;
