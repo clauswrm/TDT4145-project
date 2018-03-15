@@ -1,10 +1,14 @@
 package databaser;
 
-import databaser.persistence.Apparat;
+import databaser.persistence.*;
+
+import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
-        Apparat benk = new Apparat(1, "Benk", "Det er en benk. Ta benkpress.");
-        benk.save();
+        //Treningsøkt treningsøkt = new Treningsøkt(1, new Date(), 66, 5,7);
+        //treningsøkt.save();
+        Notat notat = new Notat(1, "GO KYS", 1);
+        notat.save();
     }
 }
