@@ -1,4 +1,4 @@
-package databaser.persistence;
+package databaser.ui;
 
 public class DagbokController {
 }
