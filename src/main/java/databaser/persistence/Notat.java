@@ -107,4 +107,5 @@ public class Notat extends ActiveDomainObject {
             throw new RuntimeException("Feil: Klarte ikke hente notater");
         }
     }
+    //kapppa
 }
