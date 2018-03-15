@@ -32,7 +32,7 @@ public class Øvelsesgruppe extends ActiveDomainObject {
         }
 
         final String sql = "INSERT INTO øvelsegruppe (idØvelsegruppe, Navn)" +
-                "VALUES (?, ?, ?)";
+                "VALUES (?, ?) ON DUPLICATE KEY UPDATE Navn=?";
 
         try (
                 Connection connection = getConnection();
@@ -44,26 +44,6 @@ public class Øvelsesgruppe extends ActiveDomainObject {
 
         } catch (SQLException e) {
             throw new RuntimeException("Unable to save to database.", e);
-        }
-    }
-
-    @Override
-    public void update() {
-        if (this.navn == null) {
-            throw new IllegalArgumentException("Navn og beskrivelse må være satt.");
-        }
-        final String sql = "UPDATE apparat SET Navn=? WHERE idApparat=?";
-
-        try (
-                Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-        ) {
-
-            setParameters(statement, navn, øvelsesgruppeID);
-            statement.execute();
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Unable to update stuff");
         }
     }
 

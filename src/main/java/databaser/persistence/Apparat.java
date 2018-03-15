@@ -41,7 +41,7 @@ public class Apparat extends ActiveDomainObject {
             throw new IllegalArgumentException("Navn og beskrivelse må være satt");
         }
         final String sql = "INSERT INTO apparat (idApparat, Navn, Beskrivelse)" +
-                "VALUES (?, ?, ?)";
+                "VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Navn=?, Beskrivelse=?";
 
         try (
                 Connection connection = getConnection();
@@ -53,26 +53,6 @@ public class Apparat extends ActiveDomainObject {
 
         } catch (SQLException e) {
             throw new RuntimeException("Unable to save apparatus to database.", e);
-        }
-    }
-
-    @Override
-    public void update() {
-        if (this.navn == null || this.beskrivelse == null) {
-            throw new IllegalArgumentException("Navn og beskrivelse må være satt.");
-        }
-        final String sql = "UPDATE apparat SET Navn=?, Beskrivelse=? WHERE idApparat=?";
-
-        try (
-                Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
-        ) {
-
-            setParameters(statement, navn, beskrivelse, apparatID);
-            statement.execute();
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Unable to update apparatus");
         }
     }
 
