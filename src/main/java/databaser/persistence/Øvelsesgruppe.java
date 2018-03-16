@@ -7,18 +7,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Øvelsesgruppe extends ActiveDomainObject {
+public class Øvelsesgruppe extends ActiveDomainObject implements Comparable<Øvelsesgruppe> {
 
     private int øvelsesgruppeID;
     private String navn;
+
+    public Øvelsesgruppe(int øvelsesgruppeID, String navn) {
+        this.øvelsesgruppeID = øvelsesgruppeID;
+        this.navn = navn;
+    }
 
     public Øvelsesgruppe(String navn) {
         this.navn = navn;
     }
 
-    public Øvelsesgruppe(int øvelsesgruppeID, String navn) {
+    public int getØvelsesgruppeID() {
+        return øvelsesgruppeID;
+    }
+
+    public void setØvelsesgruppeID(int øvelsesgruppeID) {
         this.øvelsesgruppeID = øvelsesgruppeID;
-        this.navn = navn;
     }
 
     public String getNavn() {
@@ -32,27 +40,25 @@ public class Øvelsesgruppe extends ActiveDomainObject {
     @Override
     public void save() {
         if (this.navn == null) {
-            throw new IllegalArgumentException("Navn må være satt");
+            throw new IllegalArgumentException("Navn must be set");
         }
 
-        final String sql = "INSERT INTO øvelsegruppe (idØvelsegruppe, Navn)" +
-                "VALUES (?, ?) ON DUPLICATE KEY UPDATE Navn=?";
+        final String sql = "INSERT INTO øvelsegruppe (Navn) VALUES (?)";
 
         try (
                 Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
         ) {
 
-            setParameters(statement, øvelsesgruppeID, navn, navn);
+            setParameters(statement, navn);
             statement.execute();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Unable to save to database.", e);
+            throw new RuntimeException("Unable to save Øvelsesgruppe=" + navn + " to database", e);
         }
     }
 
-    @Override
-    public void load() {
+    public static Øvelsesgruppe getØvelsesgruppeFromID(int øvelsesgruppeID) {
         final String sql = "SELECT * FROM øvelsegruppe WHERE idØvelsegruppe=?";
 
         try (
@@ -62,13 +68,14 @@ public class Øvelsesgruppe extends ActiveDomainObject {
 
             setParameters(statement, øvelsesgruppeID);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                this.øvelsesgruppeID = resultSet.getInt("idØvelsesgruppe");
-                this.navn = resultSet.getString("Navn");
-            }
+            resultSet.next();
+
+            String navn = resultSet.getString("Navn");
+
+            return new Øvelsesgruppe(øvelsesgruppeID, navn);
 
         } catch (SQLException e) {
-            throw new RuntimeException("Unable to save apparatus to database");
+            throw new RuntimeException("Unable to load Øvelsesgruppe with id=" + øvelsesgruppeID + " from the database", e);
         }
     }
 
@@ -93,7 +100,7 @@ public class Øvelsesgruppe extends ActiveDomainObject {
             return results;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Unable to load stuff from the database");
+            throw new RuntimeException("Unable to load all Øvelsesgruppe from the database", e);
         }
     }
 
@@ -103,5 +110,10 @@ public class Øvelsesgruppe extends ActiveDomainObject {
                 "øvelsesgruppeID=" + øvelsesgruppeID +
                 ", navn='" + navn + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Øvelsesgruppe other) {
+        return this.getNavn().compareTo(other.getNavn());
     }
 }

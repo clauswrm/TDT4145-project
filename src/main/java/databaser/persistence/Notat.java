@@ -7,21 +7,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Notat extends ActiveDomainObject {
+public class Notat extends ActiveDomainObject implements Comparable<Notat> {
 
     private int notatID;
     private String tekst;
-    private int øktID;
+    private Treningsøkt treningsøkt;
 
-    public Notat(String tekst, int øktID) {
-        this.tekst = tekst;
-        this.øktID = øktID;
-    }
-
-    public Notat(int notatID, String tekst, int øktID) {
+    public Notat(int notatID, String tekst, Treningsøkt treningsøkt) {
         this.notatID = notatID;
         this.tekst = tekst;
-        this.øktID = øktID;
+        this.treningsøkt = treningsøkt;
+    }
+
+    public Notat(String tekst, Treningsøkt treningsøkt) {
+        this.tekst = tekst;
+        this.treningsøkt = treningsøkt;
+    }
+
+    public int getNotatID() {
+        return notatID;
+    }
+
+    public void setNotatID(int notatID) {
+        this.notatID = notatID;
     }
 
     public String getTekst() {
@@ -32,29 +40,35 @@ public class Notat extends ActiveDomainObject {
         this.tekst = tekst;
     }
 
+    public Treningsøkt getTreningsøkt() {
+        return treningsøkt;
+    }
+
+    public void setTreningsøkt(Treningsøkt treningsøkt) {
+        this.treningsøkt = treningsøkt;
+    }
+
     @Override
     public void save() {
-        if (this.tekst == null) {
-            throw new IllegalArgumentException("Navn og beskrivelse må være satt");
+        if (this.tekst == null || this.treningsøkt == null) {
+            throw new IllegalArgumentException("Tekst and treningsøkt must be set");
         }
-        final String sql = "INSERT INTO notat (idNotat, tekst, idTreningsøkt)" +
-                "VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE tekst=?, idTreningsøkt=?";
+        final String sql = "INSERT INTO notat (tekst, idTreningsøkt) VALUES (?, ?)";
 
         try (
                 Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
         ) {
 
-            setParameters(statement, notatID, tekst, øktID, tekst, øktID);
+            setParameters(statement, notatID, tekst, treningsøkt.getTreningsøktID());
             statement.execute();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Feil: Notat ble ikke lagret til databasen.", e);
+            throw new RuntimeException("Unable to save Notat to database", e);
         }
     }
 
-    @Override
-    public void load() {
+    public static Notat getNotatFromID(int notatID) {
         final String sql = "SELECT * FROM notat WHERE idnotat=?";
 
         try (
@@ -64,14 +78,15 @@ public class Notat extends ActiveDomainObject {
 
             setParameters(statement, notatID);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                this.notatID = resultSet.getInt("idnotat");
-                this.tekst = resultSet.getString("tekst");
-                this.øktID = resultSet.getInt("idtreningsøkt");
-            }
+            resultSet.next();
+
+            String tekst = resultSet.getString("tekst");
+            int treningsøktID = resultSet.getInt("idtreningsøkt");
+
+            return new Notat(notatID, tekst, Treningsøkt.getTreningsøktFromID(treningsøktID));
 
         } catch (SQLException e) {
-            throw new RuntimeException("Feil: Klarte ikke hente notat!");
+            throw new RuntimeException("Unable to load Notat with id=" + notatID + "from the database", e);
         }
     }
 
@@ -87,17 +102,16 @@ public class Notat extends ActiveDomainObject {
             List<Notat> results = new ArrayList<>();
 
             while (resultSet.next()) {
-                int notatID = resultSet.getInt("idnotat");
+                int notatID = resultSet.getInt("idNotat");
                 String tekst = resultSet.getString("tekst");
-                int øktID = resultSet.getInt("idtreningsøkt");
+                int treningsøktID = resultSet.getInt("idTreningsøkt");
 
-                results.add(new Notat(notatID, tekst, øktID));
+                results.add(new Notat(notatID, tekst, Treningsøkt.getTreningsøktFromID(treningsøktID)));
             }
-
             return results;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Feil: Klarte ikke hente notater");
+            throw new RuntimeException("Unable to load all Notat from the database", e);
         }
     }
 
@@ -106,7 +120,12 @@ public class Notat extends ActiveDomainObject {
         return "Notat{" +
                 "notatID=" + notatID +
                 ", tekst='" + tekst + '\'' +
-                ", øktID=" + øktID +
+                ", treningsøktID=" + treningsøkt.getTreningsøktID() +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Notat other) {
+        return this.getTreningsøkt().getDate().compareTo(other.getTreningsøkt().getDate());
     }
 }

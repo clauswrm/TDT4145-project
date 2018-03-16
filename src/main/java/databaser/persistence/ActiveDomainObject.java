@@ -11,24 +11,27 @@ public abstract class ActiveDomainObject {
             dbPassword = "yolopass",
             dbURL = "jdbc:mysql://localhost:3306/mydb";
 
+    protected static Connection connection;
+
 
     public abstract void save();
 
-    public abstract void load();
-
-
     protected static Connection getConnection() throws SQLException {
-        Connection conn;
-        Properties connectionProps = new Properties();
-        connectionProps.put("user", dbUsername);
-        connectionProps.put("password", dbPassword);
+        if (connection != null) {
+            return connection;
+        } else {
+            Connection conn;
+            Properties connectionProps = new Properties();
+            connectionProps.put("user", dbUsername);
+            connectionProps.put("password", dbPassword);
 
-        conn = DriverManager.getConnection(dbURL, connectionProps);
-        System.out.println("Connected to database");
-        return conn;
+            conn = DriverManager.getConnection(dbURL, connectionProps);
+            System.out.println("Connected to database");
+            return conn;
+        }
     }
 
-    protected void setParameters(PreparedStatement statement, Object... parameters) throws SQLException {
+    protected static void setParameters(PreparedStatement statement, Object... parameters) throws SQLException {
         for (int i = 0; i < parameters.length; i++) {
             // Parameters are 1-indexed
             statement.setObject(i + 1, parameters[i]);
