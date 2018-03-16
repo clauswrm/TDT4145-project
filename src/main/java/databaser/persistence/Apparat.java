@@ -13,6 +13,11 @@ public class Apparat extends ActiveDomainObject {
     private String navn;
     private String beskrivelse;
 
+    public Apparat(String navn, String beskrivelse) {
+        this.navn = navn;
+        this.beskrivelse = beskrivelse;
+    }
+
     public Apparat(int apparatID, String navn, String beskrivelse) {
         this.apparatID = apparatID;
         this.navn = navn;
@@ -38,7 +43,7 @@ public class Apparat extends ActiveDomainObject {
     @Override
     public void save() {
         if (this.navn == null || this.beskrivelse == null) {
-            throw new IllegalArgumentException("Navn og beskrivelse må være satt");
+            throw new IllegalArgumentException("Navn and beskrivelse must be set");
         }
         final String sql = "INSERT INTO apparat (apparatID, Navn, Beskrivelse)" +
                 "VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Navn=?, Beskrivelse=?";
@@ -52,7 +57,7 @@ public class Apparat extends ActiveDomainObject {
             statement.execute();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Unable to save apparatus to database.", e);
+            throw new RuntimeException("Unable to save Apparat to database.", e);
         }
     }
 
@@ -100,7 +105,16 @@ public class Apparat extends ActiveDomainObject {
             return results;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Unable to load apparatuses from the database");
+            throw new RuntimeException("Unable to load Apparat from the database", e);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Apparat{" +
+                "apparatID=" + apparatID +
+                ", navn='" + navn + '\'' +
+                ", beskrivelse='" + beskrivelse + '\'' +
+                '}';
     }
 }

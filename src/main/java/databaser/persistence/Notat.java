@@ -13,6 +13,10 @@ public class Notat extends ActiveDomainObject {
     private String tekst;
     private int øktID;
 
+    public Notat(String tekst, int øktID) {
+        this.tekst = tekst;
+        this.øktID = øktID;
+    }
 
     public Notat(int notatID, String tekst, int øktID) {
         this.notatID = notatID;
@@ -96,5 +100,13 @@ public class Notat extends ActiveDomainObject {
             throw new RuntimeException("Feil: Klarte ikke hente notater");
         }
     }
-    //kapppa
+
+    @Override
+    public String toString() {
+        return "Notat{" +
+                "notatID=" + notatID +
+                ", tekst='" + tekst + '\'' +
+                ", øktID=" + øktID +
+                '}';
+    }
 }

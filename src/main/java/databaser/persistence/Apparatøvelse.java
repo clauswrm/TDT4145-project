@@ -12,6 +12,12 @@ public class Apparatøvelse extends ActiveDomainObject {
     private int apparatID;
     private String beskrivelse;
 
+    public Apparatøvelse(String navn, int apparatID, String beskrivelse) {
+        this.navn = navn;
+        this.apparatID = apparatID;
+        this.beskrivelse = beskrivelse;
+    }
+
     public Apparatøvelse(int apparatØvelseID, String navn, int apparatID, String beskrivelse) {
         this.apparatØvelseID = apparatØvelseID;
         this.navn = navn;
@@ -87,5 +93,15 @@ public class Apparatøvelse extends ActiveDomainObject {
         } catch (SQLException e) {
             throw new RuntimeException("Unable to save apparatus to database");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Apparatøvelse{" +
+                "apparatØvelseID=" + apparatØvelseID +
+                ", navn='" + navn + '\'' +
+                ", apparatID=" + apparatID +
+                ", beskrivelse='" + beskrivelse + '\'' +
+                '}';
     }
 }

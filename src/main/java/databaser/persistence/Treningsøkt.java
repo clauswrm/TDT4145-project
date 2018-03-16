@@ -1,6 +1,9 @@
 package databaser.persistence;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,15 +12,19 @@ public class Treningsøkt extends ActiveDomainObject {
 
     private int treningsøktID;
     private Date date;
-    private Time tidspunkt;
     int varighet;
     int form;
     int innsats;
 
+    public Treningsøkt(Date date, int varighet, int form, int innsats) {
+        this.date = date;
+        this.varighet = varighet;
+        this.form = form;
+        this.innsats = innsats;
+    }
 
     public Treningsøkt(int treningsøktID, Date date, int varighet, int form, int innsats) {
         this.treningsøktID = treningsøktID;
-
         this.date = date;
         this.varighet = varighet;
         this.form = form;
@@ -97,5 +104,16 @@ public class Treningsøkt extends ActiveDomainObject {
         } catch (SQLException e) {
             throw new RuntimeException("Feil: klarte ikke hente treningsøkter fra databasen");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Treningsøkt{" +
+                "treningsøktID=" + treningsøktID +
+                ", date=" + date +
+                ", varighet=" + varighet +
+                ", form=" + form +
+                ", innsats=" + innsats +
+                '}';
     }
 }

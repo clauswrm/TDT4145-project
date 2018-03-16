@@ -12,6 +12,10 @@ public class Øvelsesgruppe extends ActiveDomainObject {
     private int øvelsesgruppeID;
     private String navn;
 
+    public Øvelsesgruppe(String navn) {
+        this.navn = navn;
+    }
+
     public Øvelsesgruppe(int øvelsesgruppeID, String navn) {
         this.øvelsesgruppeID = øvelsesgruppeID;
         this.navn = navn;
@@ -91,5 +95,13 @@ public class Øvelsesgruppe extends ActiveDomainObject {
         } catch (SQLException e) {
             throw new RuntimeException("Unable to load stuff from the database");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Øvelsesgruppe{" +
+                "øvelsesgruppeID=" + øvelsesgruppeID +
+                ", navn='" + navn + '\'' +
+                '}';
     }
 }
