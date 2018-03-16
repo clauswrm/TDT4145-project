@@ -20,6 +20,14 @@ public class Notat extends ActiveDomainObject {
         this.øktID = øktID;
     }
 
+    public String getTekst() {
+        return tekst;
+    }
+
+    public void setTekst(String tekst) {
+        this.tekst = tekst;
+    }
+
     @Override
     public void save() {
         if (this.tekst == null) {

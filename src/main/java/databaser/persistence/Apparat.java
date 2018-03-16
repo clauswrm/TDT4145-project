@@ -40,7 +40,7 @@ public class Apparat extends ActiveDomainObject {
         if (this.navn == null || this.beskrivelse == null) {
             throw new IllegalArgumentException("Navn og beskrivelse må være satt");
         }
-        final String sql = "INSERT INTO apparat (idApparat, Navn, Beskrivelse)" +
+        final String sql = "INSERT INTO apparat (apparatID, Navn, Beskrivelse)" +
                 "VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Navn=?, Beskrivelse=?";
 
         try (
@@ -58,7 +58,7 @@ public class Apparat extends ActiveDomainObject {
 
     @Override
     public void load() {
-        final String sql = "SELECT * FROM apparat WHERE idApparat=?";
+        final String sql = "SELECT * FROM apparat WHERE apparatID=?";
 
         try (
                 Connection connection = getConnection();
@@ -68,7 +68,7 @@ public class Apparat extends ActiveDomainObject {
             setParameters(statement, apparatID);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                this.apparatID = resultSet.getInt("idApparat");
+                this.apparatID = resultSet.getInt("apparatID");
                 this.navn = resultSet.getString("Navn");
                 this.beskrivelse = resultSet.getString("Beskrivelse");
             }
@@ -90,7 +90,7 @@ public class Apparat extends ActiveDomainObject {
             List<Apparat> results = new ArrayList<>();
 
             while (resultSet.next()) {
-                int apparatID = resultSet.getInt("idApparat");
+                int apparatID = resultSet.getInt("apparatID");
                 String navn = resultSet.getString("Navn");
                 String beskrivelse = resultSet.getString("Beskrivelse");
 
