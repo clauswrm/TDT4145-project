@@ -4,103 +4,105 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Apparatøvelse extends ActiveDomainObject {
+public class Apparatøvelse extends Øvelse {
 
-    private int apparatØvelseID;
-    private String navn;
-    private int apparatID;
-    private String beskrivelse;
+    private Apparat apparat;
 
-    public Apparatøvelse(String navn, int apparatID, String beskrivelse) {
-        this.navn = navn;
-        this.apparatID = apparatID;
-        this.beskrivelse = beskrivelse;
+    public Apparatøvelse(int øvelseID, String navn, String beskrivelse, Apparat apparat) {
+        super(øvelseID, navn, beskrivelse);
+        this.apparat = apparat;
     }
 
-    public Apparatøvelse(int apparatØvelseID, String navn, int apparatID, String beskrivelse) {
-        this.apparatØvelseID = apparatØvelseID;
-        this.navn = navn;
-        this.apparatID = apparatID;
-        this.beskrivelse = beskrivelse;
+    public Apparatøvelse(String navn, String beskrivelse, Apparat apparat) {
+        super(navn, beskrivelse);
+        this.apparat = apparat;
     }
 
-    public String getNavn() {
-        return navn;
+    public Apparat getApparat() {
+        return apparat;
     }
 
-    public void setNavn(String navn) {
-        this.navn = navn;
-    }
-
-    public int getApparatID() {
-        return apparatID;
-    }
-
-    public void setApparatID(int apparatID) {
-        this.apparatID = apparatID;
-    }
-
-    public String getBeskrivelse() {
-        return beskrivelse;
-    }
-
-    public void setBeskrivelse(String beskrivelse) {
-        this.beskrivelse = beskrivelse;
+    public void setApparat(Apparat apparat) {
+        this.apparat = apparat;
     }
 
     @Override
     public void save() {
         if (this.navn == null || this.beskrivelse == null) {
-            throw new IllegalArgumentException("Navn, apparat og beskrivelse må være satt");
+            throw new IllegalArgumentException("Navn, apparat and beskrivelse must be set");
         }
 
-        final String sql = "INSERT INTO apparatøvelse (idApparatØvelse, Navn, idApparat, Beskrivelse)" +
-                "VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE Navn=?, idApparat=?, Beskrivelse=?";
+        final String sql = "INSERT INTO apparatøvelse (Navn, apparatID, Beskrivelse)" +
+                "VALUES (?, ?, ?)";
 
         try (
                 Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
         ) {
-
-            setParameters(statement, apparatØvelseID, navn, apparatID, beskrivelse);
+            setParameters(statement, navn, apparat.getApparatID(), beskrivelse);
             statement.execute();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Unable to save to database.", e);
+            throw new RuntimeException("Unable to save Apparatøvelse=" + navn + " to the database", e);
         }
-
     }
 
-    @Override
-    public void load() {
-        final String sql = "SELECT * FROM øvelsegruppe WHERE idØvelsegruppe=?";
+    public static Apparatøvelse getApparatøvelseFromID(int øvelseID) {
+        final String sql = "SELECT * FROM apparatøvelse WHERE idApparatØvelse = ?";
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            setParameters(statement, øvelseID);
+            ResultSet resultSet = statement.executeQuery();
+
+            String navn = resultSet.getString("Navn");
+            int apparatID = resultSet.getInt("apparatID");
+            String beskrivelse = resultSet.getString("Beskrivelse");
+
+            return new Apparatøvelse(øvelseID, navn, beskrivelse, Apparat.getApparatFromID(apparatID));
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to load Apparatøvelse with id=" + øvelseID + " from the database", e);
+        }
+    }
+
+    public static List<Apparatøvelse> getAll() {
+        final String sql = "SELECT * FROM apparatøvelse";
 
         try (
                 Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
         ) {
 
-            setParameters(statement, apparatØvelseID);
             ResultSet resultSet = statement.executeQuery();
+            List<Apparatøvelse> results = new ArrayList<>();
+
             while (resultSet.next()) {
-                this.apparatØvelseID = resultSet.getInt("apparatØvelseID");
-                this.navn = resultSet.getString("Navn");
-                this.apparatID = resultSet.getInt("idApparat");
-                this.beskrivelse = resultSet.getString("Beskrivelse");
+                int øvelseID = resultSet.getInt("idApparatØvelse");
+                String navn = resultSet.getString("Navn");
+                int apparatID = resultSet.getInt("apparatID");
+                String beskrivelse = resultSet.getString("Beskrivelse");
+
+                results.add(new Apparatøvelse(øvelseID, navn, beskrivelse, Apparat.getApparatFromID(apparatID)));
             }
+            return results;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Unable to save apparatus to database");
+            throw new RuntimeException("Unable to load all Apparatøvelse from the database", e);
         }
     }
 
     @Override
     public String toString() {
         return "Apparatøvelse{" +
-                "apparatØvelseID=" + apparatØvelseID +
+                "øvelseID=" + øvelseID +
+                ", apparatID=" + apparat.getApparatID() +
                 ", navn='" + navn + '\'' +
-                ", apparatID=" + apparatID +
                 ", beskrivelse='" + beskrivelse + '\'' +
                 '}';
     }

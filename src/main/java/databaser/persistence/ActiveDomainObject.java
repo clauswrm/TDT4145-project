@@ -14,9 +14,6 @@ public abstract class ActiveDomainObject {
 
     public abstract void save();
 
-    public abstract void load();
-
-
     protected static Connection getConnection() throws SQLException {
         Connection conn;
         Properties connectionProps = new Properties();
@@ -28,7 +25,7 @@ public abstract class ActiveDomainObject {
         return conn;
     }
 
-    protected void setParameters(PreparedStatement statement, Object... parameters) throws SQLException {
+    protected static void setParameters(PreparedStatement statement, Object... parameters) throws SQLException {
         for (int i = 0; i < parameters.length; i++) {
             // Parameters are 1-indexed
             statement.setObject(i + 1, parameters[i]);
