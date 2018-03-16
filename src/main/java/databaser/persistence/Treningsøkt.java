@@ -5,10 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class Treningsøkt extends ActiveDomainObject {
+public class Treningsøkt extends ActiveDomainObject implements Comparable<Treningsøkt> {
 
     private int treningsøktID;
     private Date date;
@@ -102,8 +103,9 @@ public class Treningsøkt extends ActiveDomainObject {
 
             setParameters(statement, treningsøktID);
             ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
 
-            Date date = resultSet.getDate("date");
+            Date date = resultSet.getDate("dato");
             int varighet = resultSet.getInt("varighet");
             int form = resultSet.getInt("form");
             int innsats = resultSet.getInt("innsats");
@@ -135,6 +137,7 @@ public class Treningsøkt extends ActiveDomainObject {
 
                 results.add(new Treningsøkt(treningsøktID, date, varighet, form, innsats));
             }
+            Collections.sort(results);
             return results;
 
         } catch (SQLException e) {
@@ -151,5 +154,10 @@ public class Treningsøkt extends ActiveDomainObject {
                 ", form=" + form +
                 ", innsats=" + innsats +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Treningsøkt other) {
+        return this.getDate().compareTo(other.getDate());
     }
 }

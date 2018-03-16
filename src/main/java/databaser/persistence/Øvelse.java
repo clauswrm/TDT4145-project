@@ -1,6 +1,10 @@
 package databaser.persistence;
 
-public abstract class Øvelse extends ActiveDomainObject {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public abstract class Øvelse extends ActiveDomainObject implements Comparable<Øvelse> {
 
     protected int øvelseID;
     protected String navn;
@@ -39,5 +43,19 @@ public abstract class Øvelse extends ActiveDomainObject {
 
     public void setBeskrivelse(String beskrivelse) {
         this.beskrivelse = beskrivelse;
+    }
+
+    @Override
+    public int compareTo(Øvelse other) {
+        return this.getNavn().compareTo(other.getNavn());
+    }
+
+    public static List<Øvelse> getAllØvelser() {
+        List<Øvelse> øvelser = new ArrayList<>();
+        øvelser.addAll(Friøvelse.getAllFriøvelser());
+        øvelser.addAll(Apparatøvelse.getAllAparatøvelser());
+
+        Collections.sort(øvelser);
+        return øvelser;
     }
 }

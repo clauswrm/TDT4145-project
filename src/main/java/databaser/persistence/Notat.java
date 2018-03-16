@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Notat extends ActiveDomainObject {
+public class Notat extends ActiveDomainObject implements Comparable<Notat> {
 
     private int notatID;
     private String tekst;
@@ -78,6 +78,7 @@ public class Notat extends ActiveDomainObject {
 
             setParameters(statement, notatID);
             ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
 
             String tekst = resultSet.getString("tekst");
             int treningsøktID = resultSet.getInt("idtreningsøkt");
@@ -121,5 +122,10 @@ public class Notat extends ActiveDomainObject {
                 ", tekst='" + tekst + '\'' +
                 ", treningsøktID=" + treningsøkt.getTreningsøktID() +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Notat other) {
+        return this.getTreningsøkt().getDate().compareTo(other.getTreningsøkt().getDate());
     }
 }

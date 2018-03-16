@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Øvelsesgruppe extends ActiveDomainObject {
+public class Øvelsesgruppe extends ActiveDomainObject implements Comparable<Øvelsesgruppe> {
 
     private int øvelsesgruppeID;
     private String navn;
@@ -18,6 +18,22 @@ public class Øvelsesgruppe extends ActiveDomainObject {
     }
 
     public Øvelsesgruppe(String navn) {
+        this.navn = navn;
+    }
+
+    public int getØvelsesgruppeID() {
+        return øvelsesgruppeID;
+    }
+
+    public void setØvelsesgruppeID(int øvelsesgruppeID) {
+        this.øvelsesgruppeID = øvelsesgruppeID;
+    }
+
+    public String getNavn() {
+        return navn;
+    }
+
+    public void setNavn(String navn) {
         this.navn = navn;
     }
 
@@ -52,6 +68,8 @@ public class Øvelsesgruppe extends ActiveDomainObject {
 
             setParameters(statement, øvelsesgruppeID);
             ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+
             String navn = resultSet.getString("Navn");
 
             return new Øvelsesgruppe(øvelsesgruppeID, navn);
@@ -92,5 +110,10 @@ public class Øvelsesgruppe extends ActiveDomainObject {
                 "øvelsesgruppeID=" + øvelsesgruppeID +
                 ", navn='" + navn + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Øvelsesgruppe other) {
+        return this.getNavn().compareTo(other.getNavn());
     }
 }

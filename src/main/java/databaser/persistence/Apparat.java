@@ -5,9 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Apparat extends ActiveDomainObject {
+public class Apparat extends ActiveDomainObject implements Comparable<Apparat> {
 
     private int apparatID;
     private String navn;
@@ -76,6 +77,7 @@ public class Apparat extends ActiveDomainObject {
         ) {
             setParameters(statement, apparatID);
             ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
 
             String navn = resultSet.getString("Navn");
             String beskrivelse = resultSet.getString("Beskrivelse");
@@ -105,6 +107,7 @@ public class Apparat extends ActiveDomainObject {
 
                 results.add(new Apparat(apparatID, navn, beskrivelse));
             }
+            Collections.sort(results);
             return results;
 
         } catch (SQLException e) {
@@ -119,5 +122,10 @@ public class Apparat extends ActiveDomainObject {
                 ", navn='" + navn + '\'' +
                 ", beskrivelse='" + beskrivelse + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Apparat other) {
+        return this.getNavn().compareTo(other.getNavn());
     }
 }

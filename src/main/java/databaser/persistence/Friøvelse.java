@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Friøvelse extends Øvelse {
@@ -47,6 +48,7 @@ public class Friøvelse extends Øvelse {
         ) {
             setParameters(statement, øvelseID);
             ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
 
             String navn = resultSet.getString("Navn");
             String beskrivelse = resultSet.getString("Beskrivelse");
@@ -58,7 +60,7 @@ public class Friøvelse extends Øvelse {
         }
     }
 
-    public static List<Friøvelse> getAll() {
+    public static List<Friøvelse> getAllFriøvelser() {
         final String sql = "SELECT * FROM friøvelse";
 
         try (
@@ -76,6 +78,7 @@ public class Friøvelse extends Øvelse {
 
                 results.add(new Friøvelse(øvelseID, navn, beskrivelse));
             }
+            Collections.sort(results);
             return results;
 
         } catch (SQLException e) {

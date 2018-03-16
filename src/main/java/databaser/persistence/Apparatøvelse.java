@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Apparatøvelse extends Øvelse {
@@ -59,6 +60,7 @@ public class Apparatøvelse extends Øvelse {
         ) {
             setParameters(statement, øvelseID);
             ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
 
             String navn = resultSet.getString("Navn");
             int apparatID = resultSet.getInt("apparatID");
@@ -71,7 +73,7 @@ public class Apparatøvelse extends Øvelse {
         }
     }
 
-    public static List<Apparatøvelse> getAll() {
+    public static List<Apparatøvelse> getAllAparatøvelser() {
         final String sql = "SELECT * FROM apparatøvelse";
 
         try (
@@ -90,6 +92,7 @@ public class Apparatøvelse extends Øvelse {
 
                 results.add(new Apparatøvelse(øvelseID, navn, beskrivelse, Apparat.getApparatFromID(apparatID)));
             }
+            Collections.sort(results);
             return results;
 
         } catch (SQLException e) {
