@@ -1,5 +1,6 @@
 package databaser.ui;
 
+import databaser.persistence.Apparat;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -26,13 +29,7 @@ public class ApparaterController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<String> items = listView.getItems();
-        //TODO: Get all the apparats <3
-        items.add("Navn: Benchpress\nBeskrivelse: Here be benchies");
-        items.add("Two");
-        for(int i = 0;i<20;i++){
-            items.add("fuck");
-        }
+        updateListView();
     }
     public void goToMainMenu(ActionEvent event) throws IOException {
         URL resource = getClass().getResource("/MainMenu.fxml");
@@ -44,17 +41,29 @@ public class ApparaterController implements Initializable {
 
         primaryStage.setScene(new Scene(root,1280,720));
         primaryStage.show();
-
     }
 
+    public void updateListView(){
+        ObservableList<String> items = listView.getItems();
+        items.clear();
+        List<Apparat> apparater = Apparat.getAll();
+        for(int i = 0;i<apparater.size();i++){
+            items.add(apparater.get(i).toString());
+        }
+        //items.notifyAll();
+
+    }
 
     public void handleNyttApparat(){
 
         String navn = navnField.getText();
         String beskrivelse = beskrivelseField.getText();
+        Apparat nyttApparat = new Apparat(navn,beskrivelse);
+        nyttApparat.save();
 
-        System.out.println("Nytt apparat ved navn "+navn+":\n"+beskrivelse);
+        navnField.setText("");
+        beskrivelseField.setText("");
+        updateListView();
 
-        //TODO: Legg til nytt apparat i databasen
     }
 }
