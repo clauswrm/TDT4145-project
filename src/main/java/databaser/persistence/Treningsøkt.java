@@ -9,6 +9,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Represents a Treningsøkt in the database.
+ *
+ * @see ActiveDomainObject
+ */
 public class Treningsøkt extends ActiveDomainObject implements Comparable<Treningsøkt> {
 
     private int treningsøktID;
@@ -92,7 +97,13 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
         }
     }
 
-
+    /**
+     * Loads a Treningsøkt with the given treningsøktID from the database.
+     *
+     * @param treningsøktID the ID of the Treningsøkt to be loaded from the database.
+     * @return the Treningsøkt in the database with corresponding treningsøktID.
+     * @throws RuntimeException if the given treningsøktID was not found, or if connecting to the database failed.
+     */
     public static Treningsøkt getTreningsøktFromID(int treningsøktID) {
         final String sql = "SELECT * FROM treningsøkt WHERE idtreningsøkt=?";
 
@@ -117,6 +128,12 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
         }
     }
 
+    /**
+     * Loads all Treningsøkt from the database.
+     *
+     * @return a list of all Treningsøkt in the database, sorted chronologically.
+     * @throws RuntimeException if connecting to the database failed.
+     */
     public static List<Treningsøkt> getAll() {
         final String sql = "SELECT * FROM treningsøkt";
 

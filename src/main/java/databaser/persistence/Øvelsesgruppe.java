@@ -7,6 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents an Øvelsesgruppe in the database.
+ *
+ * @see ActiveDomainObject
+ */
 public class Øvelsesgruppe extends ActiveDomainObject implements Comparable<Øvelsesgruppe> {
 
     private int øvelsesgruppeID;
@@ -58,6 +63,13 @@ public class Øvelsesgruppe extends ActiveDomainObject implements Comparable<Øv
         }
     }
 
+    /**
+     * Loads an Øvelsesgruppe with the given øvelsesgruppeID from the database.
+     *
+     * @param øvelsesgruppeID the ID of the Øvelsesgruppe to be loaded from the database.
+     * @return the Øvelsesgruppe in the database with corresponding øvelsesgruppeID.
+     * @throws RuntimeException if the given øvelsesgruppeID was not found, or if connecting to the database failed.
+     */
     public static Øvelsesgruppe getØvelsesgruppeFromID(int øvelsesgruppeID) {
         final String sql = "SELECT * FROM øvelsegruppe WHERE idØvelsegruppe=?";
 
@@ -79,6 +91,12 @@ public class Øvelsesgruppe extends ActiveDomainObject implements Comparable<Øv
         }
     }
 
+    /**
+     * Loads all Øvelsesgruppe from the database.
+     *
+     * @return a list of all Øvelsesgruppe in the database, sorted alphabetically by name.
+     * @throws RuntimeException if connecting to the database failed.
+     */
     public static List<Øvelsesgruppe> getAll() {
         final String sql = "SELECT * FROM øvelsegruppe";
 

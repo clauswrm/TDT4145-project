@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Represents an Apparatøvelse in the database.
+ *
+ * @see ActiveDomainObject
+ */
 public class Apparatøvelse extends Øvelse {
 
     private Apparat apparat;
@@ -51,6 +56,13 @@ public class Apparatøvelse extends Øvelse {
         }
     }
 
+    /**
+     * Loads an Apparatøvelse with the given øvelseID from the database.
+     *
+     * @param øvelseID the ID of the Apparatøvelse to be loaded from the database.
+     * @return the Apparatøvelse in the database with corresponding øvelseID.
+     * @throws RuntimeException if the given øvelseID was not found, or if connecting to the database failed.
+     */
     public static Apparatøvelse getApparatøvelseFromID(int øvelseID) {
         final String sql = "SELECT * FROM apparatøvelse WHERE idApparatØvelse = ?";
 
@@ -73,7 +85,13 @@ public class Apparatøvelse extends Øvelse {
         }
     }
 
-    public static List<Apparatøvelse> getAllAparatøvelser() {
+    /**
+     * Loads all Apparatøvelse from the database.
+     *
+     * @return a list of all Apparatøvelse in the database, sorted alphabetically by name.
+     * @throws RuntimeException if connecting to the database failed.
+     */
+    public static List<Apparatøvelse> getAll() {
         final String sql = "SELECT * FROM apparatøvelse";
 
         try (

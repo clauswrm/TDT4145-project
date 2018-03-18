@@ -7,6 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a Notat in the database.
+ *
+ * @see ActiveDomainObject
+ */
 public class Notat extends ActiveDomainObject implements Comparable<Notat> {
 
     private int notatID;
@@ -68,6 +73,13 @@ public class Notat extends ActiveDomainObject implements Comparable<Notat> {
         }
     }
 
+    /**
+     * Loads a Notat with the given notatID from the database.
+     *
+     * @param notatID the ID of the Notat to be loaded from the database.
+     * @return the Notat in the database with corresponding notatID.
+     * @throws RuntimeException if the given notatID was not found, or if connecting to the database failed.
+     */
     public static Notat getNotatFromID(int notatID) {
         final String sql = "SELECT * FROM notat WHERE idnotat=?";
 
@@ -90,6 +102,12 @@ public class Notat extends ActiveDomainObject implements Comparable<Notat> {
         }
     }
 
+    /**
+     * Loads all Notat from the database.
+     *
+     * @return a list of all Notat in the database, sorted chronologically by the corresponding Treningsøkt.
+     * @throws RuntimeException if connecting to the database failed.
+     */
     public static List<Notat> getAll() {
         final String sql = "SELECT * FROM notat";
 
@@ -126,6 +144,6 @@ public class Notat extends ActiveDomainObject implements Comparable<Notat> {
 
     @Override
     public int compareTo(Notat other) {
-        return this.getTreningsøkt().getDate().compareTo(other.getTreningsøkt().getDate());
+        return this.getTreningsøkt().compareTo(other.getTreningsøkt());
     }
 }

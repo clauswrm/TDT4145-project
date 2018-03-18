@@ -1,9 +1,10 @@
 package databaser.persistence;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+/**
+ * Represents a Øvelse in the database. Is a superclass for {@link Friøvelse} and {@link Apparatøvelse}.
+ *
+ * @see ActiveDomainObject
+ */
 public abstract class Øvelse extends ActiveDomainObject implements Comparable<Øvelse> {
 
     protected int øvelseID;
@@ -48,14 +49,5 @@ public abstract class Øvelse extends ActiveDomainObject implements Comparable<�
     @Override
     public int compareTo(Øvelse other) {
         return this.getNavn().compareTo(other.getNavn());
-    }
-
-    public static List<Øvelse> getAllØvelser() {
-        List<Øvelse> øvelser = new ArrayList<>();
-        øvelser.addAll(Friøvelse.getAllFriøvelser());
-        øvelser.addAll(Apparatøvelse.getAllAparatøvelser());
-
-        Collections.sort(øvelser);
-        return øvelser;
     }
 }

@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Represents an Apparat in the database.
+ *
+ * @see ActiveDomainObject
+ */
 public class Apparat extends ActiveDomainObject implements Comparable<Apparat> {
 
     private int apparatID;
@@ -68,6 +73,13 @@ public class Apparat extends ActiveDomainObject implements Comparable<Apparat> {
         }
     }
 
+    /**
+     * Loads an Apparat with the given apparatID from the database.
+     *
+     * @param apparatID the ID of the Apparat to be loaded from the database.
+     * @return the Apparat in the database with corresponding apparatID.
+     * @throws RuntimeException if the given apparatID was not found, or if connecting to the database failed.
+     */
     public static Apparat getApparatFromID(int apparatID) {
         final String sql = "SELECT * FROM apparat WHERE apparatID = ?";
 
@@ -89,6 +101,12 @@ public class Apparat extends ActiveDomainObject implements Comparable<Apparat> {
         }
     }
 
+    /**
+     * Loads all Apparat from the database.
+     *
+     * @return a list of all Apparat in the database, sorted alphabetically by name.
+     * @throws RuntimeException if connecting to the database failed.
+     */
     public static List<Apparat> getAll() {
         final String sql = "SELECT * FROM apparat";
 

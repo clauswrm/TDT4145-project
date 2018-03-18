@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Represents a Friøvelse in the database.
+ *
+ * @see ActiveDomainObject
+ */
 public class Friøvelse extends Øvelse {
 
     public Friøvelse(int øvelseID, String navn, String beskrivelse) {
@@ -39,6 +44,13 @@ public class Friøvelse extends Øvelse {
         }
     }
 
+    /**
+     * Loads a Friøvelse with the given øvelseID from the database.
+     *
+     * @param øvelseID the ID of the Friøvelse to be loaded from the database.
+     * @return the Friøvelse in the database with corresponding øvelseID.
+     * @throws RuntimeException if the given øvelseID was not found, or if connecting to the database failed.
+     */
     public static Friøvelse getFriøvelseFromID(int øvelseID) {
         final String sql = "SELECT * FROM friøvelse WHERE idFriøvelse = ?";
 
@@ -60,7 +72,13 @@ public class Friøvelse extends Øvelse {
         }
     }
 
-    public static List<Friøvelse> getAllFriøvelser() {
+    /**
+     * Loads all Friøvelse from the database.
+     *
+     * @return a list of all Friøvelse in the database, sorted alphabetically by name.
+     * @throws RuntimeException if connecting to the database failed.
+     */
+    public static List<Friøvelse> getAll() {
         final String sql = "SELECT * FROM friøvelse";
 
         try (
