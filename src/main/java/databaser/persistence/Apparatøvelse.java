@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,10 +47,16 @@ public class Apparatøvelse extends Øvelse {
 
         try (
                 Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
+                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ) {
             setParameters(statement, navn, apparat.getApparatID(), beskrivelse);
             statement.execute();
+
+            // Updates the øvelseID with the auto generated key
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                setØvelseID(generatedKeys.getInt(1));
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Unable to save Apparatøvelse=" + navn + " to the database", e);

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,11 +63,17 @@ public class Notat extends ActiveDomainObject implements Comparable<Notat> {
 
         try (
                 Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
+                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ) {
 
             setParameters(statement, notatID, tekst, treningsøkt.getTreningsøktID());
             statement.execute();
+
+            // Updates the notatID with the auto generated key
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                setNotatID(generatedKeys.getInt(1));
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Unable to save Notat to database", e);

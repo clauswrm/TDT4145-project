@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,11 +53,17 @@ public class Øvelsesgruppe extends ActiveDomainObject implements Comparable<Øv
 
         try (
                 Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
+                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ) {
 
             setParameters(statement, navn);
             statement.execute();
+
+            // Updates the øvelsesgruppeID with the auto generated key
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                setØvelsesgruppeID(generatedKeys.getInt(1));
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Unable to save Øvelsesgruppe=" + navn + " to database", e);
