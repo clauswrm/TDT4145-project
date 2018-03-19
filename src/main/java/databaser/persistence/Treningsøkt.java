@@ -18,21 +18,21 @@ import java.util.List;
 public class Treningsøkt extends ActiveDomainObject implements Comparable<Treningsøkt> {
 
     private int treningsøktID;
-    private Date date;
+    private Date dato;
     private int varighet;
     private int form;
     private int innsats;
 
-    public Treningsøkt(int treningsøktID, Date date, int varighet, int form, int innsats) {
+    public Treningsøkt(int treningsøktID, Date dato, int varighet, int form, int innsats) {
         this.treningsøktID = treningsøktID;
-        this.date = date;
+        this.dato = dato;
         this.varighet = varighet;
         this.form = form;
         this.innsats = innsats;
     }
 
-    public Treningsøkt(Date date, int varighet, int form, int innsats) {
-        this.date = date;
+    public Treningsøkt(Date dato, int varighet, int form, int innsats) {
+        this.dato = dato;
         this.varighet = varighet;
         this.form = form;
         this.innsats = innsats;
@@ -47,11 +47,11 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
     }
 
     public Date getDate() {
-        return date;
+        return dato;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(Date dato) {
+        this.dato = dato;
     }
 
     public int getVarighet() {
@@ -80,7 +80,7 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
 
     @Override
     public void save() {
-        if (this.date == null || this.varighet == 0) {
+        if (this.dato == null || this.varighet == 0) {
             throw new IllegalArgumentException("Date and varighet must be set");
         }
         final String sql = "INSERT INTO treningsøkt (dato, varighet, form, innsats) VALUES (?, ?, ?, ?)";
@@ -90,7 +90,7 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
                 PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ) {
 
-            setParameters(statement, date, varighet, form, innsats);
+            setParameters(statement, dato, varighet, form, innsats);
             statement.execute();
 
             // Updates the treningsøktID with the auto generated key
@@ -100,7 +100,7 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Unable to save Treningsøkt=" + date + " to database", e);
+            throw new RuntimeException("Unable to save Treningsøkt=" + dato + " to database", e);
         }
     }
 
@@ -157,12 +157,12 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
 
-            Date date = resultSet.getDate("dato");
+            Date dato = resultSet.getDate("dato");
             int varighet = resultSet.getInt("varighet");
             int form = resultSet.getInt("form");
             int innsats = resultSet.getInt("innsats");
 
-            return new Treningsøkt(treningsøktID, date, varighet, form, innsats);
+            return new Treningsøkt(treningsøktID, dato, varighet, form, innsats);
 
         } catch (SQLException e) {
             throw new RuntimeException("Unable to load Treningsøkt with id=" + treningsøktID + " from the database", e);
@@ -184,23 +184,35 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
         ) {
 
             ResultSet resultSet = statement.executeQuery();
-            List<Treningsøkt> results = new ArrayList<>();
-
-            while (resultSet.next()) {
-                int treningsøktID = resultSet.getInt("idtreningsøkt");
-                Date date = resultSet.getDate("dato");
-                int varighet = resultSet.getInt("varighet");
-                int form = resultSet.getInt("form");
-                int innsats = resultSet.getInt("innsats");
-
-                results.add(new Treningsøkt(treningsøktID, date, varighet, form, innsats));
-            }
+            List<Treningsøkt> results = getTreningsøkterFromResultSet(resultSet);
             Collections.sort(results);
             return results;
 
         } catch (SQLException e) {
             throw new RuntimeException("Unable to load all Treningsøkt from the database", e);
         }
+    }
+
+    /**
+     * Helper method for extracting Treningsøkter from a {@link ResultSet}.
+     *
+     * @param resultSet the ResultSet to get Treningsøkter from.
+     * @return all Treningsøkter in the ResultSet.
+     * @throws SQLException if the ResultSet does not contain valid Treningsøkter.
+     */
+    protected static List<Treningsøkt> getTreningsøkterFromResultSet(ResultSet resultSet) throws SQLException {
+        List<Treningsøkt> results = new ArrayList<>();
+
+        while (resultSet.next()) {
+            int treningsøktID = resultSet.getInt("idtreningsøkt");
+            Date dato = resultSet.getDate("dato");
+            int varighet = resultSet.getInt("varighet");
+            int form = resultSet.getInt("form");
+            int innsats = resultSet.getInt("innsats");
+
+            results.add(new Treningsøkt(treningsøktID, dato, varighet, form, innsats));
+        }
+        return results;
     }
 
     /**
@@ -239,7 +251,6 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
      * @see Friøvelse
      */
     public void addFriøvelse(Friøvelse friøvelse, String beskrivelse) {
-
         final String sql = "INSERT INTO treningsøkt_has_friøvelse (idTreningsøkt, idfriøvelse, Beskrivelse)" +
                 "VALUES (?, ?, ?)";
 
@@ -256,11 +267,46 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
         }
     }
 
+    /**
+     * Fetches all {@link Øvelse} in the Treningsøkt from the database.
+     *
+     * @return a list of all øvelser in the Treningsøkt.
+     * @throws RuntimeException if connecting to the database failed.
+     */
+    public List<Øvelse> getØvelser() {
+        final String sql_friøvelse = "SELECT * FROM treningsøkt_has_friøvelse NATURAL JOIN friøvelse " +
+                "WHERE idTreningsøkt = ?";
+        final String sql_apparatøvelse = "SELECT * FROM treningsøkt_has_apparatøvelse NATURAL JOIN apparatøvelse " +
+                "WHERE idTreningsøkt = ?";
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement_friøvelse = connection.prepareStatement(sql_friøvelse);
+                PreparedStatement statement_apparatøvelse = connection.prepareStatement(sql_apparatøvelse);
+        ) {
+
+            setParameters(statement_friøvelse, treningsøktID);
+            setParameters(statement_apparatøvelse, treningsøktID);
+            ResultSet resultSet_friøvelse = statement_friøvelse.executeQuery();
+            ResultSet resultSet_apparatøvelse = statement_friøvelse.executeQuery();
+
+            List<Øvelse> øvelser = new ArrayList<>();
+            øvelser.addAll(Friøvelse.getFriøvelserFromResultSet(resultSet_friøvelse));
+            øvelser.addAll(Apparatøvelse.getApparatøvelserFromResultSet(resultSet_apparatøvelse));
+
+            Collections.sort(øvelser);
+            return øvelser;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to load Øvelser from Treningsøkt with id=" + treningsøktID + " from the database", e);
+        }
+    }
+
     @Override
     public String toString() {
         return "Treningsøkt{" +
                 "treningsøktID=" + treningsøktID +
-                ", date=" + date +
+                ", dato=" + dato +
                 ", varighet=" + varighet +
                 ", form=" + form +
                 ", innsats=" + innsats +

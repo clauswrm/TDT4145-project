@@ -50,10 +50,7 @@ public abstract class Øvelse extends ActiveDomainObject implements Comparable<�
 
     public abstract void addToØvelsesgruppe(Øvelsesgruppe øvelsesgruppe);
 
-    public List<Treningsøkt> getTreningsøkterWithØvelse() {
-        //TODO: Implement method. (SQL NATURAL JOIN stuff)
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
+    public abstract List<Treningsøkt> getTreningsøkterWithØvelse();
 
     @Override
     public int compareTo(Øvelse other) {

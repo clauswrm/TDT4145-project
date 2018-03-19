@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a Friøvelse in the database.
@@ -146,6 +149,66 @@ public class Friøvelse extends Øvelse {
 
         } catch (SQLException e) {
             throw new RuntimeException("Unable to add øvelse=" + navn + " to øvelsesgruppe=" + øvelsesgruppe.getNavn(), e);
+        }
+    }
+
+
+    /**
+     * Fetches all {@link Treningsøkt Treningsøkter} that contains this Friøvelse from the database.
+     *
+     * @return a list of all Treningsøkter that contains this Friøvelse, sorted by date.
+     * @see Treningsøkt
+     */
+    @Override
+    public List<Treningsøkt> getTreningsøkterWithØvelse() {
+        final String sql = "SELECT (t.idTreningsøkt, t.Dato, t.Varighet, t.Form, t.Innsats) " +
+                "FROM (treningsøkt AS t NATURAL JOIN treningsøkt_has_friøvelse) NATURAL JOIN friøvelse AS f " +
+                "WHERE f.idFriøvelse = ?";
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            setParameters(statement, øvelseID);
+            ResultSet resultSet = statement.executeQuery();
+            List<Treningsøkt> results = Treningsøkt.getTreningsøkterFromResultSet(resultSet);
+
+            Collections.sort(results);
+            return results;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to get Treningsøkter with Friøvelse from the database", e);
+        }
+    }
+
+    public Map<Treningsøkt, String> getProgressForFriøvelse() {
+        Map<Treningsøkt, String> progress = new HashMap<>();
+
+        final String sql = "SELECT (t.idTreningsøkt, t.Dato, t.Varighet, t.Form, t.Innsats, x.Beskrivelse) " +
+                "FROM (treningsøkt AS t NATURAL JOIN treningsøkt_has_friøvelse AS x) NATURAL JOIN friøvelse AS f " +
+                "WHERE f.idFriøvelse = ?";
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            setParameters(statement, øvelseID);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int treningsøktID = resultSet.getInt("idtreningsøkt");
+                Date dato = resultSet.getDate("dato");
+                int varighet = resultSet.getInt("varighet");
+                int form = resultSet.getInt("form");
+                int innsats = resultSet.getInt("innsats");
+                String beskrivelse = resultSet.getString("beskrivelse");
+
+                progress.put(new Treningsøkt(treningsøktID, dato, varighet, form, innsats), beskrivelse);
+            }
+            return progress;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to get progress for Friøvelse from the database", e);
         }
     }
 

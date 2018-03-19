@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents an Apparatøvelse in the database.
@@ -159,6 +162,72 @@ public class Apparatøvelse extends Øvelse {
 
         } catch (SQLException e) {
             throw new RuntimeException("Unable to add øvelse=" + navn + " to øvelsesgruppe=" + øvelsesgruppe.getNavn(), e);
+        }
+    }
+
+    /**
+     * Fetches all {@link Treningsøkt Treningsøkter} that contains this Apparatøvelse from the database.
+     *
+     * @return a list of all Treningsøkter that contains this Apparatøvelse, sorted by date.
+     * @see Treningsøkt
+     */
+    @Override
+    public List<Treningsøkt> getTreningsøkterWithØvelse() {
+        final String sql = "SELECT (t.idTreningsøkt, t.Dato, t.Varighet, t.Form, t.Innsats) " +
+                "FROM (treningsøkt AS t NATURAL JOIN treningsøkt_has_apparatøvelse) NATURAL JOIN apparatøvelse AS a " +
+                "WHERE a.idApparatØvelse = ?";
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            setParameters(statement, øvelseID);
+            ResultSet resultSet = statement.executeQuery();
+            List<Treningsøkt> results = Treningsøkt.getTreningsøkterFromResultSet(resultSet);
+
+            Collections.sort(results);
+            return results;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to get Treningsøkter with Apparatøvelse from the database", e);
+        }
+    }
+
+    public Map<Treningsøkt, Map<String, Integer>> getProgressForApparatøvelse() {
+        Map<Treningsøkt, Map<String, Integer>> progress = new HashMap<>();
+
+        final String sql = "SELECT (t.idTreningsøkt, t.Dato, t.Varighet, t.Form, t.Innsats, x.Kilo, x.Reps, x.`Set`) " +
+                "FROM (treningsøkt AS t NATURAL JOIN treningsøkt_has_apparatøvelse AS x) NATURAL JOIN apparatøvelse AS a " +
+                "WHERE a.idApparatØvelse = ?";
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            setParameters(statement, øvelseID);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int treningsøktID = resultSet.getInt("idtreningsøkt");
+                Date dato = resultSet.getDate("dato");
+                int varighet = resultSet.getInt("varighet");
+                int form = resultSet.getInt("form");
+                int innsats = resultSet.getInt("innsats");
+                int kilo = resultSet.getInt("kilo");
+                int reps = resultSet.getInt("reps");
+                int set = resultSet.getInt("set");
+
+                Map<String, Integer> dataPoint = new HashMap<>();
+                dataPoint.put("kilo", kilo);
+                dataPoint.put("reps", reps);
+                dataPoint.put("set", set);
+
+                progress.put(new Treningsøkt(treningsøktID, dato, varighet, form, innsats), dataPoint);
+            }
+            return progress;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to get progress for Apparatøvelse from the database", e);
         }
     }
 
