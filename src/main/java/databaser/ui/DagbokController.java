@@ -3,6 +3,8 @@ package databaser.ui;
 import databaser.persistence.Treningsøkt;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -23,7 +25,6 @@ public class DagbokController {
 
     //Ny økt
     public TextField datoTextField;
-    public TextField tidspunktTextField;
     public TextField varighetTextField;
     public ChoiceBox<Integer> innsatsChoiceBox;
     public ChoiceBox<Integer> formChoiceBox;
@@ -49,6 +50,19 @@ public class DagbokController {
     public void handleGetØkter(){
         int antall = Integer.parseInt(antallØkterTextField.getText());
         List<Treningsøkt> økter = Treningsøkt.getAll();
+    }
+
+    public void goToØkt(ActionEvent event) throws IOException{
+
+
+        URL resource = getClass().getResource("/Økt.fxml");
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(resource);
+        Parent root = loader.load();
+
+        Stage primaryStage = (Stage) økterPane.getScene().getWindow();
+        primaryStage.setScene(new Scene(root,1280,720));
+        primaryStage.show();
     }
 
 
@@ -80,6 +94,20 @@ public class DagbokController {
 
             Button button = new Button();
             button.setText(økt.toString());
+
+            button.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event){
+                    try {
+                        ØktController.økt = økt;
+                        goToØkt(event);
+                    }
+                    catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             items.add(button);
         }
     }

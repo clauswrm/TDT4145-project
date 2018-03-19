@@ -54,18 +54,22 @@ public class ØvelserController implements Initializable {
 
         øvelseBeskrivelse.setText("");
         øvelseNavn.setText("");
-
+        Øvelse øvelse;
         if(apparatØvelseCheckBox.isSelected()){
             Apparat apparat = apparatChoiceBox.getValue();
 
-            Apparatøvelse øvelse = new Apparatøvelse(navn,beskrivelse,apparat);
+            øvelse = new Apparatøvelse(navn,beskrivelse,apparat);
             øvelse.save();
         }
         else{
-            Friøvelse øvelse = new Friøvelse(navn,beskrivelse);
+            øvelse = new Friøvelse(navn,beskrivelse);
             øvelse.save();
         }
         //TODO: Håndtere øvelsesgrupper
+
+        Øvelsesgruppe gruppe = gruppeChoiceBox.getValue();
+        øvelse.addToØvelsesgruppe(gruppe);
+
     }
     public void updateApparatChoiceBox(){
         ObservableList<Apparat> items = apparatChoiceBox.getItems();

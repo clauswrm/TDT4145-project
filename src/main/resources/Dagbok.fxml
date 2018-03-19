@@ -3,22 +3,20 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<?import javafx.scene.control.ListView?>
 <AnchorPane prefHeight="720.0" prefWidth="1280" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.DagbokController">
     <Button fx:id="goToMainMenuButton" layoutX="700" mnemonicParsing="false" onAction="#goToMainMenu" text="Hovedmenyen" />
 
     <!-- Ny økt -->
    <Label layoutX="50.0" layoutY="57.0" text="Dato" />
-   <Label layoutX="37.0" layoutY="108.0" text="Tidspunkt" />
    <Label layoutX="41.0" layoutY="163.0" text="Varighet i minutter" />
    <Label layoutX="183.0" layoutY="57.0" text="Form" />
    <Label layoutX="183.0" layoutY="100.0" text="Innsats" />
     <TextField fx:id="datoTextField" layoutX="28.0" layoutY="74.0" />
-    <TextField fx:id="tidspunktTextField" layoutX="28.0" layoutY="125.0" />
     <TextField fx:id="varighetTextField" layoutX="28.0" layoutY="180.0" />
     <Button fx:id="nyØktButton" layoutX="50.0" layoutY="226.0" mnemonicParsing="false" onAction="#handleNewØkt" text="Ny økt" />
 
@@ -31,8 +29,8 @@
    <TextField fx:id="antallØkterTextField" layoutX="63.0" layoutY="412.0" />
     <Button fx:id="hentØkterButton" layoutX="63.0" layoutY="450.0" onAction="#handleGetØkter" text="Hent økter" />
    <Label layoutX="477.0" layoutY="109.0" text="Økter" />
-   <ScrollPane layoutX="477.0" layoutY="139.0" prefHeight="305.0" prefWidth="345.0" fx:id="økterPane">
-     <ListView fx:id="øktView"/>
+   <ScrollPane fx:id="økterPane" layoutX="477.0" layoutY="139.0" prefHeight="305.0" prefWidth="345.0">
+     <ListView fx:id="øktView" />
    </ScrollPane>
 
 
