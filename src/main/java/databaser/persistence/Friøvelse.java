@@ -111,6 +111,31 @@ public class Friøvelse extends Øvelse {
         }
     }
 
+
+    /**
+     * Adds this Friøvelse to the given {@link Øvelsesgruppe}.
+     *
+     * @param øvelsesgruppe the Øvelsesgruppe to add the Friøvelse to.
+     * @throws RuntimeException if adding the relation to the database failed.
+     * @see Øvelsesgruppe
+     */
+    @Override
+    public void addToØvelsesgruppe(Øvelsesgruppe øvelsesgruppe) {
+        final String sql = "INSERT INTO friøvelse_has_øvelsegruppe (idFriøvelse, idØvelsegruppe) VALUES (?, ?)";
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)
+        ) {
+
+            setParameters(statement, øvelseID, øvelsesgruppe.getØvelsesgruppeID());
+            statement.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to add øvelse=" + navn + " to øvelsesgruppe=" + øvelsesgruppe.getNavn(), e);
+        }
+    }
+
     @Override
     public String toString() {
         return "Friøvelse{" +

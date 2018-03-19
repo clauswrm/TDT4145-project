@@ -125,6 +125,30 @@ public class Apparatøvelse extends Øvelse {
         }
     }
 
+    /**
+     * Adds this Apparatøvelse to the given {@link Øvelsesgruppe}.
+     *
+     * @param øvelsesgruppe the Øvelsesgruppe to add the Apparatøvelse to.
+     * @throws RuntimeException if adding the relation to the database failed.
+     * @see Øvelsesgruppe
+     */
+    @Override
+    public void addToØvelsesgruppe(Øvelsesgruppe øvelsesgruppe) {
+        final String sql = "INSERT INTO apparatøvelse_has_øvelsegruppe (idApparatØvelse, idØvelsegruppe) VALUES (?, ?)";
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)
+        ) {
+
+            setParameters(statement, øvelseID, øvelsesgruppe.getØvelsesgruppeID());
+            statement.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to add øvelse=" + navn + " to øvelsesgruppe=" + øvelsesgruppe.getNavn(), e);
+        }
+    }
+
     @Override
     public String toString() {
         return "Apparatøvelse{" +
