@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -133,6 +134,8 @@ public class Notat extends ActiveDomainObject implements Comparable<Notat> {
 
                 results.add(new Notat(notatID, tekst, Treningsøkt.getTreningsøktFromID(treningsøktID)));
             }
+
+            Collections.sort(results);
             return results;
 
         } catch (SQLException e) {

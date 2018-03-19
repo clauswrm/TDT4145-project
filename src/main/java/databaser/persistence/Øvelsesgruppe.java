@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -98,6 +99,7 @@ public class Øvelsesgruppe extends ActiveDomainObject implements Comparable<Øv
             øvelser.addAll(Friøvelse.getFriøvelserFromResultSet(resultSet_friøvelse));
             øvelser.addAll(Apparatøvelse.getApparatøvelserFromResultSet(resultSet_apparatøvelse));
 
+            Collections.sort(øvelser);
             return øvelser;
 
         } catch (SQLException e) {
@@ -156,7 +158,7 @@ public class Øvelsesgruppe extends ActiveDomainObject implements Comparable<Øv
 
                 results.add(new Øvelsesgruppe(øvelsesgruppeID, navn));
             }
-
+            Collections.sort(results);
             return results;
 
         } catch (SQLException e) {
