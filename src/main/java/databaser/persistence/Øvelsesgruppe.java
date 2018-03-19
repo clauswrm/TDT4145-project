@@ -70,6 +70,41 @@ public class Øvelsesgruppe extends ActiveDomainObject implements Comparable<Øv
         }
     }
 
+
+    /**
+     * Fetches all {@link Øvelse} in the Øvelsesgruppe from the database.
+     *
+     * @return a list of all øvelser in the Øvelsesgruppe.
+     * @throws RuntimeException if connecting to the database failed.
+     */
+    public List<Øvelse> getØvelser() {
+        final String sql_friøvelse = "SELECT * FROM friøvelse_has_øvelsegruppe NATURAL JOIN friøvelse " +
+                "WHERE idØvelsegruppe=?";
+        final String sql_apparatøvelse = "SELECT * FROM apparatøvelse_has_øvelsegruppe NATURAL JOIN apparatøvelse " +
+                "WHERE idØvelsegruppe=?";
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement_friøvelse = connection.prepareStatement(sql_friøvelse);
+                PreparedStatement statement_apparatøvelse = connection.prepareStatement(sql_apparatøvelse);
+        ) {
+
+            setParameters(statement_friøvelse, øvelsesgruppeID);
+            setParameters(statement_apparatøvelse, øvelsesgruppeID);
+            ResultSet resultSet_friøvelse = statement_friøvelse.executeQuery();
+            ResultSet resultSet_apparatøvelse = statement_friøvelse.executeQuery();
+
+            List<Øvelse> øvelser = new ArrayList<>();
+            øvelser.addAll(Friøvelse.getFriøvelserFromResultSet(resultSet_friøvelse));
+            øvelser.addAll(Apparatøvelse.getApparatøvelserFromResultSet(resultSet_apparatøvelse));
+
+            return øvelser;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to load Øvelser from Øvelsesgruppe with id=" + øvelsesgruppeID + " from the database", e);
+        }
+    }
+
     /**
      * Loads an Øvelsesgruppe with the given øvelsesgruppeID from the database.
      *

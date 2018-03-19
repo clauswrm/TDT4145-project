@@ -94,21 +94,34 @@ public class Friøvelse extends Øvelse {
         ) {
 
             ResultSet resultSet = statement.executeQuery();
-            List<Friøvelse> results = new ArrayList<>();
+            List<Friøvelse> results = getFriøvelserFromResultSet(resultSet);
 
-            while (resultSet.next()) {
-                int øvelseID = resultSet.getInt("idFriøvelse");
-                String navn = resultSet.getString("Navn");
-                String beskrivelse = resultSet.getString("Beskrivelse");
-
-                results.add(new Friøvelse(øvelseID, navn, beskrivelse));
-            }
             Collections.sort(results);
             return results;
 
         } catch (SQLException e) {
             throw new RuntimeException("Unable to load all Friøvelse from the database", e);
         }
+    }
+
+    /**
+     * Helper method for extracting Friøvelser from a {@link ResultSet}.
+     *
+     * @param resultSet the ResultSet to get Friøvelser from.
+     * @return all Friøvelser in the ResultSet.
+     * @throws SQLException if the ResultSet does not contain valid Friøvelser.
+     */
+    protected static List<Friøvelse> getFriøvelserFromResultSet(ResultSet resultSet) throws SQLException {
+        List<Friøvelse> results = new ArrayList<>();
+
+        while (resultSet.next()) {
+            int øvelseID = resultSet.getInt("idFriøvelse");
+            String navn = resultSet.getString("Navn");
+            String beskrivelse = resultSet.getString("Beskrivelse");
+
+            results.add(new Friøvelse(øvelseID, navn, beskrivelse));
+        }
+        return results;
     }
 
 
