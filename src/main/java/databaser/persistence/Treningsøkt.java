@@ -104,6 +104,40 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
         }
     }
 
+
+    /**
+     * Fetches all {@link Notat} about this Treningsøkt from the database.
+     *
+     * @return a list of all Notat about this Treningsøkt.
+     * @throws RuntimeException if connecting to the database failed.
+     * @see Notat
+     */
+    public List<Notat> getNotater() {
+        final String sql = "SELECT * FROM notat WHERE idTreningsøkt = ?";
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+
+            setParameters(statement, treningsøktID);
+            ResultSet resultSet = statement.executeQuery();
+            List<Notat> results = new ArrayList<>();
+
+            while (resultSet.next()) {
+                int notatID = resultSet.getInt("idNotat");
+                String tekst = resultSet.getString("Tekst");
+
+                results.add(new Notat(notatID, tekst, this));
+            }
+            Collections.sort(results);
+            return results;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to load Notater about Treningsøkt from the database", e);
+        }
+    }
+
     /**
      * Loads a Treningsøkt with the given treningsøktID from the database.
      *
@@ -195,7 +229,6 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
             throw new RuntimeException("Unable to add øvelse=" + apparatøvelse.getNavn() + " to treningsøkt", e);
         }
     }
-
 
     /**
      * Adds the given {@link Friøvelse} to this Treningsøkt.

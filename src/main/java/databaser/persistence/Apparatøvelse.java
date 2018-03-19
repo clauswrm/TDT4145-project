@@ -107,22 +107,35 @@ public class Apparatøvelse extends Øvelse {
         ) {
 
             ResultSet resultSet = statement.executeQuery();
-            List<Apparatøvelse> results = new ArrayList<>();
+            List<Apparatøvelse> results = getApparatøvelserFromResultSet(resultSet);
 
-            while (resultSet.next()) {
-                int øvelseID = resultSet.getInt("idApparatØvelse");
-                String navn = resultSet.getString("Navn");
-                int apparatID = resultSet.getInt("apparatID");
-                String beskrivelse = resultSet.getString("Beskrivelse");
-
-                results.add(new Apparatøvelse(øvelseID, navn, beskrivelse, Apparat.getApparatFromID(apparatID)));
-            }
             Collections.sort(results);
             return results;
 
         } catch (SQLException e) {
             throw new RuntimeException("Unable to load all Apparatøvelse from the database", e);
         }
+    }
+
+    /**
+     * Helper method for extracting Apparatøvelser from a {@link ResultSet}.
+     *
+     * @param resultSet the ResultSet to get Apparatøvelser from.
+     * @return all Apparatøvelser in the ResultSet.
+     * @throws SQLException if the ResultSet does not contain valid Apparatøvelser.
+     */
+    protected static List<Apparatøvelse> getApparatøvelserFromResultSet(ResultSet resultSet) throws SQLException {
+        List<Apparatøvelse> results = new ArrayList<>();
+
+        while (resultSet.next()) {
+            int øvelseID = resultSet.getInt("idApparatØvelse");
+            String navn = resultSet.getString("Navn");
+            int apparatID = resultSet.getInt("apparatID");
+            String beskrivelse = resultSet.getString("Beskrivelse");
+
+            results.add(new Apparatøvelse(øvelseID, navn, beskrivelse, Apparat.getApparatFromID(apparatID)));
+        }
+        return results;
     }
 
     /**

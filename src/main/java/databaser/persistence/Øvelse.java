@@ -1,5 +1,7 @@
 package databaser.persistence;
 
+import java.util.List;
+
 /**
  * Represents a Øvelse in the database. Is a superclass for {@link Friøvelse} and {@link Apparatøvelse}.
  *
@@ -47,6 +49,11 @@ public abstract class Øvelse extends ActiveDomainObject implements Comparable<�
     }
 
     public abstract void addToØvelsesgruppe(Øvelsesgruppe øvelsesgruppe);
+
+    public List<Treningsøkt> getTreningsøkterWithØvelse() {
+        //TODO: Implement method. (SQL NATURAL JOIN stuff)
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 
     @Override
     public int compareTo(Øvelse other) {
