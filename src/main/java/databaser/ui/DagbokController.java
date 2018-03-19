@@ -7,9 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,6 +31,8 @@ public class DagbokController {
 
     //Vis økter
     public TextField antallØkterTextField;
+    public ScrollPane økterPane;
+    public ListView<Button> øktView;
 
 
     public void goToMainMenu(ActionEvent event) throws IOException {
@@ -62,6 +62,7 @@ public class DagbokController {
         Date dato = Calendar.getInstance().getTime();
         Treningsøkt økt = new Treningsøkt(dato,varighet,form,innsats);
         økt.save();
+
     }
 
     private void updateIntegerChoiceBox(ChoiceBox<Integer> box){
@@ -71,8 +72,20 @@ public class DagbokController {
         }
 
     }
+    private void updateDagbokView(){
+        ObservableList<Button> items = øktView.getItems();
+        items.clear();
+        List<Treningsøkt> økter = Treningsøkt.getAll();
+        for(Treningsøkt økt:økter){
+
+            Button button = new Button();
+            button.setText(økt.toString());
+            items.add(button);
+        }
+    }
     public void initialize() {
         updateIntegerChoiceBox(innsatsChoiceBox);
         updateIntegerChoiceBox(formChoiceBox);
+        updateDagbokView();
     }
 }

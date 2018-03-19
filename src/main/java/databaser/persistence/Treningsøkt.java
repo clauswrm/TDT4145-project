@@ -154,7 +154,7 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
 
             while (resultSet.next()) {
                 int treningsøktID = resultSet.getInt("idtreningsøkt");
-                Date date = resultSet.getDate("date");
+                Date date = resultSet.getDate("dato");
                 int varighet = resultSet.getInt("varighet");
                 int form = resultSet.getInt("form");
                 int innsats = resultSet.getInt("innsats");
