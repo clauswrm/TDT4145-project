@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.ØktController">
+   <children>
+      <Button layoutX="493.0" layoutY="25.0" mnemonicParsing="false" text="Dagbok" fx:id="dagbokButton" onAction="#goToDagbok" />
+      <Label layoutX="57.0" layoutY="42.0" text="ØktLabel" fx:id="øktLabel" />
+      <ListView layoutX="440.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0" />
+      <ChoiceBox layoutX="37.0" layoutY="165.0" prefWidth="150.0" />
+      <ComboBox layoutX="37.0" layoutY="221.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>
