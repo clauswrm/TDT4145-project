@@ -24,7 +24,7 @@ public class ApparaterController implements Initializable {
     public Button nyttApparat;
     public TextField navnField;
     public TextField beskrivelseField;
-    public ListView<String> listView;
+    public ListView<Apparat> listView;
     public Button goToMainMenu;
 
     @Override
@@ -44,14 +44,13 @@ public class ApparaterController implements Initializable {
     }
 
     public void updateListView(){
-        ObservableList<String> items = listView.getItems();
+        ObservableList<Apparat> items = listView.getItems();
         items.clear();
         List<Apparat> apparater = Apparat.getAll();
         for(int i = 0;i<apparater.size();i++){
-            items.add(apparater.get(i).toString());
+            items.add(apparater.get(i));
         }
         //items.notifyAll();
-
     }
 
     public void handleNyttApparat(){
