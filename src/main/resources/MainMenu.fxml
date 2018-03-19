@@ -9,6 +9,6 @@
       <Button fx:id="apparaterButton" layoutX="160.0" layoutY="93.0" mnemonicParsing="false" onAction="#goToApparater" text="Apparater" />
        <Button fx:id="øvelserButton" mnemonicParsing="false" onAction="#goToØvelser" text="Øvelser" />
        <Label layoutX="300" layoutY="300" text="DETTE ER HOVEDMENYEEEEEN" />
-      <Button layoutX="454.0" layoutY="118.0" mnemonicParsing="false" text="Dagbok" />
+      <Button layoutX="454.0" layoutY="118.0" mnemonicParsing="false" text="Dagbok" fx:id="dagbokButton" onAction="#goToDagbok" />
    </children>
 </AnchorPane>
