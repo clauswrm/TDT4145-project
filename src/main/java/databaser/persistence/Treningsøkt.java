@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -86,11 +87,17 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
 
         try (
                 Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
+                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ) {
 
             setParameters(statement, date, varighet, form, innsats);
             statement.execute();
+
+            // Updates the treningsøktID with the auto generated key
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                setTreningsøktID(generatedKeys.getInt(1));
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Unable to save Treningsøkt=" + date + " to database", e);
