@@ -169,6 +169,60 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
         }
     }
 
+    /**
+     * Adds the given {@link Apparatøvelse} to this Treningsøkt.
+     *
+     * @param apparatøvelse the Apparatøvelse to add to the Treningsøkt.
+     * @param kilo          the amount of kilos.
+     * @param reps          the amount of kilos.
+     * @param set           the amount of kilos.
+     * @throws RuntimeException if the given Treningsøkt or Apparatøvelse was not found in the database.
+     * @see Apparatøvelse
+     */
+    public void addApparatøvelse(Apparatøvelse apparatøvelse, int kilo, int reps, int set) {
+        final String sql = "INSERT INTO treningsøkt_has_apparatøvelse (idTreningsøkt, idapparatøvelse," +
+                "Kilo, Reps, `Set`) VALUES (?, ?, ?, ?, ?)";
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+
+            setParameters(statement, treningsøktID, apparatøvelse.getØvelseID(), kilo, reps, set);
+            statement.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to add øvelse=" + apparatøvelse.getNavn() + " to treningsøkt", e);
+        }
+    }
+
+
+    /**
+     * Adds the given {@link Friøvelse} to this Treningsøkt.
+     *
+     * @param friøvelse   the Friøvelse to add to the Treningsøkt.
+     * @param beskrivelse the description of how to do the Friøvelse in the Treningsøkt.
+     * @throws RuntimeException if the given Treningsøkt or Friøvelse was not found in the database.
+     * @see Friøvelse
+     */
+    public void addFriøvelse(Friøvelse friøvelse, String beskrivelse) {
+
+        final String sql = "INSERT INTO treningsøkt_has_friøvelse (idTreningsøkt, idfriøvelse, Beskrivelse)" +
+                "VALUES (?, ?, ?)";
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)
+        ) {
+
+            setParameters(statement, treningsøktID, friøvelse.getØvelseID(), beskrivelse);
+            statement.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to add øvelse=" + friøvelse.getNavn() + " to treningsøkt", e);
+        }
+    }
+
     @Override
     public String toString() {
         return "Treningsøkt{" +

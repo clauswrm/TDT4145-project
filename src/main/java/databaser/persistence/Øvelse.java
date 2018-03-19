@@ -46,6 +46,8 @@ public abstract class Øvelse extends ActiveDomainObject implements Comparable<�
         this.beskrivelse = beskrivelse;
     }
 
+    public abstract void addToØvelsesgruppe(Øvelsesgruppe øvelsesgruppe);
+
     @Override
     public int compareTo(Øvelse other) {
         return this.getNavn().compareTo(other.getNavn());
