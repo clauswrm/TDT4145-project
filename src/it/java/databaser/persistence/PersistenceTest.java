@@ -1,6 +1,6 @@
 package databaser.persistence;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -16,8 +16,10 @@ import static org.hamcrest.Matchers.is;
 
 
 /**
- * REALLY not how integration tests are supposed to be used, but since this is a small project,
- * without test requirements and I wanted to only create one test class.
+ * BAD TEST
+ * <p>
+ * REALLY not how integration tests are supposed to be used, but since this is a small project
+ * without test requirements I wanted to only create one test class.
  * <p>
  * WARNING:
  * <p>
@@ -30,15 +32,15 @@ import static org.hamcrest.Matchers.is;
  */
 public class PersistenceTest {
 
-    private Apparat romaskin;
-    private Apparatøvelse roing;
-    private Friøvelse pushups;
-    private Treningsøkt økt;
-    private Notat notat;
-    private Øvelsesgruppe armøvelser;
+    private static Apparat romaskin;
+    private static Apparatøvelse roing;
+    private static Friøvelse pushups;
+    private static Treningsøkt økt;
+    private static Notat notat;
+    private static Øvelsesgruppe armøvelser;
 
-    @Before
-    public void setUp() {
+    @BeforeClass
+    public static void setUp() {
         romaskin = new Apparat("Romaskin", "Du ror til du dør");
         roing = new Apparatøvelse("Roing", "Ro ro ro din båt", romaskin);
         pushups = new Friøvelse("Pushups", "Dytt opp og ned");
@@ -52,6 +54,25 @@ public class PersistenceTest {
         økt.save();
         notat.save();
         armøvelser.save();
+    }
+
+    @Test
+    public void shouldAddCorrectEntities() {
+        // When
+        final List<Apparat> apparater = Apparat.getAll();
+        final List<Apparatøvelse> apparatøvelser = Apparatøvelse.getAll();
+        final List<Friøvelse> friøvelser = Friøvelse.getAll();
+        final List<Treningsøkt> treningsøkter = Treningsøkt.getAll();
+        final List<Notat> notater = Notat.getAll();
+        final List<Øvelsesgruppe> øvelsesgrupper = Øvelsesgruppe.getAll();
+
+        // Then
+        assertThat(apparater, hasSize(1));
+        assertThat(apparatøvelser, hasSize(1));
+        assertThat(friøvelser, hasSize(1));
+        assertThat(treningsøkter, hasSize(1));
+        assertThat(notater, hasSize(1));
+        assertThat(øvelsesgrupper, hasSize(1));
     }
 
     @Test
@@ -105,5 +126,14 @@ public class PersistenceTest {
         // Then
         assertThat(notater, hasSize(1));
         assertThat(notater, hasItem(notat));
+    }
+
+    @Test
+    public void shouldGetApparatForApparatøvelse() {
+        // When
+        final Apparat apparat = roing.getApparat();
+
+        // Then
+        assertThat(apparat, is(romaskin));
     }
 }
