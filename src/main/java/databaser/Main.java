@@ -1,13 +1,9 @@
 package databaser;
 
-import databaser.persistence.*;
-
-import java.util.Date;
+import databaser.ui.UserInterface;
 
 public class Main {
     public static void main(String[] args) {
-
-        Notat notat = Notat.getNotatFromID(1);
-        System.out.println(notat.getTekst());
+        UserInterface.main(null);
     }
 }

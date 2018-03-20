@@ -1,5 +1,7 @@
 package databaser.persistence;
 
+import lombok.Data;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +19,7 @@ import java.util.Map;
  *
  * @see ActiveDomainObject
  */
+@Data
 public class Friøvelse extends Øvelse {
 
     public Friøvelse(int øvelseID, String navn, String beskrivelse) {
@@ -161,9 +164,8 @@ public class Friøvelse extends Øvelse {
      */
     @Override
     public List<Treningsøkt> getTreningsøkterWithØvelse() {
-        final String sql = "SELECT (t.idTreningsøkt, t.Dato, t.Varighet, t.Form, t.Innsats) " +
-                "FROM (treningsøkt AS t NATURAL JOIN treningsøkt_has_friøvelse) NATURAL JOIN friøvelse AS f " +
-                "WHERE f.idFriøvelse = ?";
+        final String sql = "SELECT * FROM (treningsøkt NATURAL JOIN treningsøkt_has_friøvelse) " +
+                "WHERE idFriøvelse = ?";
 
         try (
                 Connection connection = getConnection();
@@ -184,9 +186,8 @@ public class Friøvelse extends Øvelse {
     public Map<Treningsøkt, String> getProgressForFriøvelse() {
         Map<Treningsøkt, String> progress = new HashMap<>();
 
-        final String sql = "SELECT (t.idTreningsøkt, t.Dato, t.Varighet, t.Form, t.Innsats, x.Beskrivelse) " +
-                "FROM (treningsøkt AS t NATURAL JOIN treningsøkt_has_friøvelse AS x) NATURAL JOIN friøvelse AS f " +
-                "WHERE f.idFriøvelse = ?";
+        final String sql = "SELECT * FROM (treningsøkt NATURAL JOIN treningsøkt_has_friøvelse) " +
+                "WHERE idFriøvelse = ?";
 
         try (
                 Connection connection = getConnection();
@@ -210,14 +211,5 @@ public class Friøvelse extends Øvelse {
         } catch (SQLException e) {
             throw new RuntimeException("Unable to get progress for Friøvelse from the database", e);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Friøvelse{" +
-                "øvelseID=" + øvelseID +
-                ", navn='" + navn + '\'' +
-                ", beskrivelse='" + beskrivelse + '\'' +
-                '}';
     }
 }

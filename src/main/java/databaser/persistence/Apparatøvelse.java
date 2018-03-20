@@ -1,5 +1,7 @@
 package databaser.persistence;
 
+import lombok.Data;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +19,7 @@ import java.util.Map;
  *
  * @see ActiveDomainObject
  */
+@Data
 public class Apparatøvelse extends Øvelse {
 
     private Apparat apparat;
@@ -28,14 +31,6 @@ public class Apparatøvelse extends Øvelse {
 
     public Apparatøvelse(String navn, String beskrivelse, Apparat apparat) {
         super(navn, beskrivelse);
-        this.apparat = apparat;
-    }
-
-    public Apparat getApparat() {
-        return apparat;
-    }
-
-    public void setApparat(Apparat apparat) {
         this.apparat = apparat;
     }
 
@@ -173,9 +168,8 @@ public class Apparatøvelse extends Øvelse {
      */
     @Override
     public List<Treningsøkt> getTreningsøkterWithØvelse() {
-        final String sql = "SELECT (t.idTreningsøkt, t.Dato, t.Varighet, t.Form, t.Innsats) " +
-                "FROM (treningsøkt AS t NATURAL JOIN treningsøkt_has_apparatøvelse) NATURAL JOIN apparatøvelse AS a " +
-                "WHERE a.idApparatØvelse = ?";
+        final String sql = "SELECT * FROM (treningsøkt NATURAL JOIN treningsøkt_has_apparatøvelse) " +
+                "WHERE idApparatØvelse = ?";
 
         try (
                 Connection connection = getConnection();
@@ -196,9 +190,8 @@ public class Apparatøvelse extends Øvelse {
     public Map<Treningsøkt, Map<String, Integer>> getProgressForApparatøvelse() {
         Map<Treningsøkt, Map<String, Integer>> progress = new HashMap<>();
 
-        final String sql = "SELECT (t.idTreningsøkt, t.Dato, t.Varighet, t.Form, t.Innsats, x.Kilo, x.Reps, x.`Set`) " +
-                "FROM (treningsøkt AS t NATURAL JOIN treningsøkt_has_apparatøvelse AS x) NATURAL JOIN apparatøvelse AS a " +
-                "WHERE a.idApparatØvelse = ?";
+        final String sql = "SELECT * FROM (treningsøkt NATURAL JOIN treningsøkt_has_apparatøvelse) " +
+                "WHERE idApparatØvelse = ?";
 
         try (
                 Connection connection = getConnection();
@@ -229,15 +222,5 @@ public class Apparatøvelse extends Øvelse {
         } catch (SQLException e) {
             throw new RuntimeException("Unable to get progress for Apparatøvelse from the database", e);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Apparatøvelse{" +
-                "øvelseID=" + øvelseID +
-                ", apparatID=" + apparat.getApparatID() +
-                ", navn='" + navn + '\'' +
-                ", beskrivelse='" + beskrivelse + '\'' +
-                '}';
     }
 }

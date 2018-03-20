@@ -39,7 +39,6 @@ public abstract class ActiveDomainObject {
         connectionProps.put("password", dbPassword);
 
         conn = DriverManager.getConnection(dbURL, connectionProps);
-        System.out.println("Connected to database");
         return conn;
     }
 

@@ -1,5 +1,7 @@
 package databaser.persistence;
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,7 @@ import java.util.List;
  *
  * @see ActiveDomainObject
  */
+@Data
 public abstract class Øvelse extends ActiveDomainObject implements Comparable<Øvelse> {
 
     protected int øvelseID;
@@ -21,30 +24,6 @@ public abstract class Øvelse extends ActiveDomainObject implements Comparable<�
 
     public Øvelse(String navn, String beskrivelse) {
         this.navn = navn;
-        this.beskrivelse = beskrivelse;
-    }
-
-    public int getØvelseID() {
-        return øvelseID;
-    }
-
-    public String getNavn() {
-        return navn;
-    }
-
-    public String getBeskrivelse() {
-        return beskrivelse;
-    }
-
-    public void setØvelseID(int øvelseID) {
-        this.øvelseID = øvelseID;
-    }
-
-    public void setNavn(String navn) {
-        this.navn = navn;
-    }
-
-    public void setBeskrivelse(String beskrivelse) {
         this.beskrivelse = beskrivelse;
     }
 

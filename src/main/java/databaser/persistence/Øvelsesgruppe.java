@@ -1,5 +1,7 @@
 package databaser.persistence;
 
+import lombok.Data;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +16,7 @@ import java.util.List;
  *
  * @see ActiveDomainObject
  */
+@Data
 public class Øvelsesgruppe extends ActiveDomainObject implements Comparable<Øvelsesgruppe> {
 
     private int øvelsesgruppeID;
@@ -25,22 +28,6 @@ public class Øvelsesgruppe extends ActiveDomainObject implements Comparable<Øv
     }
 
     public Øvelsesgruppe(String navn) {
-        this.navn = navn;
-    }
-
-    public int getØvelsesgruppeID() {
-        return øvelsesgruppeID;
-    }
-
-    public void setØvelsesgruppeID(int øvelsesgruppeID) {
-        this.øvelsesgruppeID = øvelsesgruppeID;
-    }
-
-    public String getNavn() {
-        return navn;
-    }
-
-    public void setNavn(String navn) {
         this.navn = navn;
     }
 
@@ -79,10 +66,10 @@ public class Øvelsesgruppe extends ActiveDomainObject implements Comparable<Øv
      * @throws RuntimeException if connecting to the database failed.
      */
     public List<Øvelse> getØvelser() {
-        final String sql_friøvelse = "SELECT * FROM friøvelse_has_øvelsegruppe NATURAL JOIN friøvelse " +
-                "WHERE idØvelsegruppe=?";
-        final String sql_apparatøvelse = "SELECT * FROM apparatøvelse_has_øvelsegruppe NATURAL JOIN apparatøvelse " +
-                "WHERE idØvelsegruppe=?";
+        final String sql_friøvelse = "SELECT * FROM (friøvelse_has_øvelsegruppe NATURAL JOIN friøvelse) " +
+                "WHERE idØvelsegruppe = ?";
+        final String sql_apparatøvelse = "SELECT * FROM (apparatøvelse_has_øvelsegruppe NATURAL JOIN apparatøvelse) " +
+                "WHERE idØvelsegruppe = ?";
 
         try (
                 Connection connection = getConnection();
@@ -93,7 +80,7 @@ public class Øvelsesgruppe extends ActiveDomainObject implements Comparable<Øv
             setParameters(statement_friøvelse, øvelsesgruppeID);
             setParameters(statement_apparatøvelse, øvelsesgruppeID);
             ResultSet resultSet_friøvelse = statement_friøvelse.executeQuery();
-            ResultSet resultSet_apparatøvelse = statement_friøvelse.executeQuery();
+            ResultSet resultSet_apparatøvelse = statement_apparatøvelse.executeQuery();
 
             List<Øvelse> øvelser = new ArrayList<>();
             øvelser.addAll(Friøvelse.getFriøvelserFromResultSet(resultSet_friøvelse));
@@ -164,14 +151,6 @@ public class Øvelsesgruppe extends ActiveDomainObject implements Comparable<Øv
         } catch (SQLException e) {
             throw new RuntimeException("Unable to load all Øvelsesgruppe from the database", e);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Øvelsesgruppe{" +
-                "øvelsesgruppeID=" + øvelsesgruppeID +
-                ", navn='" + navn + '\'' +
-                '}';
     }
 
     @Override

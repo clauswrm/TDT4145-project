@@ -1,5 +1,7 @@
 package databaser.persistence;
 
+import lombok.Data;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +16,7 @@ import java.util.List;
  *
  * @see ActiveDomainObject
  */
+@Data
 public class Notat extends ActiveDomainObject implements Comparable<Notat> {
 
     private int notatID;
@@ -31,30 +34,6 @@ public class Notat extends ActiveDomainObject implements Comparable<Notat> {
         this.treningsøkt = treningsøkt;
     }
 
-    public int getNotatID() {
-        return notatID;
-    }
-
-    public void setNotatID(int notatID) {
-        this.notatID = notatID;
-    }
-
-    public String getTekst() {
-        return tekst;
-    }
-
-    public void setTekst(String tekst) {
-        this.tekst = tekst;
-    }
-
-    public Treningsøkt getTreningsøkt() {
-        return treningsøkt;
-    }
-
-    public void setTreningsøkt(Treningsøkt treningsøkt) {
-        this.treningsøkt = treningsøkt;
-    }
-
     @Override
     public void save() {
         if (this.tekst == null || this.treningsøkt == null) {
@@ -67,7 +46,7 @@ public class Notat extends ActiveDomainObject implements Comparable<Notat> {
                 PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ) {
 
-            setParameters(statement, notatID, tekst, treningsøkt.getTreningsøktID());
+            setParameters(statement, tekst, treningsøkt.getTreningsøktID());
             statement.execute();
 
             // Updates the notatID with the auto generated key
@@ -141,15 +120,6 @@ public class Notat extends ActiveDomainObject implements Comparable<Notat> {
         } catch (SQLException e) {
             throw new RuntimeException("Unable to load all Notat from the database", e);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Notat{" +
-                "notatID=" + notatID +
-                ", tekst='" + tekst + '\'' +
-                ", treningsøktID=" + treningsøkt.getTreningsøktID() +
-                '}';
     }
 
     @Override

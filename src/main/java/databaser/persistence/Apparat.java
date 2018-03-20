@@ -1,5 +1,7 @@
 package databaser.persistence;
 
+import lombok.Data;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +16,7 @@ import java.util.List;
  *
  * @see ActiveDomainObject
  */
+@Data
 public class Apparat extends ActiveDomainObject implements Comparable<Apparat> {
 
     private int apparatID;
@@ -28,30 +31,6 @@ public class Apparat extends ActiveDomainObject implements Comparable<Apparat> {
 
     public Apparat(String navn, String beskrivelse) {
         this.navn = navn;
-        this.beskrivelse = beskrivelse;
-    }
-
-    public int getApparatID() {
-        return apparatID;
-    }
-
-    public void setApparatID(int apparatID) {
-        this.apparatID = apparatID;
-    }
-
-    public String getNavn() {
-        return navn;
-    }
-
-    public void setNavn(String navn) {
-        this.navn = navn;
-    }
-
-    public String getBeskrivelse() {
-        return beskrivelse;
-    }
-
-    public void setBeskrivelse(String beskrivelse) {
         this.beskrivelse = beskrivelse;
     }
 
@@ -138,15 +117,6 @@ public class Apparat extends ActiveDomainObject implements Comparable<Apparat> {
         } catch (SQLException e) {
             throw new RuntimeException("Unable to load all Apparat from the database", e);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Apparat{" +
-                "apparatID=" + apparatID +
-                ", navn='" + navn + '\'' +
-                ", beskrivelse='" + beskrivelse + '\'' +
-                '}';
     }
 
     @Override

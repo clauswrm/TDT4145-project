@@ -1,5 +1,7 @@
 package databaser.persistence;
 
+import lombok.Data;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +17,7 @@ import java.util.List;
  *
  * @see ActiveDomainObject
  */
+@Data
 public class Treningsøkt extends ActiveDomainObject implements Comparable<Treningsøkt> {
 
     private int treningsøktID;
@@ -35,46 +38,6 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
         this.dato = dato;
         this.varighet = varighet;
         this.form = form;
-        this.innsats = innsats;
-    }
-
-    public int getTreningsøktID() {
-        return treningsøktID;
-    }
-
-    public void setTreningsøktID(int treningsøktID) {
-        this.treningsøktID = treningsøktID;
-    }
-
-    public Date getDate() {
-        return dato;
-    }
-
-    public void setDate(Date dato) {
-        this.dato = dato;
-    }
-
-    public int getVarighet() {
-        return varighet;
-    }
-
-    public void setVarighet(int varighet) {
-        this.varighet = varighet;
-    }
-
-    public int getForm() {
-        return form;
-    }
-
-    public void setForm(int form) {
-        this.form = form;
-    }
-
-    public int getInnsats() {
-        return innsats;
-    }
-
-    public void setInnsats(int innsats) {
         this.innsats = innsats;
     }
 
@@ -274,9 +237,10 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
      * @throws RuntimeException if connecting to the database failed.
      */
     public List<Øvelse> getØvelser() {
-        final String sql_friøvelse = "SELECT * FROM treningsøkt_has_friøvelse NATURAL JOIN friøvelse " +
-                "WHERE idTreningsøkt = ?";
-        final String sql_apparatøvelse = "SELECT * FROM treningsøkt_has_apparatøvelse NATURAL JOIN apparatøvelse " +
+        final String sql_friøvelse = "SELECT friøvelse.idFriøvelse, friøvelse.Navn, friøvelse.Beskrivelse " +
+                "FROM (treningsøkt_has_friøvelse JOIN friøvelse " +
+                "ON treningsøkt_has_friøvelse.idFriøvelse = friøvelse.idFriøvelse) WHERE idTreningsøkt = ?";
+        final String sql_apparatøvelse = "SELECT * FROM (treningsøkt_has_apparatøvelse NATURAL JOIN apparatøvelse) " +
                 "WHERE idTreningsøkt = ?";
 
         try (
@@ -288,7 +252,7 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
             setParameters(statement_friøvelse, treningsøktID);
             setParameters(statement_apparatøvelse, treningsøktID);
             ResultSet resultSet_friøvelse = statement_friøvelse.executeQuery();
-            ResultSet resultSet_apparatøvelse = statement_friøvelse.executeQuery();
+            ResultSet resultSet_apparatøvelse = statement_apparatøvelse.executeQuery();
 
             List<Øvelse> øvelser = new ArrayList<>();
             øvelser.addAll(Friøvelse.getFriøvelserFromResultSet(resultSet_friøvelse));
@@ -303,18 +267,7 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
     }
 
     @Override
-    public String toString() {
-        return "Treningsøkt{" +
-                "treningsøktID=" + treningsøktID +
-                ", dato=" + dato +
-                ", varighet=" + varighet +
-                ", form=" + form +
-                ", innsats=" + innsats +
-                '}';
-    }
-
-    @Override
     public int compareTo(Treningsøkt other) {
-        return this.getDate().compareTo(other.getDate());
+        return this.getDato().compareTo(other.getDato());
     }
 }
