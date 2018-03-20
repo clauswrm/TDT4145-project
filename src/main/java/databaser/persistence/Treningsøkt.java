@@ -10,7 +10,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a Treningsøkt in the database.
@@ -263,6 +265,53 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
 
         } catch (SQLException e) {
             throw new RuntimeException("Unable to load Øvelser from Treningsøkt with id=" + treningsøktID + " from the database", e);
+        }
+    }
+
+
+    public Map<String, Integer> getStatsForApparatøvelse(Apparatøvelse apparatøvelse) {
+        final String sql = "SELECT * FROM (treningsøkt_has_apparatøvelse NATURAL JOIN apparatøvelse) " +
+                "WHERE idTreningsøkt = ? AND idApparatØvelse = ?";
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+
+            setParameters(statement, treningsøktID, apparatøvelse.getØvelseID());
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+
+            Map<String, Integer> stats = new HashMap<>();
+            stats.put("kilo", resultSet.getInt("kilo"));
+            stats.put("reps", resultSet.getInt("reps"));
+            stats.put("set", resultSet.getInt("set"));
+
+            return stats;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to get stats for Øvelse from Treningsøkt from the database", e);
+        }
+    }
+
+    public String getStatsForFriøvelse(Friøvelse friøvelse) {
+        final String sql = "SELECT treningsøkt_has_friøvelse.Beskrivelse FROM (treningsøkt_has_friøvelse " +
+                "JOIN friøvelse ON treningsøkt_has_friøvelse.idFriøvelse = friøvelse.idFriøvelse) " +
+                "WHERE idTreningsøkt = ? AND friøvelse.idFriøvelse = ?";
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+
+            setParameters(statement, treningsøktID, friøvelse.getØvelseID());
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+
+            return resultSet.getString("beskrivelse");
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to get stats for Øvelse from Treningsøkt from the database", e);
         }
     }
 
