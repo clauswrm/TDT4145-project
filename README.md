@@ -17,7 +17,7 @@ the data.
 Our Active Domain Object classes represent the entities we care about in the database
 and provides the necessary methods for interacting with them.
 
-[Active Domain Object class diagram][persistence diagram]
+![Active Domain Object class diagram][persistence diagram]
 
 ### UI
 
