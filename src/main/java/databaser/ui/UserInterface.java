@@ -6,18 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.net.URL;
 
 public class UserInterface extends Application {
 
-
-
-    public static void main(String[] args){
+    public static void main(String[] args) {
         launch(args);
     }
+
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         URL resource = getClass().getResource("/MainMenu.fxml");
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(resource);
@@ -25,7 +23,7 @@ public class UserInterface extends Application {
         MainMenuController controller = loader.getController();
 
         primaryStage.setTitle("Fake and Gay");
-        primaryStage.setScene(new Scene(root,1280,720));
+        primaryStage.setScene(new Scene(root, 1280, 720));
         primaryStage.show();
     }
 }

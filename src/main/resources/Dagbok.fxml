@@ -2,36 +2,43 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane prefHeight="720.0" prefWidth="1280" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.DagbokController">
-    <Button fx:id="goToMainMenuButton" layoutX="700" mnemonicParsing="false" onAction="#goToMainMenu" text="Hovedmenyen" />
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<AnchorPane prefHeight="567.0" prefWidth="925.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.DagbokController">
+    <Button fx:id="goToMainMenuButton" layoutX="799.0" layoutY="90.0" mnemonicParsing="false" onAction="#goToMainMenu" text="Hovedmenyen" />
 
     <!-- Ny økt -->
-   <Label layoutX="50.0" layoutY="57.0" text="Dato" />
-   <Label layoutX="41.0" layoutY="163.0" text="Varighet i minutter" />
-   <Label layoutX="183.0" layoutY="57.0" text="Form" />
-   <Label layoutX="183.0" layoutY="100.0" text="Innsats" />
-    <TextField fx:id="datoTextField" layoutX="28.0" layoutY="74.0" />
-    <TextField fx:id="varighetTextField" layoutX="28.0" layoutY="180.0" />
-    <Button fx:id="nyØktButton" layoutX="50.0" layoutY="226.0" mnemonicParsing="false" onAction="#handleNewØkt" text="Ny økt" />
+   <Label layoutX="46.0" layoutY="81.0" text="Dato" />
+   <Label layoutX="46.0" layoutY="202.0" text="Varighet i minutter" />
+   <Label layoutX="288.0" layoutY="81.0" text="Form" />
+   <Label layoutX="290.0" layoutY="135.0" text="Innsats" />
+    <TextField fx:id="varighetTextField" layoutX="46.0" layoutY="226.0" prefHeight="26.0" prefWidth="150.0" />
+    <Button fx:id="nyØktButton" layoutX="290.0" layoutY="230.0" mnemonicParsing="false" onAction="#handleNewØkt" text="Ny økt" />
 
-   <ChoiceBox fx:id="formChoiceBox" layoutX="183.0" layoutY="74.0" prefWidth="150.0" />
-   <ChoiceBox fx:id="innsatsChoiceBox" layoutX="183.0" layoutY="125.0" prefWidth="150.0" />
+   <ChoiceBox fx:id="formChoiceBox" layoutX="288.0" layoutY="103.0" prefWidth="150.0" />
+   <ChoiceBox fx:id="innsatsChoiceBox" layoutX="288.0" layoutY="158.0" prefWidth="150.0" />
 
 
     <!-- Hent treningsøkter -->
-   <Label layoutX="69.0" layoutY="381.0" text="Hent treningsøkter: Antall" />
-   <TextField fx:id="antallØkterTextField" layoutX="63.0" layoutY="412.0" />
-    <Button fx:id="hentØkterButton" layoutX="63.0" layoutY="450.0" onAction="#handleGetØkter" text="Hent økter" />
-   <Label layoutX="477.0" layoutY="109.0" text="Økter" />
-   <ScrollPane fx:id="økterPane" layoutX="477.0" layoutY="139.0" prefHeight="305.0" prefWidth="345.0">
+   <Label layoutX="46.0" layoutY="399.0" text="Hent siste treningsøkter: Antall" />
+   <TextField fx:id="antallØkterTextField" layoutX="46.0" layoutY="423.0" prefHeight="26.0" prefWidth="150.0" />
+    <Button fx:id="hentØkterButton" layoutX="291.0" layoutY="424.0" onAction="#handleGetØkter" text="Hent økter" />
+   <Label layoutX="547.0" layoutY="153.0" text="Økter" />
+   <ScrollPane fx:id="økterPane" layoutX="547.0" layoutY="175.0" prefHeight="305.0" prefWidth="345.0">
      <ListView fx:id="øktView" />
    </ScrollPane>
+   <DatePicker fx:id="datoPicker" layoutX="46.0" layoutY="102.0" prefHeight="26.0" prefWidth="150.0" />
+   <Text layoutX="383.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dagbok" wrappingWidth="112.7999986410141">
+      <font>
+         <Font size="30.0" />
+      </font>
+   </Text>
 
 
 
