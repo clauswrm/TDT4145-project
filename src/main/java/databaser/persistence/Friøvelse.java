@@ -212,4 +212,7 @@ public class Friøvelse extends Øvelse {
             throw new RuntimeException("Unable to get progress for Friøvelse from the database", e);
         }
     }
+    public String toString(){
+        return navn;
+    }
 }

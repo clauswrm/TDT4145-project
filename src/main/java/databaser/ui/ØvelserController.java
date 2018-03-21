@@ -30,6 +30,8 @@ public class ØvelserController implements Initializable {
     public CheckBox apparatØvelseCheckBox;
     public CheckBox friØvelseCheckBox;
 
+    public ChoiceBox<Øvelse>  øvelseListView;
+    public ChoiceBox<Øvelsesgruppe> gruppeViewChoiceBox;
 
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -38,6 +40,18 @@ public class ØvelserController implements Initializable {
         updateGruppeChoiceBox();
         updateApparatChoiceBox();
     }
+
+    public void updateØvelseListView(){
+        ObservableList<Øvelse> items = øvelseListView.getItems();
+        items.clear();
+        Øvelsesgruppe gruppe = gruppeViewChoiceBox.getValue();
+        List<Øvelse> øvelser = gruppe.getØvelser();
+
+        for(Øvelse øvelse:øvelser){
+            items.add(øvelse);
+        }
+    }
+
     private void updateGruppeChoiceBox(){
         ObservableList<Øvelsesgruppe> items = gruppeChoiceBox.getItems();
         items.clear();
@@ -46,6 +60,8 @@ public class ØvelserController implements Initializable {
         for(Øvelsesgruppe gruppe: grupper){
             items.add(gruppe);
         }
+        gruppeViewChoiceBox.getItems().clear();
+        gruppeViewChoiceBox.getItems().addAll(items);
     }
 
     public void handleAddØvelse(){

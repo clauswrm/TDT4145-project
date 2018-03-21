@@ -5,15 +5,25 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.ØktController">
    <children>
-      <Button layoutX="493.0" layoutY="25.0" mnemonicParsing="false" text="Dagbok" fx:id="dagbokButton" onAction="#goToDagbok" />
-      <Label layoutX="57.0" layoutY="42.0" text="ØktLabel" fx:id="øktLabel" />
-      <ListView layoutX="440.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0" />
-      <ChoiceBox layoutX="37.0" layoutY="165.0" prefWidth="150.0" />
-      <ComboBox layoutX="37.0" layoutY="221.0" prefWidth="150.0" />
+      <Button fx:id="dagbokButton" layoutX="493.0" layoutY="25.0" mnemonicParsing="false" onAction="#goToDagbok" text="Dagbok" />
+      <Label fx:id="øktLabel" layoutX="57.0" layoutY="42.0" text="ØktLabel" />
+      <ListView layoutX="440.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0" fx:id="øvelseListView" />
+
+       <!-- ny øvelse -->
+      <ChoiceBox fx:id="gruppeChoiceBox" layoutX="37.0" layoutY="165.0" onAction="#updateØvelseChoiceBox" prefWidth="150.0" />
+      <ComboBox fx:id="øvelseChoiceBox" layoutX="37.0" layoutY="220.0" onAction="#setInputFieldVisibility" prefWidth="150.0" />
+       <TextArea fx:id="nyØvelseKommentar" layoutX="37.0" layoutY="270" prefHeight="50" prefWidth="150" />
+       <TextField fx:id="setsTextField" layoutX="37.0" layoutY="350" prefWidth="150" />
+       <TextField fx:id="repsTextField" layoutX="37.0" layoutY="400" prefWidth="150" />
+       <TextField fx:id="weightTextField" layoutX="37.0" layoutY="450" prefWidth="150" />
+       <Button fx:id="nyØvelseButton" layoutX="37.0" layoutY="600" prefWidth="150" text="Legg til øvelse" onAction="#handleNyØvelse"/>
+
+
    </children>
 </AnchorPane>

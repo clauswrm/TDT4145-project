@@ -223,4 +223,7 @@ public class Apparatøvelse extends Øvelse {
             throw new RuntimeException("Unable to get progress for Apparatøvelse from the database", e);
         }
     }
+    public String toString(){
+        return navn;
+    }
 }
