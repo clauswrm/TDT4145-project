@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class ØktController {
 
@@ -31,10 +32,14 @@ public class ØktController {
     public TextField weightTextField;
     public Button nyØvelseButton;
 
-    public ListView<Øvelse> øvelseListView;
+    public ListView<String> øvelseListView;
 
     public ArrayList<Øvelse> øvelseArrayList = new ArrayList<>();
 
+    //Notater
+    public TextArea notatTextArea;
+    public Button nyNotatButton;
+    public ListView<Notat> notatListView;
 
     public void setØkt(Treningsøkt økt) {
         this.økt = økt;
@@ -47,17 +52,53 @@ public class ØktController {
         updateØvelseListView();
     }
 
+    public void handleNyNotat(){
+        Notat notat = new Notat(notatTextArea.getText(),økt);
+        notatTextArea.setText("");
+        notat.save();
+
+
+        updateNotatListView();
+    }
+    public void updateNotatListView(){
+        ObservableList<Notat> items = notatListView.getItems();
+        items.clear();
+        List<Notat> notater = økt.getNotater();
+        for(Notat notat : notater){
+            items.add(notat);
+        }
+    }
+
     private void setØktLabel() {
         øktLabel.setText(økt.toString());
     }
 
     public void updateØvelseListView(){
-        ObservableList<Øvelse> items = øvelseListView.getItems();
+        ObservableList<String> items = øvelseListView.getItems();
         items.clear();
 
         List<Øvelse> øvelser = økt.getØvelser();
 
-        items.addAll(øvelser);
+        for(Øvelse øvelse: øvelser){
+            String displayString = "";
+            if (øvelse instanceof Friøvelse){
+                String beskrivelse = økt.getStatsForFriøvelse((Friøvelse) øvelse);
+                displayString+=øvelse.toString()+"\n"+beskrivelse;
+                items.add(displayString);
+
+            }
+            if(øvelse instanceof Apparatøvelse){
+                Map<String,Integer> stats = økt.getStatsForApparatøvelse((Apparatøvelse) øvelse);
+                String vekt = stats.get("kilo").toString();
+                String reps = stats.get("reps").toString();
+                String sets = stats.get("set").toString();
+
+                displayString = øvelse.toString()+"\nVekt: "+vekt+"\nRepetisjoner: "+reps+"\nAntall sett: "+sets;
+                items.add(displayString);
+
+            }
+
+        }
     }
 
     public void goToDagbok(ActionEvent event) throws IOException {
@@ -82,7 +123,7 @@ public class ØktController {
     }
 
     public void resetØvelseInputFields() {
-
+        øvelseChoiceBox.setValue("");
         setsTextField.setVisible(false);
         repsTextField.setVisible(false);
         weightTextField.setVisible(false);
@@ -91,7 +132,6 @@ public class ØktController {
         repsTextField.setText("");
         setsTextField.setText("");
         nyØvelseKommentar.setText("");
-
     }
 
 
@@ -161,8 +201,9 @@ public class ØktController {
         økt.addFriøvelse(øvelse, desc);
     }
     public void handleNyØvelse(){
-        resetØvelseInputFields();
         addØvelse();
         updateØvelseListView();
+        resetØvelseInputFields();
+        updateNotatListView();
     }
 }

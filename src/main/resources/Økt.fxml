@@ -13,7 +13,10 @@
    <children>
       <Button fx:id="dagbokButton" layoutX="493.0" layoutY="25.0" mnemonicParsing="false" onAction="#goToDagbok" text="Dagbok" />
       <Label fx:id="øktLabel" layoutX="57.0" layoutY="42.0" text="ØktLabel" />
-      <ListView layoutX="440.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0" fx:id="øvelseListView" />
+      <ListView fx:id="øvelseListView" layoutX="440.0" layoutY="107.0" prefHeight="500.0" prefWidth="200.0" />
+       <ListView fx:id="notatListView" layoutX="914.0" layoutY="70.0" prefHeight="500.0" prefWidth="200" />
+       <TextArea layoutX="678.0" layoutY="65.0" prefHeight="200.0" prefWidth="200.0" fx:id="notatTextArea" />
+       <Button fx:id="nyNotatButton" layoutX="742.0" layoutY="270.0" text="Nytt notat" onAction="#handleNyNotat"/>
 
        <!-- ny øvelse -->
       <ChoiceBox fx:id="gruppeChoiceBox" layoutX="37.0" layoutY="165.0" onAction="#updateØvelseChoiceBox" prefWidth="150.0" />
@@ -22,7 +25,7 @@
        <TextField fx:id="setsTextField" layoutX="37.0" layoutY="350" prefWidth="150" />
        <TextField fx:id="repsTextField" layoutX="37.0" layoutY="400" prefWidth="150" />
        <TextField fx:id="weightTextField" layoutX="37.0" layoutY="450" prefWidth="150" />
-       <Button fx:id="nyØvelseButton" layoutX="37.0" layoutY="600" prefWidth="150" text="Legg til øvelse" onAction="#handleNyØvelse"/>
+       <Button fx:id="nyØvelseButton" layoutX="37.0" layoutY="600" onAction="#handleNyØvelse" prefWidth="150" text="Legg til øvelse" />
 
 
    </children>
