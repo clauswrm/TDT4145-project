@@ -12,7 +12,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 
@@ -33,6 +35,10 @@ public class ØvelserController implements Initializable {
     public ChoiceBox<Øvelse>  øvelseListView;
     public ChoiceBox<Øvelsesgruppe> gruppeViewChoiceBox;
 
+    public DatePicker startDatePicker;
+    public DatePicker endDatePicker;
+    public ListView<String> resultListView;
+
 
     public void initialize(URL location, ResourceBundle resources) {
         friØvelseCheckBox.setSelected(true);
@@ -50,6 +56,30 @@ public class ØvelserController implements Initializable {
         for(Øvelse øvelse:øvelser){
             items.add(øvelse);
         }
+    }
+    public void updateResultListView(){
+        Øvelse øvelse = øvelseListView.getValue();
+
+        if(øvelse instanceof Apparatøvelse){
+            updateApparatResultListView((Apparatøvelse) øvelse);
+        }
+        if(øvelse instanceof Friøvelse){
+            updateFriResultListView((Friøvelse) øvelse);
+        }
+
+    }
+    public void updateApparatResultListView(Apparatøvelse øvelse){
+        Map<Treningsøkt, Map<String, Integer>> resultater = øvelse.getProgressForApparatøvelse();
+        LocalDate startDate = startDatePicker.getValue();
+        LocalDate endDate = endDatePicker.getValue();
+
+        for(Treningsøkt økt: resultater.keySet()){
+            //TODO:Konvertering mellom LocalDate og Date
+        }
+
+    }
+    public void updateFriResultListView(Friøvelse øvelse){
+
     }
 
     private void updateGruppeChoiceBox(){
