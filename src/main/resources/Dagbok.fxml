@@ -8,37 +8,47 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<AnchorPane prefHeight="567.0" prefWidth="925.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.DagbokController">
-    <Button fx:id="goToMainMenuButton" layoutX="799.0" layoutY="90.0" mnemonicParsing="false" onAction="#goToMainMenu" text="Hovedmenyen" />
+<AnchorPane prefHeight="900.0" prefWidth="660.0" styleClass="train_background" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.DagbokController">
+   <Pane layoutX="41.0" layoutY="120.0" prefHeight="276.0" prefWidth="587.0" styleClass="train_foreground">
+      <children>
+          <TextField fx:id="varighetTextField" layoutX="214.0" layoutY="91.0" prefHeight="26.0" prefWidth="150.0" promptText="Minutter" />
+         <Label layoutX="395.0" layoutY="137.0" styleClass="train_text" text="Form" />
+         <Label layoutX="214.0" layoutY="53.0" styleClass="train_text" text="Varighet i minutter" />
+         <Label layoutX="214.0" layoutY="137.0" styleClass="train_text" text="Innsats" />
+          <Button fx:id="nyØktButton" layoutX="32.0" layoutY="174.0" mnemonicParsing="false" onAction="#handleNewØkt" styleClass="train_button" text="Ny økt" />
 
-    <!-- Ny økt -->
-   <Label layoutX="46.0" layoutY="81.0" text="Dato" />
-   <Label layoutX="46.0" layoutY="202.0" text="Varighet i minutter" />
-   <Label layoutX="288.0" layoutY="81.0" text="Form" />
-   <Label layoutX="290.0" layoutY="135.0" text="Innsats" />
-    <TextField fx:id="varighetTextField" layoutX="46.0" layoutY="226.0" prefHeight="26.0" prefWidth="150.0" />
-    <Button fx:id="nyØktButton" layoutX="290.0" layoutY="230.0" mnemonicParsing="false" onAction="#handleNewØkt" text="Ny økt" />
+         <ChoiceBox fx:id="formChoiceBox" layoutX="395.0" layoutY="177.0" prefWidth="150.0" />
+         <ChoiceBox fx:id="innsatsChoiceBox" layoutX="214.0" layoutY="177.0" prefWidth="150.0" />
 
-   <ChoiceBox fx:id="formChoiceBox" layoutX="288.0" layoutY="103.0" prefWidth="150.0" />
-   <ChoiceBox fx:id="innsatsChoiceBox" layoutX="288.0" layoutY="158.0" prefWidth="150.0" />
+          <!-- Ny økt -->
+         <Label layoutX="396.0" layoutY="53.0" styleClass="train_text" text="Dato" />
+         <DatePicker fx:id="datoPicker" layoutX="395.0" layoutY="91.0" prefHeight="26.0" prefWidth="150.0" />
+         <Label layoutX="32.0" layoutY="53.0" styleClass="train_under_title" text="Lag ny økt" />
+      </children>
+   </Pane>
+   <Pane layoutX="42.0" layoutY="421.0" prefHeight="447.0" prefWidth="587.0" styleClass="train_foreground">
+      <children>
 
 
-    <!-- Hent treningsøkter -->
-   <Label layoutX="46.0" layoutY="399.0" text="Hent siste treningsøkter: Antall" />
-   <TextField fx:id="antallØkterTextField" layoutX="46.0" layoutY="423.0" prefHeight="26.0" prefWidth="150.0" />
-    <Button fx:id="hentØkterButton" layoutX="291.0" layoutY="424.0" onAction="#handleGetØkter" text="Hent økter" />
-   <Label layoutX="547.0" layoutY="153.0" text="Økter" />
-   <ScrollPane fx:id="økterPane" layoutX="547.0" layoutY="175.0" prefHeight="305.0" prefWidth="345.0">
-     <ListView fx:id="øktView" />
-   </ScrollPane>
-   <DatePicker fx:id="datoPicker" layoutX="46.0" layoutY="102.0" prefHeight="26.0" prefWidth="150.0" />
-   <Text layoutX="383.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dagbok" wrappingWidth="112.7999986410141">
+          <!-- Hent treningsøkter -->
+         <Label layoutX="14.0" layoutY="136.0" styleClass="train_text" text="Hent siste treningsøkter:" />
+         <TextField fx:id="antallØkterTextField" layoutX="14.0" layoutY="175.0" prefHeight="26.0" prefWidth="150.0" promptText="Antall" />
+          <Button fx:id="hentØkterButton" layoutX="17.0" layoutY="253.0" onAction="#handleGetØkter" styleClass="train_button" text="Hent økter" />
+         <Label layoutX="26.0" layoutY="14.0" styleClass="train_under_title" text="Økter" />
+         <ScrollPane fx:id="økterPane" layoutX="228.0" layoutY="10.0" prefHeight="423.0" prefWidth="345.0">
+           <ListView fx:id="øktView" prefHeight="419.0" prefWidth="342.0" />
+         </ScrollPane>
+      </children>
+   </Pane>
+   <Text fill="#dedede" layoutX="241.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="train_title" text="Dagbok" wrappingWidth="190.39999185925262">
       <font>
          <Font size="30.0" />
       </font>
    </Text>
+    <Button fx:id="goToMainMenuButton" layoutX="506.0" layoutY="49.0" mnemonicParsing="false" onAction="#goToMainMenu" styleClass="train_button" text="Hovedmenyen" />
 
 
 

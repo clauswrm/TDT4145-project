@@ -2,26 +2,27 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-
-<?import javafx.scene.control.ListView?>
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
-<?import javafx.scene.control.ScrollPane?>
-<AnchorPane prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.ApparaterController">
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<AnchorPane prefHeight="900" prefWidth="660" styleClass="train_background" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.ApparaterController">
    <children>
-       <Label layoutX="63.0" layoutY="104.0" text="Navn" />
-       <Label layoutX="63.0" layoutY="160.0" text="Beskrivelse" />
-      <TextField layoutX="64.0" layoutY="125.0" fx:id="navnField" />
-      <TextField layoutX="64.0" layoutY="177.0" fx:id="beskrivelseField"/>
-    <Button layoutX="63.0" layoutY="213.0" mnemonicParsing="false" fx:id="nyttApparat" text="Legg til nytt apparat" onAction="#handleNyttApparat" />
-       <Button mnemonicParsing="false" text="Hovedmenyen" fx:id="goToMainMenu" onAction="#goToMainMenu"/>
-      <ScrollPane layoutY="100" layoutX="500" fitToHeight="true" hbarPolicy="NEVER">
-        <ListView fx:id="listView"/>
+       <Label layoutX="78.0" layoutY="190.0" styleClass="train_text" text="Navn" />
+       <Label layoutX="77.0" layoutY="277.0" styleClass="train_text" text="Beskrivelse" />
+      <TextField fx:id="navnField" layoutX="78.0" layoutY="220.0" prefHeight="26.0" prefWidth="210.0" />
+      <TextField fx:id="beskrivelseField" layoutX="78.0" layoutY="307.0" prefHeight="26.0" prefWidth="210.0" />
+    <Button fx:id="nyttApparat" layoutX="77.0" layoutY="560.0" mnemonicParsing="false" onAction="#handleNyttApparat" styleClass="train_button" text="Legg til nytt apparat" />
+       <Button fx:id="goToMainMenu" layoutX="506.0" layoutY="49.0" mnemonicParsing="false" onAction="#goToMainMenu" styleClass="train_button" text="Hovedmenyen" />
+      <ScrollPane fitToHeight="true" hbarPolicy="NEVER" layoutX="346.0" layoutY="190.0">
+        <ListView fx:id="listView" />
       </ScrollPane>
+      <Text fill="#dedede" layoutX="235.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="train_title" text="Apparater" wrappingWidth="190.39999185925262">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

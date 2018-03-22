@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-
-<?import javafx.scene.control.ListView?>
-<AnchorPane prefHeight="720.0" prefWidth="1280" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.ØvelserController">
+<AnchorPane prefHeight="900" prefWidth="660" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.ØvelserController">
     <Button fx:id="goToMainMenu" layoutX="700" mnemonicParsing="false" onAction="#goToMainMenu" text="Hovedmenyen" />
     <ChoiceBox fx:id="gruppeViewChoiceBox" layoutX="320.0" layoutY="163.0" onAction="#updateØvelseListView">
     </ChoiceBox>

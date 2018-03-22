@@ -1,0 +1,47 @@
+#main_title {
+    -fx-font-size: 50px;
+    -fx-font-family: "Arial";
+
+    -fx-text-fill: #DEDEDE;
+    -fx-text-alignment: center;
+}
+
+.main_buttons {
+    -fx-font-size: 25px;
+    -fx-text-fill: #DEDEDE;
+    -fx-background-color: rgb(30, 148, 148);
+}
+
+.train_title {
+    -fx-font-size: 40px;
+    -fx-font-family: "Arial";
+    -fx-text-fill: #DEDEDE;
+    -fx-text-alignment: center;
+}
+
+.train_button {
+    -fx-font-size: 15px;
+    -fx-text-fill: #DEDEDE;
+    -fx-background-color: rgb(30, 148, 148);
+}
+
+.train_background {
+    -fx-background-color: #222222;
+}
+
+.train_foreground {
+    -fx-background-color: #222222;
+}
+
+.train_text {
+    -fx-text-fill: #DEDEDE;
+    -fx-font-size: 14px;
+}
+
+.train_under_title {
+    -fx-font-size: 20px;
+    -fx-font-family: "Arial";
+    -fx-text-fill: #DEDEDE;
+    -fx-text-alignment: center;
+}
+
