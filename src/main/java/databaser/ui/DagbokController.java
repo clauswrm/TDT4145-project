@@ -12,11 +12,13 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class DagbokController extends BaseController {
 
@@ -121,7 +123,8 @@ public class DagbokController extends BaseController {
         updateØkter(økter, items);
     }
 
-    public void initialize() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         updateIntegerChoiceBox(innsatsChoiceBox);
         updateIntegerChoiceBox(formChoiceBox);
         updateDagbokView();

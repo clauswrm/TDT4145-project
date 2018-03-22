@@ -9,7 +9,6 @@ import databaser.persistence.Øvelsesgruppe;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -26,7 +25,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 
-public class ØvelserController extends BaseController implements Initializable {
+public class ØvelserController extends BaseController {
 
     @FXML
     public Button goToMainMenu;

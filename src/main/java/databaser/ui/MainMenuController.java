@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class MainMenuController extends BaseController {
 
@@ -28,5 +30,10 @@ public class MainMenuController extends BaseController {
     @FXML
     public void goToØvelser(ActionEvent event) throws IOException {
         goTo(event, Page.ØVELSER);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 }

@@ -3,6 +3,7 @@ package databaser.ui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -10,7 +11,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
-public abstract class BaseController {
+public abstract class BaseController implements Initializable {
 
     @FXML
     public void goTo(ActionEvent event, Page page) throws IOException {

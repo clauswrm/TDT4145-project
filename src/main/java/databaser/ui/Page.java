@@ -10,7 +10,7 @@ public enum Page {
     ØKT("/Økt.fxml", "Økt"),
     ØVELSER("/Øvelser.fxml", "Øvelse"),;
 
-    private final String fxmlFile;
+    private final String fxmlPath;
     private final String title;
 
     /**
@@ -20,12 +20,12 @@ public enum Page {
      * @param title    Title for the page.
      */
     Page(String fxmlFile, String title) {
-        this.fxmlFile = fxmlFile;
+        this.fxmlPath = fxmlFile;
         this.title = UserInterface.appName + " - " + title;
     }
 
     public String fxmlPath() {
-        return fxmlFile;
+        return fxmlPath;
     }
 
     public String title() {
