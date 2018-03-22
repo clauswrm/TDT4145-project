@@ -1,9 +1,9 @@
 package databaser;
 
-import databaser.ui.UserInterface;
+import databaser.ui.TrainingApp;
 
 public class Main {
     public static void main(String[] args) {
-        UserInterface.main(args);
+        TrainingApp.main(args);
     }
 }

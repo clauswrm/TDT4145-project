@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<AnchorPane prefHeight="900" prefWidth="660" styleClass="train_background" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.ApparaterController">
+<AnchorPane prefHeight="900" prefWidth="660" styleClass="train_background" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.controllers.ApparaterController">
    <children>
        <Label layoutX="78.0" layoutY="190.0" styleClass="train_text" text="Navn" />
        <Label layoutX="77.0" layoutY="277.0" styleClass="train_text" text="Beskrivelse" />

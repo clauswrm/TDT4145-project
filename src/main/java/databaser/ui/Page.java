@@ -21,7 +21,7 @@ public enum Page {
      */
     Page(String fxmlFile, String title) {
         this.fxmlPath = fxmlFile;
-        this.title = UserInterface.appName + " - " + title;
+        this.title = TrainingApp.appName + " - " + title;
     }
 
     public String fxmlPath() {

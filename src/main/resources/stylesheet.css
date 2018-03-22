@@ -1,3 +1,4 @@
+/* Main screen */
 #main_title {
     -fx-font-size: 50px;
     -fx-font-family: "Arial";
@@ -11,6 +12,8 @@
     -fx-text-fill: #DEDEDE;
     -fx-background-color: rgb(30, 148, 148);
 }
+
+/* Other screens */
 
 .train_title {
     -fx-font-size: 40px;
@@ -29,9 +32,6 @@
     -fx-background-color: #222222;
 }
 
-.train_foreground {
-    -fx-background-color: #222222;
-}
 
 .train_text {
     -fx-text-fill: #DEDEDE;
@@ -45,3 +45,8 @@
     -fx-text-alignment: center;
 }
 
+/* Unused */
+
+.train_foreground {
+    -fx-background-color: #222222;
+}

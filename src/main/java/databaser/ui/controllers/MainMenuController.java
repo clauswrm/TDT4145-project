@@ -1,5 +1,6 @@
-package databaser.ui;
+package databaser.ui.controllers;
 
+import databaser.ui.Page;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

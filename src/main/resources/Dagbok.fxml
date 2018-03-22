@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<AnchorPane prefHeight="900.0" prefWidth="660.0" styleClass="train_background" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.DagbokController">
+<AnchorPane prefHeight="900.0" prefWidth="660.0" styleClass="train_background" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.controllers.DagbokController">
    <Pane layoutX="41.0" layoutY="120.0" prefHeight="276.0" prefWidth="587.0" styleClass="train_foreground">
       <children>
           <TextField fx:id="varighetTextField" layoutX="214.0" layoutY="91.0" prefHeight="26.0" prefWidth="150.0" promptText="Minutter" />

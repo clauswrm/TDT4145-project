@@ -1,6 +1,7 @@
-package databaser.ui;
+package databaser.ui.controllers;
 
 import databaser.persistence.Apparat;
+import databaser.ui.Page;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane prefHeight="900" prefWidth="660" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.ØvelserController">
+<AnchorPane prefHeight="900" prefWidth="660" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.controllers.ØvelserController">
     <Button fx:id="goToMainMenu" layoutX="700" mnemonicParsing="false" onAction="#goToMainMenu" text="Hovedmenyen" />
     <ChoiceBox fx:id="gruppeViewChoiceBox" layoutX="320.0" layoutY="163.0" onAction="#updateØvelseListView">
     </ChoiceBox>

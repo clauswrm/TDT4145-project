@@ -1,5 +1,6 @@
 package databaser.ui;
 
+import databaser.ui.controllers.MainMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,11 +9,12 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 
-public class UserInterface extends Application {
+public class TrainingApp extends Application {
 
-    protected static final int WIDTH = 660, HEIGHT = 900;
-    protected static final String appName = "Train-n-Gain";
-    protected static Stage primaryStage;
+    public static final int WIDTH = 660;
+    public static final int HEIGHT = 900;
+    public static final String appName = "Train-n-Gain";
+    public static Stage primaryStage;
 
     public static void main(String[] args) {
         launch(args);
@@ -20,7 +22,7 @@ public class UserInterface extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        UserInterface.primaryStage = primaryStage;
+        TrainingApp.primaryStage = primaryStage;
 
         URL resource = getClass().getResource(Page.MAIN_MENU.fxmlPath());
         FXMLLoader loader = new FXMLLoader();

@@ -1,5 +1,7 @@
-package databaser.ui;
+package databaser.ui.controllers;
 
+import databaser.ui.Page;
+import databaser.ui.TrainingApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,9 +22,9 @@ public abstract class BaseController implements Initializable {
         loader.setLocation(resource);
         Parent root = loader.load();
 
-        Stage primaryStage = UserInterface.primaryStage;
+        Stage primaryStage = TrainingApp.primaryStage;
         primaryStage.setTitle(page.title());
-        primaryStage.setScene(new Scene(root, UserInterface.WIDTH, UserInterface.HEIGHT));
+        primaryStage.setScene(new Scene(root, TrainingApp.WIDTH, TrainingApp.HEIGHT));
         primaryStage.show();
     }
 }
