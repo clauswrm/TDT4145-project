@@ -4,27 +4,23 @@ import databaser.persistence.Treningsøkt;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
-public class DagbokController {
+public class DagbokController extends BaseController {
 
+    @FXML
     public Button goToMainMenuButton;
 
     //Ny økt
@@ -51,15 +47,12 @@ public class DagbokController {
 
     @FXML
     public void goToMainMenu(ActionEvent event) throws IOException {
-        URL resource = getClass().getResource("/MainMenu.fxml");
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(resource);
-        Parent root = loader.load();
+        goTo(event, Page.MAIN_MENU);
+    }
 
-        Stage primaryStage = (Stage) goToMainMenuButton.getScene().getWindow();
-
-        primaryStage.setScene(new Scene(root, 1280, 720));
-        primaryStage.show();
+    @FXML
+    public void goToØkt(ActionEvent event) throws IOException {
+        goTo(event, Page.ØKT);
     }
 
     @FXML
@@ -92,17 +85,6 @@ public class DagbokController {
         }
     }
 
-    @FXML
-    public void goToØkt(ActionEvent event) throws IOException {
-        URL resource = getClass().getResource("/Økt.fxml");
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(resource);
-        Parent root = loader.load();
-
-        Stage primaryStage = (Stage) økterPane.getScene().getWindow();
-        primaryStage.setScene(new Scene(root, 1280, 720));
-        primaryStage.show();
-    }
 
     @FXML
     public void handleNewØkt() {

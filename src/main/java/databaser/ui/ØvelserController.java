@@ -1,14 +1,22 @@
 package databaser.ui;
 
-import databaser.persistence.*;
+import databaser.persistence.Apparat;
+import databaser.persistence.Apparatøvelse;
+import databaser.persistence.Friøvelse;
+import databaser.persistence.Treningsøkt;
+import databaser.persistence.Øvelse;
+import databaser.persistence.Øvelsesgruppe;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,25 +26,40 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 
-public class ØvelserController implements Initializable {
+public class ØvelserController extends BaseController implements Initializable {
 
+    @FXML
     public Button goToMainMenu;
+    @FXML
     public ChoiceBox<Øvelsesgruppe> gruppeChoiceBox;
+    @FXML
     public ChoiceBox<Apparat> apparatChoiceBox;
+    @FXML
     public Button addGruppeButton;
+    @FXML
     public TextField gruppeNavnTextField;
+    @FXML
     public Button addØvelseButton;
+    @FXML
     public TextArea øvelseBeskrivelse;
+    @FXML
     public TextField øvelseNavn;
 
+    @FXML
     public CheckBox apparatØvelseCheckBox;
+    @FXML
     public CheckBox friØvelseCheckBox;
 
-    public ChoiceBox<Øvelse>  øvelseListView;
+    @FXML
+    public ChoiceBox<Øvelse> øvelseListView;
+    @FXML
     public ChoiceBox<Øvelsesgruppe> gruppeViewChoiceBox;
 
+    @FXML
     public DatePicker startDatePicker;
+    @FXML
     public DatePicker endDatePicker;
+    @FXML
     public ListView<String> resultListView;
 
 
@@ -47,68 +70,71 @@ public class ØvelserController implements Initializable {
         updateApparatChoiceBox();
     }
 
-    public void updateØvelseListView(){
+    @FXML
+    public void updateØvelseListView() {
         ObservableList<Øvelse> items = øvelseListView.getItems();
         items.clear();
         Øvelsesgruppe gruppe = gruppeViewChoiceBox.getValue();
         List<Øvelse> øvelser = gruppe.getØvelser();
-
-        for(Øvelse øvelse:øvelser){
-            items.add(øvelse);
-        }
+        items.addAll(øvelser);
     }
-    public void updateResultListView(){
+
+    @FXML
+    public void updateResultListView() {
         Øvelse øvelse = øvelseListView.getValue();
 
-        if(øvelse instanceof Apparatøvelse){
+        if (øvelse instanceof Apparatøvelse) {
             updateApparatResultListView((Apparatøvelse) øvelse);
         }
-        if(øvelse instanceof Friøvelse){
+        if (øvelse instanceof Friøvelse) {
             updateFriResultListView((Friøvelse) øvelse);
         }
 
     }
-    public void updateApparatResultListView(Apparatøvelse øvelse){
+
+    @FXML
+    public void updateApparatResultListView(Apparatøvelse øvelse) {
         Map<Treningsøkt, Map<String, Integer>> resultater = øvelse.getProgressForApparatøvelse();
         LocalDate startDate = startDatePicker.getValue();
         LocalDate endDate = endDatePicker.getValue();
 
-        for(Treningsøkt økt: resultater.keySet()){
-            //TODO:Konvertering mellom LocalDate og Date
+        for (Treningsøkt økt : resultater.keySet()) {
+            //TODO:Konvertering mellom LocalDa te og Date
         }
 
     }
-    public void updateFriResultListView(Friøvelse øvelse){
+
+    public void updateFriResultListView(Friøvelse øvelse) {
 
     }
 
-    private void updateGruppeChoiceBox(){
+    @FXML
+    private void updateGruppeChoiceBox() {
         ObservableList<Øvelsesgruppe> items = gruppeChoiceBox.getItems();
         items.clear();
         List<Øvelsesgruppe> grupper = Øvelsesgruppe.getAll();
 
-        for(Øvelsesgruppe gruppe: grupper){
-            items.add(gruppe);
-        }
+        items.addAll(grupper);
+
         gruppeViewChoiceBox.getItems().clear();
         gruppeViewChoiceBox.getItems().addAll(items);
     }
 
-    public void handleAddØvelse(){
+    @FXML
+    public void handleAddØvelse() {
         String beskrivelse = øvelseBeskrivelse.getText();
         String navn = øvelseNavn.getText();
 
         øvelseBeskrivelse.setText("");
         øvelseNavn.setText("");
         Øvelse øvelse;
-        if(apparatØvelseCheckBox.isSelected()){
+        if (apparatØvelseCheckBox.isSelected()) {
             Apparat apparat = apparatChoiceBox.getValue();
 
-            øvelse = new Apparatøvelse(navn,beskrivelse,apparat);
+            øvelse = new Apparatøvelse(navn, beskrivelse, apparat);
             øvelse.save();
-        }
-        else{
-            øvelse = new Friøvelse(navn,beskrivelse);
+        } else {
+            øvelse = new Friøvelse(navn, beskrivelse);
             øvelse.save();
         }
         //TODO: Håndtere øvelsesgrupper
@@ -117,37 +143,40 @@ public class ØvelserController implements Initializable {
         øvelse.addToØvelsesgruppe(gruppe);
 
     }
-    public void updateApparatChoiceBox(){
+
+    @FXML
+    public void updateApparatChoiceBox() {
         ObservableList<Apparat> items = apparatChoiceBox.getItems();
         items.clear();
         List<Apparat> apparater = Apparat.getAll();
-        for(Apparat apparat:apparater){
-            items.add(apparat);
-        }
+        items.addAll(apparater);
 
     }
-    public void handleApparatØvelseCheckBox(){
 
-        if(apparatØvelseCheckBox.isSelected()){
+    @FXML
+    public void handleApparatØvelseCheckBox() {
+
+        if (apparatØvelseCheckBox.isSelected()) {
             friØvelseCheckBox.setSelected(false);
             apparatChoiceBox.setVisible(true);
-        }
-        else{
+        } else {
             apparatØvelseCheckBox.setSelected(true);
         }
     }
-    public void handleFriØvelseCheckBox(){
-        if(friØvelseCheckBox.isSelected()){
+
+    @FXML
+    public void handleFriØvelseCheckBox() {
+        if (friØvelseCheckBox.isSelected()) {
             apparatChoiceBox.setVisible(false);
             apparatØvelseCheckBox.setSelected(false);
-        }
-        else{
+        } else {
             friØvelseCheckBox.setSelected(true);
         }
     }
 
-    public void handleNyGruppe(){
-        String gruppeNavn =  gruppeNavnTextField.getText();
+    @FXML
+    public void handleNyGruppe() {
+        String gruppeNavn = gruppeNavnTextField.getText();
         gruppeNavnTextField.setText("");
 
         Øvelsesgruppe gruppe = new Øvelsesgruppe(gruppeNavn);
@@ -155,18 +184,8 @@ public class ØvelserController implements Initializable {
         updateGruppeChoiceBox();
     }
 
-
-
+    @FXML
     public void goToMainMenu(ActionEvent event) throws IOException {
-        URL resource = getClass().getResource("/MainMenu.fxml");
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(resource);
-        Parent root = loader.load();
-
-        Stage primaryStage = (Stage) goToMainMenu.getScene().getWindow();
-
-        primaryStage.setScene(new Scene(root,1280,720));
-        primaryStage.show();
-
+        goTo(event, Page.MAIN_MENU);
     }
 }
