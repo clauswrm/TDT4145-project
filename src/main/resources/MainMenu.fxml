@@ -18,5 +18,6 @@
       <Text fill="#dedede" layoutX="469.0" layoutY="857.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="train_under_title" text="V2018" wrappingWidth="105.6706771850586" />
       <Text fill="#dedede" layoutX="85.0" layoutY="857.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="train_under_title" text="TDT4145" wrappingWidth="105.67068010568619" />
       <Text fill="#dedede" layoutX="181.0" layoutY="797.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="train_under_title" text="Ask, Claus, Nora og Henrik" wrappingWidth="297.67064666748047" />
+      <Button fx:id="instillingerButton" layoutX="530.0" layoutY="54.0" mnemonicParsing="false" onAction="#goToInstillinger" styleClass="train_button" text="Instillinger" />
    </children>
 </AnchorPane>
