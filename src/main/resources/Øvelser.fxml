@@ -8,7 +8,7 @@
     <Button fx:id="goToMainMenu" layoutX="495.0" layoutY="51.0" mnemonicParsing="false" onAction="#goToMainMenu" styleClass="train_button" text="Hovedmenyen" />
     <ChoiceBox fx:id="gruppeViewChoiceBox" layoutX="371.0" layoutY="222.0" onAction="#updateØvelseListView" prefHeight="26.0" prefWidth="248.0">
     </ChoiceBox>
-   <TextField fx:id="øvelseNavn" layoutX="54.0" layoutY="181.0" prefHeight="26.0" prefWidth="198.0" />
+   <TextField fx:id="øvelseNavn" layoutX="54.0" layoutY="181.0" prefHeight="26.0" prefWidth="198.0" promptText="Navn" />
    <Label layoutX="55.0" layoutY="117.0" styleClass="train_under_title" text="Ny øvelse" />
    <Label layoutX="55.0" layoutY="155.0" styleClass="train_text" text="Navn" />
    <Label layoutX="55.0" layoutY="215.0" styleClass="train_text" text="Beskrivelse" />
@@ -17,14 +17,14 @@
          <Font name="Arial" size="14.0" />
       </font></CheckBox>
    <ChoiceBox fx:id="apparatChoiceBox" layoutX="52.0" layoutY="438.0" prefHeight="26.0" prefWidth="198.0" />
-   <TextArea fx:id="øvelseBeskrivelse" layoutX="54.0" layoutY="241.0" prefHeight="81.0" prefWidth="197.0" />
+   <TextArea fx:id="øvelseBeskrivelse" layoutX="54.0" layoutY="241.0" prefHeight="81.0" prefWidth="197.0" promptText="Beskrivelse" />
    <Button fx:id="addØvelseButton" layoutX="51.0" layoutY="520.0" mnemonicParsing="false" onAction="#handleAddØvelse" prefHeight="31.0" prefWidth="198.0" styleClass="train_button" text="Legg til Øvelse" />
    <ChoiceBox fx:id="gruppeChoiceBox" layoutX="53.0" layoutY="353.0" prefHeight="26.0" prefWidth="198.0" />
    <Label layoutX="51.0" layoutY="625.0" styleClass="train_under_title" text="Ny Gruppe" />
    <Label layoutX="52.0" layoutY="662.0" styleClass="train_text" text="Navn" />
    <Label layoutX="51.0" layoutY="725.0" styleClass="train_text" text="Beskrivelse" />
-   <TextField fx:id="gruppeNavnTextField" layoutX="51.0" layoutY="692.0" prefHeight="26.0" prefWidth="198.0" />
-   <TextField fx:id="gruppeBeskrivelseTextField" layoutX="51.0" layoutY="753.0" prefHeight="26.0" prefWidth="198.0" />
+   <TextField fx:id="gruppeNavnTextField" layoutX="51.0" layoutY="692.0" prefHeight="26.0" prefWidth="198.0" promptText="Navn" />
+   <TextField fx:id="gruppeBeskrivelseTextField" layoutX="51.0" layoutY="753.0" prefHeight="26.0" prefWidth="198.0" promptText="Beskrivelse" />
    <CheckBox fx:id="friØvelseCheckBox" layoutX="52.0" layoutY="481.0" mnemonicParsing="false" onAction="#handleFriØvelseCheckBox" text="Friøvelse" textFill="#dedede">
       <font>
          <Font name="Arial" size="14.0" />
