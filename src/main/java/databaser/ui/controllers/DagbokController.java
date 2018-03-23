@@ -75,6 +75,7 @@ public class DagbokController extends BaseController {
 
             Button button = new Button();
             button.setText(økt.toString());
+            button.getStyleClass().add("train_button");
 
             button.setOnAction(event -> {
                 try {
