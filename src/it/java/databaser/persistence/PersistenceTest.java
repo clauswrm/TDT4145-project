@@ -67,17 +67,18 @@ public class PersistenceTest {
         final List<Øvelsesgruppe> øvelsesgrupper = Øvelsesgruppe.getAll();
 
         // Then
-        assertThat(apparater, hasSize(1));
-        assertThat(apparatøvelser, hasSize(1));
-        assertThat(friøvelser, hasSize(1));
-        assertThat(treningsøkter, hasSize(1));
-        assertThat(notater, hasSize(1));
-        assertThat(øvelsesgrupper, hasSize(1));
+        assertThat(apparater, hasItem(romaskin));
+        assertThat(apparatøvelser, hasItem(roing));
+        assertThat(friøvelser, hasItem(pushups));
+        assertThat(treningsøkter, hasItem(økt));
+        assertThat(notater, hasItem(notat));
+        assertThat(øvelsesgrupper, hasItem(armøvelser));
     }
 
     @Test
     public void shouldAddØvelserToØvelsesgruppe() {
         // Given
+        final int oldSize = armøvelser.getØvelser().size();
         roing.addToØvelsesgruppe(armøvelser);
         pushups.addToØvelsesgruppe(armøvelser);
 
@@ -85,13 +86,17 @@ public class PersistenceTest {
         final List<Øvelse> øvelser = armøvelser.getØvelser();
 
         // Then
-        assertThat(øvelser.size(), is(2));
+        assertThat(øvelser.size(), is(oldSize + 2));
         assertThat(øvelser, hasItems(roing, pushups));
     }
 
     @Test
     public void shouldAddØvelserToTreningsøkt() {
         // Given
+        final int oldØvelserSize = økt.getØvelser().size();
+        final int oldRoingSize = roing.getTreningsøkterWithØvelse().size();
+        final int oldPushupsSize = pushups.getTreningsøkterWithØvelse().size();
+
         økt.addApparatøvelse(roing, 4, 12, 4);
         økt.addFriøvelse(pushups, "Max push x 4 med 1 min pause");
 
@@ -104,18 +109,17 @@ public class PersistenceTest {
         final Map<Treningsøkt, String> progressForFriøvelse = pushups.getProgressForFriøvelse();
 
         // Then
-        assertThat(øvelserInTreningsøkt, hasSize(2));
+        assertThat(øvelserInTreningsøkt, hasSize(oldØvelserSize + 2));
         assertThat(øvelserInTreningsøkt, hasItems(roing, pushups));
 
-        assertThat(treningsøkterWithRoing, hasSize(1));
+        assertThat(treningsøkterWithRoing, hasSize(oldRoingSize + 1));
         assertThat(treningsøkterWithRoing, hasItem(økt));
 
-        assertThat(treningsøkterWithPushups, hasSize(1));
+        assertThat(treningsøkterWithPushups, hasSize(oldPushupsSize + 1));
         assertThat(treningsøkterWithPushups, hasItem(økt));
 
-        assertThat(progressForApparatøvelse.size(), is(1));
         assertThat(progressForApparatøvelse.get(økt).keySet(), hasItems("kilo", "reps", "set"));
-        assertThat(progressForFriøvelse.size(), is(1));
+        assertThat(progressForFriøvelse.keySet(), hasSize(1));
     }
 
     @Test
@@ -124,7 +128,6 @@ public class PersistenceTest {
         final List<Notat> notater = økt.getNotater();
 
         // Then
-        assertThat(notater, hasSize(1));
         assertThat(notater, hasItem(notat));
     }
 
