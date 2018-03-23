@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -292,6 +293,18 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
         } catch (SQLException e) {
             throw new RuntimeException("Unable to get stats for Øvelse from Treningsøkt from the database", e);
         }
+    }
+    public boolean isInInterval(LocalDate start,LocalDate end){
+
+        LocalDate localDate = LocalDate.of(dato.getYear()+1,dato.getMonth()+1,dato.getDay()+1);
+
+        if(localDate.compareTo(start) == 1){
+            if(localDate.compareTo(end)==-1){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public String getStatsForFriøvelse(Friøvelse friøvelse) {

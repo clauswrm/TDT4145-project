@@ -21,6 +21,7 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -51,7 +52,10 @@ public class ØvelserController extends BaseController {
     public CheckBox friØvelseCheckBox;
 
     @FXML
-    public ChoiceBox<Øvelse> øvelseListView;
+    public ChoiceBox<String> øvelseChoiceBox;
+
+    public ArrayList<Øvelse> øvelseArrayList = new ArrayList<>();
+
     @FXML
     public ChoiceBox<Øvelsesgruppe> gruppeViewChoiceBox;
 
@@ -70,18 +74,10 @@ public class ØvelserController extends BaseController {
         updateApparatChoiceBox();
     }
 
-    @FXML
-    public void updateØvelseListView() {
-        ObservableList<Øvelse> items = øvelseListView.getItems();
-        items.clear();
-        Øvelsesgruppe gruppe = gruppeViewChoiceBox.getValue();
-        List<Øvelse> øvelser = gruppe.getØvelser();
-        items.addAll(øvelser);
-    }
 
     @FXML
     public void updateResultListView() {
-        Øvelse øvelse = øvelseListView.getValue();
+        Øvelse øvelse = findØvelseFromString();
 
         if (øvelse instanceof Apparatøvelse) {
             updateApparatResultListView((Apparatøvelse) øvelse);
@@ -89,17 +85,53 @@ public class ØvelserController extends BaseController {
         if (øvelse instanceof Friøvelse) {
             updateFriResultListView((Friøvelse) øvelse);
         }
-
     }
 
     @FXML
+    public void updateØvelseChoiceBox() {
+        øvelseChoiceBox.getItems().clear();
+        Øvelsesgruppe gruppe = gruppeViewChoiceBox.getValue();
+        øvelseArrayList.clear();
+        øvelseArrayList.addAll(gruppe.getØvelser());
+
+        for (Øvelse øvelse : øvelseArrayList) {
+            øvelseChoiceBox.getItems().add(øvelse.toString());
+        }
+    }
+
+    @FXML
+    public Øvelse findØvelseFromString() {
+        String ovString = øvelseChoiceBox.getValue();
+        for (Øvelse øvelse : øvelseArrayList) {
+            if (øvelse.toString().equals(ovString)) {
+                return øvelse;
+            }
+        }
+        return null;
+    }
+
+
+    @FXML
     public void updateApparatResultListView(Apparatøvelse øvelse) {
+        System.out.println("yolo");
         Map<Treningsøkt, Map<String, Integer>> resultater = øvelse.getProgressForApparatøvelse();
+        System.out.println(resultater.size());
         LocalDate startDate = startDatePicker.getValue();
         LocalDate endDate = endDatePicker.getValue();
 
+        ObservableList<String> items = resultListView.getItems();
+
         for (Treningsøkt økt : resultater.keySet()) {
             //TODO:Konvertering mellom LocalDa te og Date
+            if(økt.isInInterval(startDate,endDate)){
+                Map<String, Integer> stats = økt.getStatsForApparatøvelse(øvelse);
+                String vekt = stats.get("kilo").toString();
+                String reps = stats.get("reps").toString();
+                String sets = stats.get("set").toString();
+
+                items.add(vekt+" "+reps+" "+sets);
+
+            }
         }
 
     }

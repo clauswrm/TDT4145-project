@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Text?>
 <AnchorPane prefHeight="900" prefWidth="660.0" styleClass="train_background" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.controllers.ØvelserController">
     <Button fx:id="goToMainMenu" layoutX="495.0" layoutY="51.0" mnemonicParsing="false" onAction="#goToMainMenu" styleClass="train_button" text="Hovedmenyen" />
-    <ChoiceBox fx:id="gruppeViewChoiceBox" layoutX="371.0" layoutY="222.0" onAction="#updateØvelseListView" prefHeight="26.0" prefWidth="248.0">
+    <ChoiceBox fx:id="gruppeViewChoiceBox" layoutX="371.0" layoutY="222.0" onAction="#updateØvelseChoiceBox" prefHeight="26.0" prefWidth="248.0">
     </ChoiceBox>
    <TextField fx:id="øvelseNavn" layoutX="54.0" layoutY="181.0" prefHeight="26.0" prefWidth="198.0" promptText="Navn" />
    <Label layoutX="55.0" layoutY="117.0" styleClass="train_under_title" text="Ny øvelse" />
@@ -31,7 +31,7 @@
       </font></CheckBox>
    <Label layoutX="55.0" layoutY="329.0" styleClass="train_text" text="Gruppe" />
    <Button fx:id="addGruppeButton" layoutX="51.0" layoutY="803.0" mnemonicParsing="false" onAction="#handleNyGruppe" prefHeight="31.0" prefWidth="198.0" styleClass="train_button" text="Legg til Gruppe" />
-   <ChoiceBox fx:id="øvelseListView" layoutX="371.0" layoutY="313.0" prefHeight="200.0" prefWidth="248.0" />
+   <ChoiceBox fx:id="øvelseChoiceBox" layoutX="371.0" layoutY="313.0" prefHeight="200.0" prefWidth="248.0" onAction="#updateResultListView"/>
    <DatePicker fx:id="startDatePicker" layoutX="371.0" layoutY="152.0" prefHeight="26.0" prefWidth="116.0" />
    <DatePicker fx:id="endDatePicker" layoutX="502.0" layoutY="152.0" prefHeight="26.0" prefWidth="116.0" />
     <ListView fx:id="resultListView" layoutX="371.0" layoutY="554.0" prefHeight="284.0" prefWidth="248.0" />

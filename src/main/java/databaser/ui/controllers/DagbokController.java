@@ -109,6 +109,7 @@ public class DagbokController extends BaseController {
         updateDagbokView();
     }
 
+
     @FXML
     private void updateIntegerChoiceBox(ChoiceBox<Integer> box) {
         ObservableList<Integer> items = box.getItems();
