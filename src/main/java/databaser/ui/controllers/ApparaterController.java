@@ -49,6 +49,9 @@ public class ApparaterController extends BaseController {
     @FXML
     public void handleNyttApparat() {
         String navn = navnField.getText();
+        if (navn == ""){
+            throw new IllegalArgumentException();
+        }
         String beskrivelse = beskrivelseField.getText();
         Apparat nyttApparat = new Apparat(navn, beskrivelse);
         nyttApparat.save();

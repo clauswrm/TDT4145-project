@@ -157,4 +157,7 @@ public class Øvelsesgruppe extends ActiveDomainObject implements Comparable<Øv
     public int compareTo(Øvelsesgruppe other) {
         return this.getNavn().compareTo(other.getNavn());
     }
+    public String toString(){
+        return navn;
+    }
 }

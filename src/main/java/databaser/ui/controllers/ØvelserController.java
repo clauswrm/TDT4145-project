@@ -71,6 +71,8 @@ public class ØvelserController extends BaseController {
         apparatChoiceBox.setVisible(false);
         updateGruppeChoiceBox();
         updateApparatChoiceBox();
+        startDatePicker.setValue(LocalDate.now());
+        endDatePicker.setValue(LocalDate.now());
     }
 
 

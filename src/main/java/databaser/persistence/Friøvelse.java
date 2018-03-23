@@ -213,6 +213,6 @@ public class Friøvelse extends Øvelse {
         }
     }
     public String toString(){
-        return navn;
+        return navn+"\nBeskrivelse: "+beskrivelse;
     }
 }

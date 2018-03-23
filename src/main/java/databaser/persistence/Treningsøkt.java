@@ -298,8 +298,8 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
     }
     public boolean isInInterval(LocalDate start,LocalDate end){
 
-        if(dato.compareTo(Date.from(Instant.from(start.atStartOfDay(ZoneId.systemDefault())))) > 0){
-            if(dato.compareTo(Date.from(Instant.from(end.atStartOfDay(ZoneId.systemDefault())))) < 0){
+        if(dato.compareTo(Date.from(Instant.from(start.atStartOfDay(ZoneId.systemDefault())))) >= 0){
+            if(dato.compareTo(Date.from(Instant.from(end.atStartOfDay(ZoneId.systemDefault())))) <= 0){
                 return true;
             }
         }

@@ -131,5 +131,6 @@ public class DagbokController extends BaseController {
         updateIntegerChoiceBox(innsatsChoiceBox);
         updateIntegerChoiceBox(formChoiceBox);
         updateDagbokView();
+
     }
 }
