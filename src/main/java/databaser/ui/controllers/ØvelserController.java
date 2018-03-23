@@ -20,11 +20,10 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.time.ZoneId;
+import java.util.*;
 
 
 public class ØvelserController extends BaseController {
@@ -113,23 +112,21 @@ public class ØvelserController extends BaseController {
 
     @FXML
     public void updateApparatResultListView(Apparatøvelse øvelse) {
-        System.out.println("yolo");
         Map<Treningsøkt, Map<String, Integer>> resultater = øvelse.getProgressForApparatøvelse();
-        System.out.println(resultater.size());
         LocalDate startDate = startDatePicker.getValue();
         LocalDate endDate = endDatePicker.getValue();
 
-        ObservableList<String> items = resultListView.getItems();
 
+        ObservableList<String> items = resultListView.getItems();
+        items.clear();
         for (Treningsøkt økt : resultater.keySet()) {
-            //TODO:Konvertering mellom LocalDa te og Date
             if(økt.isInInterval(startDate,endDate)){
                 Map<String, Integer> stats = økt.getStatsForApparatøvelse(øvelse);
                 String vekt = stats.get("kilo").toString();
                 String reps = stats.get("reps").toString();
                 String sets = stats.get("set").toString();
 
-                items.add(vekt+" "+reps+" "+sets);
+                items.add(økt.getDato().toString()+"\nVekt: "+vekt+"\nRepetisjoner: "+reps+"\nSett: "+sets);
 
             }
         }

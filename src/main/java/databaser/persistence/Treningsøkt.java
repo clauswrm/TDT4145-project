@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -296,10 +298,8 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
     }
     public boolean isInInterval(LocalDate start,LocalDate end){
 
-        LocalDate localDate = LocalDate.of(dato.getYear()+1,dato.getMonth()+1,dato.getDay()+1);
-
-        if(localDate.compareTo(start) == 1){
-            if(localDate.compareTo(end)==-1){
+        if(dato.compareTo(Date.from(Instant.from(start.atStartOfDay(ZoneId.systemDefault())))) > 0){
+            if(dato.compareTo(Date.from(Instant.from(end.atStartOfDay(ZoneId.systemDefault())))) < 0){
                 return true;
             }
         }
