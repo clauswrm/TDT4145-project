@@ -27,7 +27,10 @@ and password to match your setup.
 Our Active Domain Object classes represent the entities we care about in the database 
 and provides the necessary methods for interacting with them.
 
-The most important method of all _ADOs_ is `.save()`, which saves the objects state to the database.
+The most important methods of all _ADOs_ is:
+* `.save()`, which saves the objects state to the database.
+* `.getAll()` (_static_), which fetches all objects of a certain type (rows from a certain table) from the database.
+* `.getById(int id)` (_static_), which fetches a object with a certain ID from the database.
 
 For in-depth information about how the classes work, see the respective `JavaDoc`.
 
