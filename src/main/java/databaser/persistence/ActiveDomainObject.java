@@ -11,9 +11,9 @@ import java.util.Properties;
  * An abstract base class which all classes that represents an entity in the database should inherrit from.
  */
 public abstract class ActiveDomainObject {
-    private static final String dbUsername = "root",
-                                dbPassword = "yolopass",
-                                dbURL = "jdbc:mysql://localhost:3306/mydb?useSSL=false";
+    public static String dbUsername = "root",
+            dbPassword = "yolopass",
+            dbURL = "jdbc:mysql://localhost:3306/mydb?useSSL=false";
 
 
     /**

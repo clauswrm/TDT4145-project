@@ -17,6 +17,8 @@ public class MainMenuController extends BaseController {
     public Button øvelserButton;
     @FXML
     public Button dagbokButton;
+    @FXML
+    public Button instillingerButton;
 
     @FXML
     public void goToDagbok(ActionEvent event) throws IOException {
@@ -31,6 +33,11 @@ public class MainMenuController extends BaseController {
     @FXML
     public void goToØvelser(ActionEvent event) throws IOException {
         goTo(event, Page.ØVELSER);
+    }
+
+    @FXML
+    public void goToInstillinger(ActionEvent event) throws IOException {
+        goTo(event, Page.INSTILLINGER);
     }
 
     @Override
