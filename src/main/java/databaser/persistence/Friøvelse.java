@@ -183,6 +183,13 @@ public class Friøvelse extends Øvelse {
         }
     }
 
+
+    /**
+     * Fetches the progress for a the Friøvelse as a Map between each {@link Treningsøkt} in which it was
+     * performed, and the given beskrivelse.
+     *
+     * @return the progress for the Friøvelse.
+     */
     public Map<Treningsøkt, String> getProgressForFriøvelse() {
         Map<Treningsøkt, String> progress = new HashMap<>();
 
@@ -212,7 +219,8 @@ public class Friøvelse extends Øvelse {
             throw new RuntimeException("Unable to get progress for Friøvelse from the database", e);
         }
     }
-    public String toString(){
-        return navn+"\nBeskrivelse: "+beskrivelse;
+
+    public String toString() {
+        return navn + "\nBeskrivelse: " + beskrivelse;
     }
 }

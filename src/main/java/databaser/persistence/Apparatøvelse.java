@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -188,6 +187,12 @@ public class Apparatøvelse extends Øvelse {
         }
     }
 
+    /**
+     * Fetches the progress for a the Apparatøvelse as a Map between each {@link Treningsøkt} in which it was
+     * performed, and the given kilo, reps and set.
+     *
+     * @return the progress for the Apparatøvelse.
+     */
     public Map<Treningsøkt, Map<String, Integer>> getProgressForApparatøvelse() {
         Map<Treningsøkt, Map<String, Integer>> progress = new HashMap<>();
 
@@ -224,7 +229,8 @@ public class Apparatøvelse extends Øvelse {
             throw new RuntimeException("Unable to get progress for Apparatøvelse from the database", e);
         }
     }
-    public String toString(){
-        return navn+"\nBeskrivelse: "+beskrivelse+"\nApparat: "+apparat.getNavn();
+
+    public String toString() {
+        return navn + "\nBeskrivelse: " + beskrivelse + "\nApparat: " + apparat.getNavn();
     }
 }
