@@ -332,4 +332,6 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
     public int compareTo(Treningsøkt other) {
         return this.getDato().compareTo(other.getDato());
     }
+    public String toString(){return dato.toString()+"\nInnsats: "+Integer.toString(innsats)+"\nForm: "
+            +Integer.toString(form)+"\nVarighet i minutter: "+Integer.toString(varighet);}
 }

@@ -13,7 +13,7 @@
 <AnchorPane prefHeight="900" prefWidth="660" styleClass="train_background" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.controllers.ØktController">
    <children>
       <Button fx:id="dagbokButton" layoutX="530.0" layoutY="46.0" mnemonicParsing="false" onAction="#goToDagbok" styleClass="train_button" text="Dagbok" />
-      <Label fx:id="øktLabel" layoutX="86.0" layoutY="103.0" styleClass="train_under_title" text="Øktnavn" />
+      <Label fx:id="øktLabel" layoutX="86.0" layoutY="50.0" styleClass="train_under_title" text="Øktnavn" />
       <ListView fx:id="øvelseListView" layoutX="379.0" layoutY="176.0" prefHeight="401.0" prefWidth="223.0" />
        <ListView fx:id="notatListView" layoutX="379.0" layoutY="676.0" prefHeight="158.0" prefWidth="223.0" />
        <TextArea fx:id="notatTextArea" layoutX="86.0" layoutY="675.0" prefHeight="110.0" prefWidth="223.0" promptText="Nytt notat" />
@@ -23,10 +23,10 @@
       <ChoiceBox fx:id="gruppeChoiceBox" layoutX="87.0" layoutY="178.0" onAction="#updateØvelseChoiceBox" prefWidth="150.0" />
       <ComboBox fx:id="øvelseChoiceBox" layoutX="87.0" layoutY="236.0" onAction="#setInputFieldVisibility" prefWidth="150.0" />
        <TextArea fx:id="nyØvelseKommentar" layoutX="87.0" layoutY="298.0" prefHeight="50" prefWidth="150" promptText="Beskrivelse" />
-       <TextField fx:id="setsTextField" layoutX="87.0" layoutY="382.0" prefWidth="150" promptText="Kilo" />
-       <TextField fx:id="repsTextField" layoutX="87.0" layoutY="442.0" prefWidth="150" promptText="Reps" />
-       <TextField fx:id="weightTextField" layoutX="87.0" layoutY="498.0" prefWidth="150" promptText="Set" />
-       <Button fx:id="nyØvelseButton" layoutX="87.0" layoutY="548.0" onAction="#handleNyØvelse" prefWidth="150" styleClass="train_button" text="Legg til øvelse" />
+       <TextField fx:id="setsTextField" layoutX="87.0" layoutY="300.0" prefWidth="150" promptText="Set" />
+       <TextField fx:id="repsTextField" layoutX="87.0" layoutY="350.0" prefWidth="150" promptText="Reps" />
+       <TextField fx:id="weightTextField" layoutX="87.0" layoutY="400" prefWidth="150" promptText="Kilo" />
+       <Button fx:id="nyØvelseButton" layoutX="87.0" layoutY="448.0" onAction="#handleNyØvelse" prefWidth="150" styleClass="train_button" text="Legg til øvelse" />
       <Text fill="#dedede" layoutX="235.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="train_title" text="Økt" wrappingWidth="190.39999185925262">
          <font>
             <Font size="30.0" />
@@ -37,7 +37,6 @@
       <Label layoutX="86.0" layoutY="211.0" styleClass="train_text" text="Øvelse" />
       <Label layoutX="89.0" layoutY="638.0" styleClass="train_under_title" text="Nytt notat for økt" />
       <Label layoutX="378.0" layoutY="638.0" styleClass="train_under_title" text="Alle notater for økt" />
-
 
    </children>
 </AnchorPane>

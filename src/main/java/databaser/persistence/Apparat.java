@@ -123,4 +123,5 @@ public class Apparat extends ActiveDomainObject implements Comparable<Apparat> {
     public int compareTo(Apparat other) {
         return this.getNavn().compareTo(other.getNavn());
     }
+    public String toString(){return navn;}
 }
