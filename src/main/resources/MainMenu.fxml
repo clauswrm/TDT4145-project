@@ -14,7 +14,7 @@
       <Button fx:id="apparaterButton" layoutX="138.0" layoutY="421.0" mnemonicParsing="false" onAction="#goToApparater" prefHeight="58.0" prefWidth="384.0" styleClass="main_buttons" stylesheets="@stylesheet.css" text="Apparater" />
        <Button fx:id="øvelserButton" layoutX="138.0" layoutY="515.0" mnemonicParsing="false" onAction="#goToØvelser" prefHeight="58.0" prefWidth="384.0" styleClass="main_buttons" stylesheets="@stylesheet.css" text="Øvelser" />
       <Button fx:id="dagbokButton" layoutX="138.0" layoutY="329.0" mnemonicParsing="false" onAction="#goToDagbok" prefHeight="57.0" prefWidth="384.0" styleClass="main_buttons" stylesheets="@stylesheet.css" text="Dagbok" />
-      <Text fill="#dedede" layoutX="181.0" layoutY="774.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="train_under_title" text="En treninsdagbokapp av" wrappingWidth="297.67064666748047" />
+      <Text fill="#dedede" layoutX="181.0" layoutY="774.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="train_under_title" text="En treningsdagbokapp av" wrappingWidth="297.67064666748047" />
       <Text fill="#dedede" layoutX="469.0" layoutY="857.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="train_under_title" text="V2018" wrappingWidth="105.6706771850586" />
       <Text fill="#dedede" layoutX="85.0" layoutY="857.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="train_under_title" text="TDT4145" wrappingWidth="105.67068010568619" />
       <Text fill="#dedede" layoutX="181.0" layoutY="797.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="train_under_title" text="Ask, Claus, Nora og Henrik" wrappingWidth="297.67064666748047" />

@@ -126,4 +126,7 @@ public class Notat extends ActiveDomainObject implements Comparable<Notat> {
     public int compareTo(Notat other) {
         return this.getTreningsøkt().compareTo(other.getTreningsøkt());
     }
+    public String toString(){
+        return tekst;
+    }
 }

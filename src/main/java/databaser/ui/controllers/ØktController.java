@@ -72,6 +72,7 @@ public class ØktController extends BaseController {
         updateGruppeChoiceBox();
         resetØvelseInputFields();
         updateØvelseListView();
+        updateNotatListView();
     }
 
     @FXML
