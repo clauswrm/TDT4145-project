@@ -134,6 +134,17 @@ public class ØvelserController extends BaseController {
     }
 
     public void updateFriResultListView(Friøvelse øvelse) {
+        Map<Treningsøkt,String> resultater = øvelse.getProgressForFriøvelse();
+        LocalDate startDate = startDatePicker.getValue();
+        LocalDate endDate = endDatePicker.getValue();
+        ObservableList<String> items = resultListView.getItems();
+        items.clear();
+        for(Treningsøkt økt: resultater.keySet()){
+            if(økt.isInInterval(startDate,endDate)){
+                String res = økt.getStatsForFriøvelse(øvelse);
+                items.add("Resultat: "+res);
+            }
+        }
 
     }
 
