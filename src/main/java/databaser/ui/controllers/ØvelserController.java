@@ -10,13 +10,7 @@ import databaser.ui.Page;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,6 +21,9 @@ import java.util.*;
 
 
 public class ØvelserController extends BaseController {
+
+    public ComboBox<Øvelsesgruppe> gComboBox;
+    public ComboBox<Øvelse> øComboBox;
 
     @FXML
     public Button goToMainMenu;
@@ -149,6 +146,22 @@ public class ØvelserController extends BaseController {
         }
 
     }
+    public void addØvelseToGruppe(){
+        Øvelse øvelse = øComboBox.getValue();
+        Øvelsesgruppe gruppe = gComboBox.getValue();
+
+        if(!gruppe.getØvelser().contains(øvelse)){
+            øvelse.addToØvelsesgruppe(gruppe);
+        }
+
+    }
+    public void updateØvelseToGroupComboBox(){
+        ObservableList<Øvelse> items = øComboBox.getItems();
+        items.clear();
+
+        items.addAll(Apparatøvelse.getAll());
+        items.addAll(Friøvelse.getAll());
+    }
 
     @FXML
     private void updateGruppeChoiceBox() {
@@ -160,6 +173,8 @@ public class ØvelserController extends BaseController {
 
         gruppeViewChoiceBox.getItems().clear();
         gruppeViewChoiceBox.getItems().addAll(items);
+        gComboBox.getItems().clear();
+        gComboBox.getItems().addAll(items);
     }
 
     @FXML
