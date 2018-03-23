@@ -271,7 +271,12 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
         }
     }
 
-
+    /**
+     * Returns the stats for the given {@link Apparatøvelse} in the given treningsøkt.
+     *
+     * @param apparatøvelse the Apparatøvelse to get stats for.
+     * @return the kilo, reps and set for the Apparatøvelse in the Treningsøkt.
+     */
     public Map<String, Integer> getStatsForApparatøvelse(Apparatøvelse apparatøvelse) {
         final String sql = "SELECT * FROM (treningsøkt_has_apparatøvelse NATURAL JOIN apparatøvelse) " +
                 "WHERE idTreningsøkt = ? AND idApparatØvelse = ?";
@@ -296,17 +301,13 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
             throw new RuntimeException("Unable to get stats for Øvelse from Treningsøkt from the database", e);
         }
     }
-    public boolean isInInterval(LocalDate start,LocalDate end){
 
-        if(dato.compareTo(Date.from(Instant.from(start.atStartOfDay(ZoneId.systemDefault())))) >= 0){
-            if(dato.compareTo(Date.from(Instant.from(end.atStartOfDay(ZoneId.systemDefault())))) <= 0){
-                return true;
-            }
-        }
-
-        return false;
-    }
-
+    /**
+     * Returns the stats for the given {@link Friøvelse} in the given treningsøkt.
+     *
+     * @param friøvelse the Friøvelse to get stats for.
+     * @return the beskrivelse for the Friøvelse in the Treningsøkt.s
+     */
     public String getStatsForFriøvelse(Friøvelse friøvelse) {
         final String sql = "SELECT treningsøkt_has_friøvelse.Beskrivelse FROM (treningsøkt_has_friøvelse " +
                 "JOIN friøvelse ON treningsøkt_has_friøvelse.idFriøvelse = friøvelse.idFriøvelse) " +
@@ -328,10 +329,31 @@ public class Treningsøkt extends ActiveDomainObject implements Comparable<Treni
         }
     }
 
+    /**
+     * Checks to see if the Treningsøkt was done between two given {@link LocalDate}s.
+     *
+     * @param start the start date for the interval.
+     * @param end   the end date for the interval
+     * @return if the Treningsøkt was between start and end.
+     */
+    public boolean isInInterval(LocalDate start, LocalDate end) {
+
+        if (dato.compareTo(Date.from(Instant.from(start.atStartOfDay(ZoneId.systemDefault())))) >= 0) {
+            if (dato.compareTo(Date.from(Instant.from(end.atStartOfDay(ZoneId.systemDefault())))) <= 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public int compareTo(Treningsøkt other) {
         return this.getDato().compareTo(other.getDato());
     }
-    public String toString(){return dato.toString()+"\nInnsats: "+Integer.toString(innsats)+"\nForm: "
-            +Integer.toString(form)+"\nVarighet i minutter: "+Integer.toString(varighet);}
+
+    public String toString() {
+        return dato.toString() + "\nInnsats: " + Integer.toString(innsats) + "\nForm: "
+                + Integer.toString(form) + "\nVarighet i minutter: " + Integer.toString(varighet);
+    }
 }
