@@ -2,31 +2,49 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane prefHeight="900" prefWidth="660" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.controllers.ØvelserController">
-    <Button fx:id="goToMainMenu" layoutX="700" mnemonicParsing="false" onAction="#goToMainMenu" text="Hovedmenyen" />
-    <ChoiceBox fx:id="gruppeViewChoiceBox" layoutX="320.0" layoutY="163.0" onAction="#updateØvelseListView">
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<AnchorPane prefHeight="900" prefWidth="660.0" styleClass="train_background" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="databaser.ui.controllers.ØvelserController">
+    <Button fx:id="goToMainMenu" layoutX="495.0" layoutY="51.0" mnemonicParsing="false" onAction="#goToMainMenu" styleClass="train_button" text="Hovedmenyen" />
+    <ChoiceBox fx:id="gruppeViewChoiceBox" layoutX="371.0" layoutY="222.0" onAction="#updateØvelseListView" prefHeight="26.0" prefWidth="248.0">
     </ChoiceBox>
-   <TextField fx:id="øvelseNavn" layoutX="19.0" layoutY="119.0" />
-   <Label layoutX="19.0" layoutY="75.0" text="Ny øvelse" />
-   <Label layoutX="19.0" layoutY="102.0" text="Navn" />
-   <Label layoutX="19.0" layoutY="158.0" text="Beskrivelse" />
-   <CheckBox fx:id="apparatØvelseCheckBox" layoutX="21.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleApparatØvelseCheckBox" text="Apparatøvelse" />
-   <ChoiceBox fx:id="apparatChoiceBox" layoutX="17.0" layoutY="377.0" prefWidth="150.0" />
-   <TextArea fx:id="øvelseBeskrivelse" layoutX="22.0" layoutY="175.0" prefHeight="81.0" prefWidth="197.0" />
-   <Button fx:id="addØvelseButton" layoutX="16.0" layoutY="402.0" mnemonicParsing="false" onAction="#handleAddØvelse" text="Legg til Øvelse" />
-   <ChoiceBox fx:id="gruppeChoiceBox" layoutX="16.0" layoutY="273.0" prefWidth="150.0" />
-   <Label layoutX="36.0" layoutY="480.0" text="Ny Gruppe" />
-   <Label layoutX="34.0" layoutY="525.0" text="Navn" />
-   <Label layoutX="33.0" layoutY="590.0" text="Beskrivelse" />
-   <TextField fx:id="gruppeNavnTextField" layoutX="33.0" layoutY="542.0" />
-   <TextField fx:id="gruppeBeskrivelseTextField" layoutX="33.0" layoutY="607.0" />
-   <CheckBox fx:id="friØvelseCheckBox" layoutX="132.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleFriØvelseCheckBox" text="Friøvelse" />
-   <Label layoutX="19.0" layoutY="256.0" text="Gruppe" />
-   <Button fx:id="addGruppeButton" layoutX="33.0" layoutY="640.0" mnemonicParsing="false" onAction="#handleNyGruppe" text="Legg til Gruppe" />
-   <ChoiceBox fx:id="øvelseListView" layoutX="452.0" layoutY="156.0" prefHeight="200.0" prefWidth="200.0" />
-   <DatePicker layoutX="667.0" layoutY="119.0" fx:id="startDatePicker" />
-   <DatePicker layoutX="872.0" layoutY="119.0" fx:id="endDatePicker"/>
-    <ListView layoutX="670" layoutY="200" fx:id="resultListView"/>
+   <TextField fx:id="øvelseNavn" layoutX="54.0" layoutY="181.0" prefHeight="26.0" prefWidth="198.0" />
+   <Label layoutX="55.0" layoutY="117.0" styleClass="train_under_title" text="Ny øvelse" />
+   <Label layoutX="55.0" layoutY="155.0" styleClass="train_text" text="Navn" />
+   <Label layoutX="55.0" layoutY="215.0" styleClass="train_text" text="Beskrivelse" />
+   <CheckBox fx:id="apparatØvelseCheckBox" alignment="TOP_LEFT" layoutX="53.0" layoutY="403.0" mnemonicParsing="false" onAction="#handleApparatØvelseCheckBox" text="Apparatøvelse" textFill="#dedede">
+      <font>
+         <Font name="Arial" size="14.0" />
+      </font></CheckBox>
+   <ChoiceBox fx:id="apparatChoiceBox" layoutX="52.0" layoutY="438.0" prefHeight="26.0" prefWidth="198.0" />
+   <TextArea fx:id="øvelseBeskrivelse" layoutX="54.0" layoutY="241.0" prefHeight="81.0" prefWidth="197.0" />
+   <Button fx:id="addØvelseButton" layoutX="51.0" layoutY="520.0" mnemonicParsing="false" onAction="#handleAddØvelse" prefHeight="31.0" prefWidth="198.0" styleClass="train_button" text="Legg til Øvelse" />
+   <ChoiceBox fx:id="gruppeChoiceBox" layoutX="53.0" layoutY="353.0" prefHeight="26.0" prefWidth="198.0" />
+   <Label layoutX="51.0" layoutY="625.0" styleClass="train_under_title" text="Ny Gruppe" />
+   <Label layoutX="52.0" layoutY="662.0" styleClass="train_text" text="Navn" />
+   <Label layoutX="51.0" layoutY="725.0" styleClass="train_text" text="Beskrivelse" />
+   <TextField fx:id="gruppeNavnTextField" layoutX="51.0" layoutY="692.0" prefHeight="26.0" prefWidth="198.0" />
+   <TextField fx:id="gruppeBeskrivelseTextField" layoutX="51.0" layoutY="753.0" prefHeight="26.0" prefWidth="198.0" />
+   <CheckBox fx:id="friØvelseCheckBox" layoutX="52.0" layoutY="481.0" mnemonicParsing="false" onAction="#handleFriØvelseCheckBox" text="Friøvelse" textFill="#dedede">
+      <font>
+         <Font name="Arial" size="14.0" />
+      </font></CheckBox>
+   <Label layoutX="55.0" layoutY="329.0" styleClass="train_text" text="Gruppe" />
+   <Button fx:id="addGruppeButton" layoutX="51.0" layoutY="803.0" mnemonicParsing="false" onAction="#handleNyGruppe" prefHeight="31.0" prefWidth="198.0" styleClass="train_button" text="Legg til Gruppe" />
+   <ChoiceBox fx:id="øvelseListView" layoutX="371.0" layoutY="313.0" prefHeight="200.0" prefWidth="248.0" />
+   <DatePicker fx:id="startDatePicker" layoutX="371.0" layoutY="152.0" prefHeight="26.0" prefWidth="116.0" />
+   <DatePicker fx:id="endDatePicker" layoutX="502.0" layoutY="152.0" prefHeight="26.0" prefWidth="116.0" />
+    <ListView fx:id="resultListView" layoutX="371.0" layoutY="554.0" prefHeight="284.0" prefWidth="248.0" />
+   <Text fill="#dedede" layoutX="225.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="train_title" text="Øvelser" wrappingWidth="190.39999185925262">
+      <font>
+         <Font size="30.0" />
+      </font>
+   </Text>
+   <Label layoutX="371.0" layoutY="130.0" styleClass="train_text" text="Start" />
+   <Label layoutX="508.0" layoutY="130.0" styleClass="train_text" text="End" />
+   <Label layoutX="369.0" layoutY="194.0" styleClass="train_text" text="Øvelsesgruppe" />
+   <Label layoutX="369.0" layoutY="524.0" styleClass="train_text" text="Resultater" />
+   <Label layoutX="370.0" layoutY="282.0" styleClass="train_text" text="Øvelser" />
     
 
 

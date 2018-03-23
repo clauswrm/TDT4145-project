@@ -8,7 +8,7 @@ public enum Page {
     DAGBOK("/Dagbok.fxml", "Dagbok"),
     MAIN_MENU("/MainMenu.fxml", "Hjem"),
     ØKT("/Økt.fxml", "Økt"),
-    ØVELSER("/Øvelser.fxml", "Øvelse"),;
+    ØVELSER("/Øvelser.fxml", "Øvelser"),;
 
     private final String fxmlPath;
     private final String title;
