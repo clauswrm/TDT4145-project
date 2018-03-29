@@ -18,7 +18,7 @@ the data.
 1) Run the __updated__ [SQL script][sql_script] for creating the required database structure on your 
 preffered MySQL server.
 
-2) Run the [main method][main] to launch the application.
+2) Run [`release_1.0.jar`][jar] or the [main method][main] in the source code to launch the application.
 
 3) Click the `Instillinger` button to access database settings. Change the URL, username 
 and password to match your setup.
@@ -55,5 +55,6 @@ use our Active Domain Objects to interact with the database, decoupling UI from 
 [ui diagram]: docs/ui_classes.png "UI diagram"
 [sql_script]: docs/treningsDb_v2.sql "SQL script for creating the database."
 [main]: src/main/java/databaser/Main.java
+[jar]: release_1.0.jar "Runnable project JAR."
 [page]: src/main/java/databaser/ui/Page.java
 [app]: src/main/java/databaser/ui/TrainingApp.java
