@@ -10,6 +10,9 @@ For this small project we implemented a [Active Domain Object][ado] pattern for 
 access, providing a simple programmatic interface for retrieving and operating on 
 the data.
 
+> WARNINIG: Because of the nature of this project, norwegian and english is used interchangebly
+> in the source code (the GUI is in norwegian). It's bad practice but oh well...
+
 ## How to run
 
 1) Run the __updated__ [SQL script][sql_script] for creating the required database structure on your 
@@ -47,10 +50,10 @@ use our Active Domain Objects to interact with the database, decoupling UI from 
 
 ![UI diagram][ui diagram]
 
-[ado]: http://www.diranieh.com/DataAccessPatterns/ActiveDomainObject.htm
+[ado]: http://www.diranieh.com/DataAccessPatterns/ActiveDomainObject.htm "Resource on Active Domain Object pattern."
 [persistence diagram]: docs/persistence_classes.png "Persistence diagram"
 [ui diagram]: docs/ui_classes.png "UI diagram"
-[sql_script]: docs/treningsDb_v2.sql
+[sql_script]: docs/treningsDb_v2.sql "SQL script for creating the database."
 [main]: src/main/java/databaser/Main.java
 [page]: src/main/java/databaser/ui/Page.java
 [app]: src/main/java/databaser/ui/TrainingApp.java
